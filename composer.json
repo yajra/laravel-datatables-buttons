@@ -1,0 +1,49 @@
+{
+  "name": "yajra/laravel-datatables-buttons",
+  "description": "jQuery DataTables Buttons Plugin for Laravel.",
+  "keywords": [
+    "laravel",
+    "datatables",
+    "buttons",
+    "jquery"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arjay Angeles",
+      "email": "aqangeles@gmail.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "/www/yajra/laravel-datatables"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "yajra/laravel-datatables-oracle": "^7.0",
+    "illuminate/support": "^5.0",
+    "illuminate/database": "^5.0",
+    "illuminate/view": "^5.0",
+    "illuminate/http": "^5.0",
+    "illuminate/filesystem": "^5.0",
+    "league/fractal": "^0.14",
+    "laravelcollective/html": "^5.0",
+    "maatwebsite/excel": "^2.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "^0.9",
+    "phpunit/phpunit": "^4.0"
+  },
+  "suggest": {
+    "dompdf/dompdf": "Allows exporting of dataTable to PDF using the DomPDF.",
+    "barryvdh/laravel-snappy": "Allows exporting of dataTable to PDF using the print view."
+  },
+  "autoload": {
+    "psr-4": {
+      "Yajra\\Datatables\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
