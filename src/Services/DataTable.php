@@ -2,8 +2,8 @@
 
 namespace Yajra\Datatables\Services;
 
-use Config;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Facades\Config;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\Datatables\Contracts\DataTableButtonsContract;
@@ -57,6 +57,13 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      * @var \Yajra\Datatables\Contracts\DataTableScopeContract[]
      */
     protected $scopes = [];
+
+    /**
+     * Html builder.
+     *
+     * @var \Yajra\Datatables\Html\Builder
+     */
+    protected $htmlBuilder;
 
     /**
      * Export filename.
@@ -173,7 +180,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     public function builder()
     {
-        return $this->datatables->getHtmlBuilder();
+        return $this->htmlBuilder ?: $this->htmlBuilder = $this->datatables->getHtmlBuilder();
     }
 
     /**
