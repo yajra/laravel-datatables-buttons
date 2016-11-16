@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "yajra/laravel-datatables-oracle": "^7.0",
+    "yajra/laravel-datatables-oracle": "dev-master",
     "illuminate/support": "^5.0",
     "illuminate/database": "^5.0",
     "illuminate/view": "^5.0",
