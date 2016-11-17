@@ -1,6 +1,6 @@
 # Laravel DataTables Buttons Plugin
 
-This package is a plugin of [Laravel Datatables](https://github.com/yajra/laravel-datatables-buttons) for handling server-side function of exporting the table as csv, excel, pdf and printing.
+This package is a plugin of [Laravel Datatables](https://github.com/yajra/laravel-datatables) for handling server-side function of exporting the table as csv, excel, pdf and printing.
 
 ## Requirements
 - [PHP >=5.5.9](http://php.net/)
