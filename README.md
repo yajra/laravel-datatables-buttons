@@ -9,8 +9,7 @@ This package is a plugin of [Laravel Datatables](https://github.com/yajra/larave
 - [jQuery DataTables Button Extension](https://datatables.net/reference/button/)
 
 ## Documentations
-- [Laravel Datatables Documentation](http://datatables.yajrabox.com/docs/laravel-datatables)
-- [Demo Application](http://datatables.yajrabox.com) is available for artisan's reference.
+- [Laravel Datatables Documentation](http://yajrabox.com/docs/laravel-datatables)
 
 ## Quick Installation
 `composer require yajra/laravel-datatables-buttons:dev-master`
