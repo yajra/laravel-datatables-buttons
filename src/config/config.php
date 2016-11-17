@@ -2,11 +2,6 @@
 
 return [
     /**
-     * DataTables script view template.
-     */
-    'script_template' => 'datatables::script',
-
-    /**
      * DataTables internal index id response column name.
      */
     'index_column'    => 'DT_Row_Index',
