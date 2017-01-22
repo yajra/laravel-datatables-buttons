@@ -180,7 +180,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     public function builder()
     {
-        return $this->htmlBuilder ?: $this->htmlBuilder = $this->datatables->getHtmlBuilder();
+        return $this->htmlBuilder ?: $this->htmlBuilder = app('datatables.html');
     }
 
     /**
