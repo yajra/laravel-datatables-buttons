@@ -71,6 +71,7 @@ class ButtonsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(HtmlServiceProvider::class);
         $this->app->register(ExcelServiceProvider::class);
     }
 }
