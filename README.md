@@ -3,8 +3,8 @@
 This package is a plugin of [Laravel Datatables](https://github.com/yajra/laravel-datatables) for handling server-side function of exporting the table as csv, excel, pdf and printing.
 
 ## Requirements
-- [PHP >=5.5.9](http://php.net/)
-- [Laravel 5.x](https://github.com/laravel/framework)
+- [PHP >=5.6.4](http://php.net/)
+- [Laravel 5.4](https://github.com/laravel/framework)
 - [jQuery DataTables v1.10.x](http://datatables.net/)
 - [jQuery DataTables Button Extension](https://datatables.net/reference/button/)
 
