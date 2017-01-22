@@ -3,7 +3,6 @@
 namespace Yajra\Datatables\Services;
 
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Support\Facades\Config;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\Datatables\Contracts\DataTableButtonsContract;
@@ -315,7 +314,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     public function pdf()
     {
-        if ('snappy' == Config::get('datatables-buttons.pdf_generator', 'excel')) {
+        if ('snappy' == config('datatables-buttons.pdf_generator', 'excel')) {
             return $this->snappyPdf();
         } else {
             $this->buildExcelFile()->download('pdf');
@@ -332,14 +331,14 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
         /** @var \Barryvdh\Snappy\PdfWrapper $snappy */
         $snappy = app('snappy.pdf.wrapper');
 
-        $options     = Config::get('datatables-buttons.snappy.options', [
+        $options     = config('datatables-buttons.snappy.options', [
             'no-outline'    => true,
             'margin-left'   => '0',
             'margin-right'  => '0',
             'margin-top'    => '10mm',
             'margin-bottom' => '10mm',
         ]);
-        $orientation = Config::get('datatables-buttons.snappy.orientation', 'landscape');
+        $orientation = config('datatables-buttons.snappy.orientation', 'landscape');
 
         $snappy->setOptions($options)
                ->setOrientation($orientation);
