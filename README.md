@@ -12,7 +12,7 @@ This package is a plugin of [Laravel Datatables](https://github.com/yajra/larave
 - [Laravel Datatables Documentation](http://yajrabox.com/docs/laravel-datatables)
 
 ## Quick Installation
-`composer require yajra/laravel-datatables-buttons:dev-master`
+`composer require yajra/laravel-datatables-buttons:1.*`
 
 #### Service Provider
 `Yajra\Datatables\ButtonsServiceProvider::class`
