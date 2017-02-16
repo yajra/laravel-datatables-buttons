@@ -3,6 +3,7 @@
 namespace Yajra\Datatables\Services;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\Datatables\Contracts\DataTableButtonsContract;
@@ -79,6 +80,20 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     protected $attributes = [];
 
     /**
+     * Callback before sending the response.
+     *
+     * @var callable
+     */
+    protected $beforeCallback;
+
+    /**
+     * Callback after processing the response.
+     *
+     * @var callable
+     */
+    protected $afterCallback;
+
+    /**
      * DataTable constructor.
      *
      * @param \Yajra\Datatables\Datatables $datatables
@@ -126,6 +141,28 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     }
 
     /**
+     * Display ajax response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajax()
+    {
+        $dataTable = $this->dataTable();
+
+        if ($callback = $this->beforeCallback) {
+            $dataTable = $callback($dataTable);
+        }
+
+        $response = $dataTable->make(true);
+
+        if ($callback = $this->afterCallback) {
+            $response = new JsonResponse($callback($response->getData(true)));
+        }
+
+        return $response;
+    }
+
+    /**
      * Display printable view of datatables.
      *
      * @return \Illuminate\Contracts\View\View
@@ -167,16 +204,6 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     protected function getColumnsFromBuilder()
     {
         return $this->html()->getColumns();
-    }
-
-    /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function ajax()
-    {
-        return $this->dataTable()->make(true);
     }
 
     /**
@@ -230,6 +257,32 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
         $data     = $response->getData(true);
 
         return $data['data'];
+    }
+
+    /**
+     * Add callback before sending the response.
+     *
+     * @param callable $callback
+     * @return $this
+     */
+    public function before(callable $callback)
+    {
+        $this->beforeCallback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Add callback after the response was processed.
+     *
+     * @param callable $callback
+     * @return $this
+     */
+    public function after(callable $callback)
+    {
+        $this->afterCallback = $callback;
+
+        return $this;
     }
 
     /**
