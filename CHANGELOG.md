@@ -2,7 +2,7 @@
 
 ## Change Log
 
-### UNRELEASED
+### v1.1.0 - 02-16-2017
 - Add before and response callback.
 - Fix and update datatables generator.
 - Use phpunit 5.7 to match Laravel’s requirement.
