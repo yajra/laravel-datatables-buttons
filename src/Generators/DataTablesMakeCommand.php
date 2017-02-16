@@ -36,20 +36,6 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected $type = 'DataTable';
 
     /**
-     * The model class to be used by dataTable.
-     *
-     * @var string
-     */
-    protected $model;
-
-    /**
-     * DataTable export filename.
-     *
-     * @var string
-     */
-    protected $filename;
-
-    /**
      * Build the class with the given name.
      *
      * @param  string $name
