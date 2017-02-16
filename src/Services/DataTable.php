@@ -4,6 +4,7 @@ namespace Yajra\Datatables\Services;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\Datatables\Contracts\DataTableButtonsContract;
@@ -91,7 +92,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      *
      * @var callable
      */
-    protected $afterCallback;
+    protected $responseCallback;
 
     /**
      * DataTable constructor.
@@ -155,8 +156,9 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
 
         $response = $dataTable->make(true);
 
-        if ($callback = $this->afterCallback) {
-            $response = new JsonResponse($callback($response->getData(true)));
+        if ($callback = $this->responseCallback) {
+            $data     = new Collection($response->getData(true));
+            $response = new JsonResponse($callback($data));
         }
 
         return $response;
@@ -278,9 +280,9 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      * @param callable $callback
      * @return $this
      */
-    public function after(callable $callback)
+    public function response(callable $callback)
     {
-        $this->afterCallback = $callback;
+        $this->responseCallback = $callback;
 
         return $this;
     }
