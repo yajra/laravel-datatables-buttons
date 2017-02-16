@@ -57,10 +57,55 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function buildClass($name)
     {
-        $stub = $this->files->get($this->getStub());
-        $stub = $this->replaceNamespace($stub, $name)->replaceClass($stub, $name);
+        $stub = parent::buildClass($name);
 
-        return $this->replaceModelImport($stub)->replaceModel($stub)->replaceFilename($stub);
+        return $this->replaceModelImport($stub)
+                    ->replaceModel($stub)
+                    ->replaceFilename($stub);
+    }
+
+    /**
+     * Replace model name.
+     *
+     * @param string $stub
+     * @return mixed
+     */
+    protected function replaceModel(&$stub)
+    {
+        $model = explode('\\', $this->getModel());
+        $model = array_pop($model);
+        $stub  = str_replace('ModelName', $model, $stub);
+
+        return $this;
+    }
+
+    /**
+     * Get model name to use.
+     */
+    protected function getModel()
+    {
+        $name           = $this->getNameInput();
+        $rootNamespace  = $this->laravel->getNamespace();
+        $modelNamespace = $this->laravel['config']->get('datatables-buttons.namespace.model');
+
+        return $this->option('model')
+            ? $rootNamespace . "\\" . ($modelNamespace ? $modelNamespace . "\\" : "") . str_singular($name)
+            : $rootNamespace . "\\User";
+    }
+
+    /**
+     * Replace model import.
+     *
+     * @param string $stub
+     * @return $this
+     */
+    protected function replaceModelImport(&$stub)
+    {
+        $stub = str_replace(
+            'DummyModel', str_replace('\\\\', '\\', $this->getModel()), $stub
+        );
+
+        return $this;
     }
 
     /**
@@ -74,36 +119,6 @@ class DataTablesMakeCommand extends GeneratorCommand
     }
 
     /**
-     * Replace model name.
-     *
-     * @param string $stub
-     * @return mixed
-     */
-    protected function replaceModel(&$stub)
-    {
-        $model = explode('\\', $this->model);
-        $model = array_pop($model);
-        $stub  = str_replace('ModelName', $model, $stub);
-
-        return $this;
-    }
-
-    /**
-     * Replace model import.
-     *
-     * @param string $stub
-     * @return $this
-     */
-    protected function replaceModelImport(&$stub)
-    {
-        $stub = str_replace(
-            'DummyModel', str_replace('\\\\', '\\', $this->model), $stub
-        );
-
-        return $this;
-    }
-
-    /**
      * Replace the filename.
      *
      * @param string $stub
@@ -112,7 +127,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected function replaceFilename(&$stub)
     {
         $stub = str_replace(
-            'DummyFilename', $this->filename, $stub
+            'DummyFilename', str_slug($this->getNameInput()), $stub
         );
 
         return $stub;
@@ -131,28 +146,12 @@ class DataTablesMakeCommand extends GeneratorCommand
     }
 
     /**
-     * Determine if the class already exists.
-     *
-     * @param  string $rawName
-     * @return bool
-     */
-    protected function alreadyExists($rawName)
-    {
-        $name = $this->parseName($rawName);
-
-        $this->setModel($rawName);
-        $this->setFilename($rawName);
-
-        return $this->files->exists($this->getPath($name));
-    }
-
-    /**
      * Parse the name and format according to the root namespace.
      *
      * @param  string $name
      * @return string
      */
-    protected function parseName($name)
+    protected function qualifyClass($name)
     {
         $rootNamespace = $this->laravel->getNamespace();
 
@@ -168,7 +167,7 @@ class DataTablesMakeCommand extends GeneratorCommand
             $name .= 'DataTable';
         }
 
-        return $this->parseName($this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name);
+        return $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name;
     }
 
     /**
@@ -179,30 +178,6 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . "\\" . $this->laravel['config']->get('datatables.namespace.base', 'DataTables');
-    }
-
-    /**
-     * Set the model to be used.
-     *
-     * @param string $name
-     */
-    protected function setModel($name)
-    {
-        $rootNamespace  = $this->laravel->getNamespace();
-        $modelNamespace = $this->laravel['config']->get('datatables.namespace.model');
-        $this->model    = $this->option('model')
-            ? $rootNamespace . "\\" . ($modelNamespace ? $modelNamespace . "\\" : "") . $name
-            : $rootNamespace . "\\User";
-    }
-
-    /**
-     * Set the filename for export.
-     *
-     * @param string $name
-     */
-    protected function setFilename($name)
-    {
-        $this->filename = Str::lower(Str::plural($name));
+        return $rootNamespace . "\\" . $this->laravel['config']->get('datatables-buttons.namespace.base', 'DataTables');
     }
 }
