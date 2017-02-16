@@ -170,6 +170,16 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     }
 
     /**
+     * Display ajax response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajax()
+    {
+        return $this->dataTable()->make(true);
+    }
+
+    /**
      * Optional method if you want to use html builder.
      *
      * @return \Yajra\Datatables\Html\Builder

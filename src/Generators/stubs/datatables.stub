@@ -8,16 +8,15 @@ use Yajra\Datatables\Services\DataTable;
 class DummyClass extends DataTable
 {
     /**
-     * Display ajax response.
+     * Build DataTable class.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Yajra\Datatables\Engines\BaseEngine
      */
-    public function ajax()
+    public function dataTable()
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->addColumn('action', 'path.to.action.view')
-            ->make(true);
+            ->addColumn('action', 'path.to.action.view');
     }
 
     /**
