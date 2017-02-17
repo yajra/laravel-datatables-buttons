@@ -25,7 +25,7 @@ This package is a plugin of [Laravel Datatables](https://github.com/yajra/larave
 `Yajra\Datatables\ButtonsServiceProvider::class`
 
 #### Configuration and Assets
-`$ php artisan vendor:publish --tag=datatables-buttons`
+`$ php artisan vendor:publish --tag=datatables-buttons --force`
 
 And that's it! Start building out some awesome DataTables!
 

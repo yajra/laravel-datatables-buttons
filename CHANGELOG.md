@@ -2,6 +2,10 @@
 
 ## Change Log
 
+### v1.1.1 - 02-17-2017
+- Remove config that is set on main repo.
+- Docs, use ^1.1 when installing.
+
 ### v1.1.0 - 02-16-2017
 - Add before and response callback.
 - Fix and update datatables generator.
