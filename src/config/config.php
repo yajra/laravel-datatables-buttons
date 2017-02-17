@@ -2,11 +2,6 @@
 
 return [
     /**
-     * DataTables internal index id response column name.
-     */
-    'index_column'    => 'DT_Row_Index',
-
-    /**
      * Namespaces used by the generator.
      */
     'namespace'       => [
