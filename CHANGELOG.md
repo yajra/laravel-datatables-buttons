@@ -2,6 +2,10 @@
 
 ## Change Log
 
+### v1.1.2 - 03-08-2017
+- Fix url params js script.
+- Fix https://github.com/yajra/laravel-datatables/issues/1049.
+
 ### v1.1.1 - 02-17-2017
 - Remove config that is set on main repo.
 - Docs, use ^1.1 when installing.
