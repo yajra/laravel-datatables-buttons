@@ -61,7 +61,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * Replace model name.
      *
      * @param string $stub
-     * @return mixed
+     * @return this
      */
     protected function replaceModel(&$stub)
     {
@@ -187,7 +187,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * Replace the filename.
      *
      * @param string $stub
-     * @return this
+     * @return string
      */
     protected function replaceFilename(&$stub)
     {
