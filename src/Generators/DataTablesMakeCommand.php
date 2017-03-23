@@ -133,7 +133,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * Replace the action.
      *
      * @param string $stub
-     * @return string
+     * @return this
      */
     protected function replaceAction(&$stub)
     {
@@ -187,7 +187,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * Replace the filename.
      *
      * @param string $stub
-     * @return string
+     * @return this
      */
     protected function replaceFilename(&$stub)
     {
