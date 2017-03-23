@@ -16,7 +16,7 @@ class DummyClass extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->addColumn('action', 'path.to.action.view');
+            ->addColumn('action', 'DummyAction');
     }
 
     /**
@@ -26,7 +26,7 @@ class DummyClass extends DataTable
      */
     public function query()
     {
-        $query = ModelName::query();
+        $query = ModelName::select($this->getColumns);
 
         return $this->applyScopes($query);
     }
@@ -46,19 +46,16 @@ class DummyClass extends DataTable
     }
 
     /**
-     * Get columns.
-     *
-     * @return array
-     */
-    protected function getColumns()
-    {
-        return [
-            'id',
-            // add your columns
-            'created_at',
-            'updated_at',
-        ];
-    }
+         * Get columns.
+         *
+         * @return array
+         */
+        protected function getColumns()
+        {
+            return [
+                'DummyColumns'
+            ];
+        }
 
     /**
      * Get filename for export.
