@@ -208,7 +208,7 @@ class DataTablesMakeCommand extends GeneratorCommand
         return [
             ['model', null, InputOption::VALUE_NONE, 'Use the provided name as the model.', null],
             ['action', null, InputOption::VALUE_OPTIONAL, 'Force the use of singular in filename.', null],
-            ['columns', null, InputOption::VALUE_IS_ARRAY, 'Use the provided columns.', null],
+            ['columns', null, InputOption::VALUE_OPTIONAL, 'Use the provided columns.', null],
         ];
     }
 
