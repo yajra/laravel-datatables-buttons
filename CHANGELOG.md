@@ -2,6 +2,9 @@
 
 ## Change Log
 
+### v1.2.1 - 03-28-2017
+- Do not require return from before callback closure. #14
+
 ### v1.2.0 - 03-28-2017
 - Add html builder callback for code re-usability. #13
 
