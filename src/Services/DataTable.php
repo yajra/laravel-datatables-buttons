@@ -67,6 +67,13 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     protected $htmlBuilder;
 
     /**
+     * Html builder extension callback.
+     *
+     * @var callable
+     */
+    protected $htmlCallback;
+
+    /**
      * Export filename.
      *
      * @var string
@@ -112,7 +119,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      * @param string $view
      * @param array $data
      * @param array $mergeData
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function render($view, $data = [], $mergeData = [])
     {
@@ -128,7 +135,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
             return call_user_func_array([$this, $action], []);
         }
 
-        return $this->viewFactory->make($view, $data, $mergeData)->with('dataTable', $this->html());
+        return $this->viewFactory->make($view, $data, $mergeData)->with('dataTable', $this->getHtmlBuilder());
     }
 
     /**
@@ -259,6 +266,32 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
         $data     = $response->getData(true);
 
         return $data['data'];
+    }
+
+    /**
+     * @return \Yajra\Datatables\Html\Builder
+     */
+    protected function getHtmlBuilder()
+    {
+        $builder = $this->html();
+        if ($this->htmlCallback) {
+            call_user_func($this->htmlCallback, $builder);
+        }
+
+        return $builder;
+    }
+
+    /**
+     * Add html builder callback hook.
+     *
+     * @param callable $callback
+     * @return $this
+     */
+    public function withHtml(callable $callback)
+    {
+        $this->htmlCallback = $callback;
+
+        return $this;
     }
 
     /**
