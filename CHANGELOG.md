@@ -2,6 +2,9 @@
 
 ## Change Log
 
+### v1.2.0 - 03-28-2017
+- Add html builder callback for code re-usability. #13
+
 ### v1.1.2 - 03-08-2017
 - Fix url params js script.
 - Fix https://github.com/yajra/laravel-datatables/issues/1049.
