@@ -158,7 +158,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
         $dataTable = $this->dataTable();
 
         if ($callback = $this->beforeCallback) {
-            $dataTable = $callback($dataTable);
+            $callback($dataTable);
         }
 
         $response = $dataTable->make(true);
