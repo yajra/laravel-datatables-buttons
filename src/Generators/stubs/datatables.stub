@@ -26,7 +26,7 @@ class DummyClass extends DataTable
      */
     public function query()
     {
-        $query = ModelName::select($this->getColumns);
+        $query = ModelName::query()->select($this->getColumns());
 
         return $this->applyScopes($query);
     }

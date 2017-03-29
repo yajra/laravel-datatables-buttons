@@ -178,8 +178,8 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected function getStub()
     {
         $config = $this->laravel['config'];
-        return $config->get('datatables.custom_template')
-            ? $config->get('datatables.custom_path') . '/datatables.stub'
+        return $config->get('datatables-buttons.stub')
+            ? base_path() . $config->get('datatables-buttons.stub') . '/datatables.stub'
             : __DIR__ . '/stubs/datatables.stub';
     }
 
@@ -207,7 +207,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         return [
             ['model', null, InputOption::VALUE_NONE, 'Use the provided name as the model.', null],
-            ['action', null, InputOption::VALUE_OPTIONAL, 'Force the use of singular in filename.', null],
+            ['action', null, InputOption::VALUE_OPTIONAL, 'Path to action column template.', null],
             ['columns', null, InputOption::VALUE_OPTIONAL, 'Use the provided columns.', null],
         ];
     }
