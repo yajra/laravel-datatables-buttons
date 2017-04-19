@@ -124,7 +124,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * @param  int     $indentation
      * @return string
      */
-    protected function parseArray($definition, $delimiter = ',', $indentation = 16)
+    protected function parseArray($definition, $delimiter = ',', $indentation = 12)
     {
         return str_replace($delimiter, "',\n" . str_repeat(' ', $indentation) . "'", $definition);
     }
