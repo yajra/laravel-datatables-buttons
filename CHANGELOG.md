@@ -2,6 +2,10 @@
 
 ## Change Log
 
+### v1.3.0 - 04-20-2017
+- Adding model-namespace, columns and action options to Generator #12, credits to @lk77.
+- Allow to add custom button actions (or disable already existing ones). #18, credits to @underdpt.
+
 ### v1.2.1 - 03-28-2017
 - Do not require return from before callback closure. #14
 
