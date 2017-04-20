@@ -102,6 +102,15 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     protected $responseCallback;
 
     /**
+     * Available button actions. When calling an action, the value will be used
+     * as the function name (so it should be available)
+     * If you want to add or disable an action, overload and modify this property
+     *
+     * @var array
+     */
+    protected $actions = ['print', 'csv', 'excel', 'pdf'];
+
+    /**
      * DataTable constructor.
      *
      * @param \Yajra\Datatables\Datatables $datatables
@@ -127,7 +136,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
             return $this->ajax();
         }
 
-        if ($action = $this->request()->get('action') AND in_array($action, ['print', 'csv', 'excel', 'pdf'])) {
+        if ($action = $this->request()->get('action') AND in_array($action, $this->actions)) {
             if ($action == 'print') {
                 return $this->printPreview();
             }
