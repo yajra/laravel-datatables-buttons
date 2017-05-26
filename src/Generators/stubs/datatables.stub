@@ -58,6 +58,26 @@ class DummyClass extends DataTable
     }
 
     /**
+     * Get default builder parameters.
+     *
+     * @return array
+     */
+    protected function getBuilderParameters()
+    {
+        return [
+            'dom'     => 'Bfrtip',
+            'order'   => [[0, 'desc']],
+            'buttons' => [
+                'create',
+                'export',
+                'print',
+                'reset',
+                'reload',
+            ],
+        ];
+    }
+
+    /**
      * Get filename for export.
      *
      * @return string
