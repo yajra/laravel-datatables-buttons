@@ -42,7 +42,17 @@ class DummyClass extends DataTable
                     ->columns($this->getColumns())
                     ->ajax('')
                     ->addAction(['width' => '80px'])
-                    ->parameters($this->getBuilderParameters());
+                    ->parameters([
+                        'dom'     => 'Bfrtip',
+                        'order'   => [[0, 'desc']],
+                        'buttons' => [
+                            'create',
+                            'export',
+                            'print',
+                            'reset',
+                            'reload',
+                        ],
+                    ]);
     }
 
     /**
@@ -54,26 +64,6 @@ class DummyClass extends DataTable
     {
         return [
             'DummyColumns'
-        ];
-    }
-
-    /**
-     * Get default builder parameters.
-     *
-     * @return array
-     */
-    protected function getBuilderParameters()
-    {
-        return [
-            'dom'     => 'Bfrtip',
-            'order'   => [[0, 'desc']],
-            'buttons' => [
-                'create',
-                'export',
-                'print',
-                'reset',
-                'reload',
-            ],
         ];
     }
 
