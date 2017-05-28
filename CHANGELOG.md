@@ -2,6 +2,9 @@
 
 ## Change Log
 
+### v1.3.1 - 05-28-2017
+- Inline builder parameters and include `dom` on stub to assist new users. #20
+
 ### v1.3.0 - 04-20-2017
 - Adding model-namespace, columns and action options to Generator #12, credits to @lk77.
 - Allow to add custom button actions (or disable already existing ones). #18, credits to @underdpt.
