@@ -16,14 +16,14 @@
   ],
   "require": {
     "php": ">=5.6.4",
-    "yajra/laravel-datatables-oracle": "7.*",
+    "yajra/laravel-datatables-oracle": "7.*|8.*",
     "yajra/laravel-datatables-html": "1.*",
     "maatwebsite/excel": "^2.0",
-    "illuminate/console": "5.4.*"
+    "illuminate/console": "5.4.*|5.5.*"
   },
   "require-dev": {
     "mockery/mockery": "0.9.*",
-    "phpunit/phpunit": "~5.7"
+    "phpunit/phpunit": "~6.0"
   },
   "autoload": {
     "psr-4": {
@@ -49,5 +49,6 @@
     "dompdf/dompdf": "Allows exporting of dataTable to PDF using the DomPDF.",
     "barryvdh/laravel-snappy": "Allows exporting of dataTable to PDF using the print view."
   },
-  "minimum-stability": "stable"
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
