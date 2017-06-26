@@ -40,7 +40,7 @@ class DummyClass extends DataTable
     {
         return $this->builder()
                     ->columns($this->getColumns())
-                    ->ajax('')
+                    ->minifiedAjax('')
                     ->addAction(['width' => '80px'])
                     ->parameters([
                         'dom'     => 'Bfrtip',
