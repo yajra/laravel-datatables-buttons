@@ -2,6 +2,12 @@
 
 ## Change Log
 
+### v1.3.2 - 06-26-2017
+- Use minifiedAjax by default. #24
+- Update html package to min v1.4
+- Fix random issues occurring due to long URL.
+- Fix/Lessen IE compatibility issue due to long URL limitation.
+
 ### v1.3.1 - 05-28-2017
 - Inline builder parameters and include `dom` on stub to assist new users. #20
 
