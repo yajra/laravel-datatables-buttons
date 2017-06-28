@@ -1,6 +1,6 @@
 # Laravel DataTables Buttons Plugin
 
-[![Laravel 5.4](https://img.shields.io/badge/Laravel-5.4-orange.svg)](http://laravel.com)
+[![Laravel 5.4|5.5](https://img.shields.io/badge/Laravel-5.4-orange.svg)](http://laravel.com)
 [![Latest Stable Version](https://img.shields.io/packagist/v/yajra/laravel-datatables-buttons.svg)](https://packagist.org/packages/yajra/laravel-datatables-buttons)
 [![Build Status](https://travis-ci.org/yajra/laravel-datatables-buttons.svg?branch=master)](https://travis-ci.org/yajra/laravel-datatables-buttons)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yajra/laravel-datatables-buttons/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yajra/laravel-datatables-buttons/?branch=master)
@@ -11,7 +11,7 @@ This package is a plugin of [Laravel Datatables](https://github.com/yajra/larave
 
 ## Requirements
 - [PHP >=5.6.4](http://php.net/)
-- [Laravel 5.4](https://github.com/laravel/framework)
+- [Laravel 5.4|5.5](https://github.com/laravel/framework)
 - [jQuery DataTables v1.10.x](http://datatables.net/)
 - [jQuery DataTables Button Extension](https://datatables.net/reference/button/)
 
@@ -19,12 +19,12 @@ This package is a plugin of [Laravel Datatables](https://github.com/yajra/larave
 - [Laravel Datatables Documentation](http://yajrabox.com/docs/laravel-datatables)
 
 ## Quick Installation
-`composer require yajra/laravel-datatables-buttons:^1.1`
+`composer require yajra/laravel-datatables-buttons:^2.0`
 
-#### Service Provider
+#### Service Provider (Optional on Laravel 5.5)
 `Yajra\Datatables\ButtonsServiceProvider::class`
 
-#### Configuration and Assets
+#### Configuration and Assets (Optional)
 `$ php artisan vendor:publish --tag=datatables-buttons --force`
 
 And that's it! Start building out some awesome DataTables!

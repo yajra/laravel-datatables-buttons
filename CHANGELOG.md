@@ -2,7 +2,8 @@
 
 ## Change Log
 
-### v2.0-dev UNRELEASED
+### v2.0.0 - 06-28-2017
+- Add support for Laravel 5.5.
 - Upgrade to laravel-datatables-html:~2.0
 
 ### v1.3.2 - 06-26-2017
