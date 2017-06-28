@@ -17,7 +17,7 @@
   "require": {
     "php": ">=5.6.4",
     "yajra/laravel-datatables-oracle": "7.*|8.*",
-    "yajra/laravel-datatables-html": "^1.4",
+    "yajra/laravel-datatables-html": "^2.0",
     "maatwebsite/excel": "^2.0",
     "illuminate/console": "5.4.*|5.5.*"
   },
@@ -37,7 +37,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0-dev"
+      "dev-master": "2.0-dev"
     },
     "laravel": {
       "providers": [

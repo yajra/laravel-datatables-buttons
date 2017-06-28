@@ -2,6 +2,9 @@
 
 ## Change Log
 
+### v2.0-dev UNRELEASED
+- Upgrade to laravel-datatables-html:~2.0
+
 ### v1.3.2 - 06-26-2017
 - Use minifiedAjax by default. #24
 - Update html package to min v1.4
