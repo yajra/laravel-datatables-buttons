@@ -2,6 +2,9 @@
 
 ## Change Log
 
+### v2.0.1 - 06-28-2017
+- Allow tests failure on PHP 5.6.
+
 ### v2.0.0 - 06-28-2017
 - Add support for Laravel 5.5.
 - Upgrade to laravel-datatables-html:~2.0
