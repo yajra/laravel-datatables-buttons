@@ -10,13 +10,17 @@
 This package is a plugin of [Laravel Datatables](https://github.com/yajra/laravel-datatables) for handling server-side function of exporting the table as csv, excel, pdf and printing.
 
 ## Requirements
-- [PHP >=5.6.4](http://php.net/)
+- [PHP >=7.0](http://php.net/)
 - [Laravel 5.4|5.5](https://github.com/laravel/framework)
 - [jQuery DataTables v1.10.x](http://datatables.net/)
 - [jQuery DataTables Button Extension](https://datatables.net/reference/button/)
 
 ## Documentations
 - [Laravel Datatables Documentation](http://yajrabox.com/docs/laravel-datatables)
+
+## NOTE
+This version is still on experimental stage. Until Laravel DataTables v8.x stable version is released, 
+there might be a breaking changes that may be included on future releases. 
 
 ## Quick Installation
 `composer require yajra/laravel-datatables-buttons:^2.0`
