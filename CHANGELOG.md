@@ -2,6 +2,10 @@
 
 ## Change Log
 
+### v2.0.2 - 06-30-2017
+- Fix min php requirements.
+- Import data transformer that was removed from main package (v8.x).
+
 ### v2.0.1 - 06-28-2017
 - Allow tests failure on PHP 5.6.
 
