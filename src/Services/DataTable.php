@@ -113,7 +113,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     /**
      * DataTable constructor.
      *
-     * @param \Yajra\Datatables\Datatables $datatables
+     * @param \Yajra\Datatables\Datatables       $datatables
      * @param \Illuminate\Contracts\View\Factory $viewFactory
      */
     public function __construct(Datatables $datatables, Factory $viewFactory)
@@ -126,8 +126,8 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      * Process dataTables needed render output.
      *
      * @param string $view
-     * @param array $data
-     * @param array $mergeData
+     * @param array  $data
+     * @param array  $mergeData
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function render($view, $data = [], $mergeData = [])
@@ -247,7 +247,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     /**
      * Map ajax response to columns definition.
      *
-     * @param mixed $columns
+     * @param mixed  $columns
      * @param string $type
      * @return array
      */
@@ -470,7 +470,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     /**
      * Set a custom class attribute.
      *
-     * @param mixed $key
+     * @param mixed      $key
      * @param mixed|null $value
      * @return $this
      */
