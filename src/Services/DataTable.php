@@ -529,15 +529,6 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
      */
     protected function getBuilderParameters()
     {
-        return [
-            'order'   => [[0, 'desc']],
-            'buttons' => [
-                'create',
-                'export',
-                'print',
-                'reset',
-                'reload',
-            ],
-        ];
+        return config('datatables-buttons.parameters');
     }
 }

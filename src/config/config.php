@@ -52,4 +52,18 @@ return [
         ],
         'orientation' => 'landscape',
     ],
+
+    /**
+     * Default html builder parameters.
+     */
+    'parameters' => [
+        'order'   => [[0, 'desc']],
+        'buttons' => [
+            'create',
+            'export',
+            'print',
+            'reset',
+            'reload',
+        ],
+    ]
 ];
