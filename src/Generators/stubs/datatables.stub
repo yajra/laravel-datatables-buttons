@@ -4,6 +4,7 @@ namespace DummyNamespace;
 
 use DummyModel;
 use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\EloquentDataTable;
 
 class DummyClass extends DataTable
 {
@@ -14,9 +15,7 @@ class DummyClass extends DataTable
      */
     public function dataTable()
     {
-        return $this->datatables
-            ->eloquent($this->query())
-            ->addColumn('action', 'DummyAction');
+        return (new EloquentDataTable($this->query()))->addColumn('action', 'DummyAction');
     }
 
     /**

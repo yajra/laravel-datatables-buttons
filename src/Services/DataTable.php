@@ -15,11 +15,6 @@ use Yajra\DataTables\Transformers\DataTransformer;
 abstract class DataTable implements DataTableService, DataTableButtons
 {
     /**
-     * @var \Yajra\DataTables\Factory
-     */
-    protected $datatables;
-
-    /**
      * Datatables print preview view.
      *
      * @var string
@@ -102,16 +97,6 @@ abstract class DataTable implements DataTableService, DataTableButtons
      * @var \Yajra\DataTables\Utilities\Request
      */
     protected $request;
-
-    /**
-     * DataTable constructor.
-     *
-     * @param \Yajra\DataTables\Factory $factory
-     */
-    public function __construct(Factory $factory)
-    {
-        $this->datatables = $factory;
-    }
 
     /**
      * Process dataTables needed render output.

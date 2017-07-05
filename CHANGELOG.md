@@ -8,6 +8,7 @@
 - Change namespace from `Yajra\Datatables` to `Yajra\DataTables`.
 - Force implementation/upgrade of `dataTable()` method.
 - Use `snappy` as default pdf generator.
+- Remove constructor dependencies. Create DataTable instance directly from `dataTable()` method.
 
 ### v2.0.2 - 06-30-2017
 - Fix min php requirements.
