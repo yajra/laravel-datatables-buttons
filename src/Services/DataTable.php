@@ -2,7 +2,6 @@
 
 namespace Yajra\DataTables\Services;
 
-use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
@@ -19,12 +18,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      * @var \Yajra\DataTables\Factory
      */
     protected $datatables;
-
-    /**
-     * @var \Illuminate\Contracts\View\Factory
-     */
-    protected $viewFactory;
-
+    
     /**
      * Datatables print preview view.
      *
@@ -108,12 +102,10 @@ abstract class DataTable implements DataTableService, DataTableButtons
      * DataTable constructor.
      *
      * @param \Yajra\DataTables\Factory          $datatables
-     * @param \Illuminate\Contracts\View\Factory $viewFactory
      */
-    public function __construct(Factory $datatables, View $viewFactory)
+    public function __construct(Factory $datatables)
     {
         $this->datatables  = $datatables;
-        $this->viewFactory = $viewFactory;
     }
 
     /**
@@ -138,7 +130,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
             return call_user_func_array([$this, $action], []);
         }
 
-        return $this->viewFactory->make($view, $data, $mergeData)->with('dataTable', $this->getHtmlBuilder());
+        return view($view, $data, $mergeData)->with('dataTable', $this->getHtmlBuilder());
     }
 
     /**
@@ -158,7 +150,6 @@ abstract class DataTable implements DataTableService, DataTableButtons
      */
     public function ajax()
     {
-        /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
         $dataTable = $this->dataTable();
 
         if ($callback = $this->beforeCallback) {
@@ -175,6 +166,13 @@ abstract class DataTable implements DataTableService, DataTableButtons
     }
 
     /**
+     * Build dataTable class.
+     *
+     * @return \Yajra\DataTables\DataTableAbstract
+     */
+    abstract protected function dataTable();
+
+    /**
      * Display printable view of datatables.
      *
      * @return \Illuminate\Contracts\View\View
@@ -183,7 +181,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
     {
         $data = $this->getDataForPrint();
 
-        return $this->viewFactory->make($this->printPreview, compact('data'));
+        return view($this->printPreview, compact('data'));
     }
 
     /**
