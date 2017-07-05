@@ -11,7 +11,8 @@
 - Remove constructor dependencies. Create DataTable instance directly from `dataTable()` method.
 - Method injections are now supported on the following methods:
 ```php
-public function csv(), excel(), pdf(), ajax(), dataTable(), printPreview()
+public function ajax(), dataTable(), query()
+public function csv(), excel(), pdf(), printPreview()
 ```
 - DataTableService contract removed for flexibility,
 

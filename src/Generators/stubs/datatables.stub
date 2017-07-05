@@ -11,15 +11,25 @@ class DummyClass extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param \DummyModel $model
+     * @param mixed $source Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable(ModelName $model)
+    public function dataTable($source)
     {
-        $query = $model->newQuery()->select($this->getColumns());
-        $dataTable = new EloquentDataTable($query);
+        $dataTable = new EloquentDataTable($source);
 
         return $dataTable->addColumn('action', 'DummyAction');
+    }
+
+    /**
+     * Get query source of dataTable.
+     *
+     * @param \DummyModel $model
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function query(ModelName $model)
+    {
+        return $model->newQuery()->select($this->getColumns());
     }
 
     /**
@@ -31,7 +41,7 @@ class DummyClass extends DataTable
     {
         return $this->builder()
                     ->columns($this->getColumns())
-                    ->minifiedAjax('')
+                    ->minifiedAjax()
                     ->addAction(['width' => '80px'])
                     ->parameters([
                         'dom'     => 'Bfrtip',

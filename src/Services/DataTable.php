@@ -9,7 +9,6 @@ use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
 use Yajra\DataTables\Contracts\DataTableService;
-use Yajra\DataTables\Factory;
 use Yajra\DataTables\Transformers\DataTransformer;
 
 abstract class DataTable implements DataTableButtons
@@ -140,8 +139,14 @@ abstract class DataTable implements DataTableButtons
      */
     public function ajax()
     {
+        $source = null;
+        if (method_exists($this, 'query')) {
+            $source = app()->call([$this, 'query']);
+            $source = $this->applyScopes($source);
+        }
+
         /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
-        $dataTable = resolve('app')->call([$this, 'dataTable']);
+        $dataTable = app()->call(static::class . '@dataTable', compact('source'));
 
         if ($callback = $this->beforeCallback) {
             $callback($dataTable);
