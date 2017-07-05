@@ -2,21 +2,21 @@
 
 namespace Yajra\DataTables\Services;
 
-use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\DataTables\Contracts\DataTableButtons;
+use Yajra\DataTables\Contracts\DataTableScope;
 use Yajra\DataTables\Contracts\DataTableService;
-use Yajra\DataTables\Contracts\DataTableScopeContract;
-use Yajra\DataTables\Datatables;
+use Yajra\DataTables\Factory;
 use Yajra\DataTables\Transformers\DataTransformer;
 
 abstract class DataTable implements DataTableService, DataTableButtons
 {
     /**
-     * @var \Yajra\DataTables\Datatables
+     * @var \Yajra\DataTables\Factory
      */
     protected $datatables;
 
@@ -49,7 +49,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
     /**
      * Query scopes.
      *
-     * @var \Yajra\DataTables\Contracts\DataTableScopeContract[]
+     * @var \Yajra\DataTables\Contracts\DataTableScope[]
      */
     protected $scopes = [];
 
@@ -107,10 +107,10 @@ abstract class DataTable implements DataTableService, DataTableButtons
     /**
      * DataTable constructor.
      *
-     * @param \Yajra\DataTables\Datatables       $datatables
+     * @param \Yajra\DataTables\Factory          $datatables
      * @param \Illuminate\Contracts\View\Factory $viewFactory
      */
-    public function __construct(Datatables $datatables, Factory $viewFactory)
+    public function __construct(Factory $datatables, View $viewFactory)
     {
         $this->datatables  = $datatables;
         $this->viewFactory = $viewFactory;
@@ -122,7 +122,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      * @param string $view
      * @param array  $data
      * @param array  $mergeData
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @return mixed
      */
     public function render($view, $data = [], $mergeData = [])
     {
@@ -144,7 +144,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
     /**
      * Get Datatables Request instance.
      *
-     * @return \Yajra\DataTables\Request
+     * @return \Yajra\DataTables\Utilities\Request
      */
     public function request()
     {
@@ -158,20 +158,20 @@ abstract class DataTable implements DataTableService, DataTableButtons
      */
     public function ajax()
     {
+        /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
         $dataTable = $this->dataTable();
 
         if ($callback = $this->beforeCallback) {
             $callback($dataTable);
         }
 
-        $response = $dataTable->make(true);
-
         if ($callback = $this->responseCallback) {
-            $data     = new Collection($response->getData(true));
-            $response = new JsonResponse($callback($data));
+            $data = new Collection($dataTable->toArray());
+
+            return new JsonResponse($callback($data));
         }
 
-        return $response;
+        return $dataTable->toJson();
     }
 
     /**
@@ -263,7 +263,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      */
     protected function getAjaxResponseData()
     {
-        $this->datatables->getRequest()->merge(['length' => -1]);
+        $this->request()->merge(['length' => -1]);
 
         $response = $this->ajax();
         $data     = $response->getData(true);
@@ -451,10 +451,10 @@ abstract class DataTable implements DataTableService, DataTableButtons
     /**
      * Add basic array query scopes.
      *
-     * @param \Yajra\DataTables\Contracts\DataTableScopeContract $scope
+     * @param \Yajra\DataTables\Contracts\DataTableScope $scope
      * @return $this
      */
-    public function addScope(DataTableScopeContract $scope)
+    public function addScope(DataTableScope $scope)
     {
         $this->scopes[] = $scope;
 

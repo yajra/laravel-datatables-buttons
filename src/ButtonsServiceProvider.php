@@ -7,12 +7,6 @@ use Maatwebsite\Excel\ExcelServiceProvider;
 use Yajra\DataTables\Generators\DataTablesMakeCommand;
 use Yajra\DataTables\Generators\DataTablesScopeCommand;
 
-/**
- * Class DatatablesServiceProvider.
- *
- * @package Yajra\Datatables
- * @author  Arjay Angeles <aqangeles@gmail.com>
- */
 class ButtonsServiceProvider extends ServiceProvider
 {
     /**
