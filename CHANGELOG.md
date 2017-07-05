@@ -9,6 +9,11 @@
 - Force implementation/upgrade of `dataTable()` method.
 - Use `snappy` as default pdf generator.
 - Remove constructor dependencies. Create DataTable instance directly from `dataTable()` method.
+- Method injections are now supported on the following methods:
+```php
+public function csv(), excel(), pdf(), ajax(), dataTable(), printPreview()
+```
+- DataTableService contract removed for flexibility,
 
 ### v2.0.2 - 06-30-2017
 - Fix min php requirements.
