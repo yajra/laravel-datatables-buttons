@@ -11,23 +11,15 @@ class DummyClass extends DataTable
     /**
      * Build DataTable class.
      *
+     * @param \DummyModel $model
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable()
+    public function dataTable(ModelName $model)
     {
-        return (new EloquentDataTable($this->query()))->addColumn('action', 'DummyAction');
-    }
+        $query = $model->newQuery()->select($this->getColumns());
+        $dataTable = new EloquentDataTable($query);
 
-    /**
-     * Get the query object to be processed by dataTables.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
-     */
-    public function query()
-    {
-        $query = ModelName::query()->select($this->getColumns());
-
-        return $this->applyScopes($query);
+        return $dataTable->addColumn('action', 'DummyAction');
     }
 
     /**
