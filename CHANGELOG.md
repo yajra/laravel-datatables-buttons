@@ -2,6 +2,12 @@
 
 ## Change Log
 
+### v3.0-dev - UNRELEASED
+- Drop support for `laravel-datatables:7.*`.
+- Exclusive support fo `laravel-datatables:8.*`.
+- Change namespace from `Yajra\Datatables` to `Yajra\DataTables`.
+- Force implementation/upgrade of `dataTable()` method.
+
 ### v2.0.2 - 06-30-2017
 - Fix min php requirements.
 - Import data transformer that was removed from main package (v8.x).
