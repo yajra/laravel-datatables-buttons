@@ -140,7 +140,8 @@ abstract class DataTable implements DataTableService, DataTableButtons
      */
     public function ajax()
     {
-        $dataTable = $this->dataTable();
+        /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
+        $dataTable = resolve('app')->call($this, 'dataTable');
 
         if ($callback = $this->beforeCallback) {
             $callback($dataTable);
@@ -160,7 +161,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      *
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    abstract protected function dataTable();
+    abstract public function dataTable();
 
     /**
      * Display printable view of datatables.
