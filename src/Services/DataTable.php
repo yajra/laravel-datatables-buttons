@@ -145,7 +145,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      */
     public function request()
     {
-        return $this->request = $this->request ?? resolve('datatables.request');
+        return $this->request ?: $this->request = resolve('datatables.request');
     }
 
     /**
