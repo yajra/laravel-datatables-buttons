@@ -1,6 +1,6 @@
 {
   "name": "yajra/laravel-datatables-buttons",
-  "description": "jQuery DataTables Buttons Plugin for Laravel.",
+  "description": "Laravel DataTables Buttons Plugin.",
   "keywords": [
     "laravel",
     "datatables",
