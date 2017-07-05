@@ -108,15 +108,15 @@ abstract class DataTable implements DataTableButtons
     public function render($view, $data = [], $mergeData = [])
     {
         if ($this->request()->ajax() && $this->request()->wantsJson()) {
-            return resolve('app')->call([$this, 'ajax']);
+            return app()->call([$this, 'ajax']);
         }
 
         if ($action = $this->request()->get('action') AND in_array($action, $this->actions)) {
             if ($action == 'print') {
-                return resolve('app')->call([$this, 'printPreview']);
+                return app()->call([$this, 'printPreview']);
             }
 
-            return resolve('app')->call([$this, $action]);
+            return app()->call([$this, $action]);
         }
 
         return view($view, $data, $mergeData)->with('dataTable', $this->getHtmlBuilder());
@@ -146,7 +146,7 @@ abstract class DataTable implements DataTableButtons
         }
 
         /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
-        $dataTable = app()->call(static::class . '@dataTable', compact('source'));
+        $dataTable = app()->call([$this, 'dataTable'], compact('source'));
 
         if ($callback = $this->beforeCallback) {
             $callback($dataTable);
