@@ -2,7 +2,7 @@
 
 namespace Yajra\DataTables\Contracts;
 
-interface DataTableButtonsContract
+interface DataTableButtons
 {
     /**
      * Export to excel file.

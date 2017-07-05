@@ -2,9 +2,9 @@
 
 namespace DummyNamespace;
 
-use Yajra\DataTables\Contracts\DataTableScopeContract;
+use Yajra\DataTables\Contracts\DataTableScope;
 
-class DummyClass implements DataTableScopeContract
+class DummyClass implements DataTableScope
 {
     /**
      * Apply a query scope.

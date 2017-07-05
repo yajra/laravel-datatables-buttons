@@ -4,12 +4,6 @@ namespace Yajra\DataTables\Transformers;
 
 use Illuminate\Support\Collection;
 
-/**
- * Class DataTransformer.
- *
- * @package Yajra\Datatables\Transformers
- * @author  Arjay Angeles <aqangeles@gmail.com>
- */
 class DataTransformer
 {
     /**

@@ -55,7 +55,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * Replace model name.
      *
      * @param string $stub
-     * @return this
+     * @return \Yajra\DataTables\Generators\DataTablesMakeCommand
      */
     protected function replaceModel(&$stub)
     {
@@ -127,7 +127,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * Replace the action.
      *
      * @param string $stub
-     * @return this
+     * @return \Yajra\DataTables\Generators\DataTablesMakeCommand
      */
     protected function replaceAction(&$stub)
     {

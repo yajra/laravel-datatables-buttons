@@ -7,13 +7,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
-use Yajra\DataTables\Contracts\DataTableButtonsContract;
-use Yajra\DataTables\Contracts\DataTableContract;
+use Yajra\DataTables\Contracts\DataTableButtons;
+use Yajra\DataTables\Contracts\DataTableService;
 use Yajra\DataTables\Contracts\DataTableScopeContract;
 use Yajra\DataTables\Datatables;
 use Yajra\DataTables\Transformers\DataTransformer;
 
-abstract class DataTable implements DataTableContract, DataTableButtonsContract
+abstract class DataTable implements DataTableService, DataTableButtons
 {
     /**
      * @var \Yajra\DataTables\Datatables

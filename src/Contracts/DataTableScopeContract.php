@@ -2,7 +2,7 @@
 
 namespace Yajra\DataTables\Contracts;
 
-interface DataTableScopeContract
+interface DataTableScope
 {
     /**
      * Apply a query scope.

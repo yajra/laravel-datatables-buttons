@@ -2,7 +2,7 @@
 
 namespace Yajra\DataTables\Contracts;
 
-interface DataTableContract
+interface DataTableService
 {
     /**
      * @return \Illuminate\Http\JsonResponse
