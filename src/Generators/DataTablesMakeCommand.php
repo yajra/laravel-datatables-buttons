@@ -1,17 +1,11 @@
 <?php
 
-namespace Yajra\Datatables\Generators;
+namespace Yajra\DataTables\Generators;
 
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
-/**
- * Class DataTablesMakeCommand.
- *
- * @package Yajra\Datatables\Generators
- * @author  Arjay Angeles <aqangeles@gmail.com>
- */
 class DataTablesMakeCommand extends GeneratorCommand
 {
     /**

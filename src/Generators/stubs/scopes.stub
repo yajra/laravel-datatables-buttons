@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Yajra\Datatables\Contracts\DataTableScopeContract;
+use Yajra\DataTables\Contracts\DataTableScopeContract;
 
 class DummyClass implements DataTableScopeContract
 {

@@ -1,13 +1,7 @@
 <?php
 
-namespace Yajra\Datatables\Contracts;
+namespace Yajra\DataTables\Contracts;
 
-/**
- * Interface DataTableContract
- *
- * @package Yajra\Datatables\Contracts
- * @author  Arjay Angeles <aqangeles@gmail.com>
- */
 interface DataTableContract
 {
     /**
@@ -16,7 +10,7 @@ interface DataTableContract
     public function ajax();
 
     /**
-     * @return \Yajra\Datatables\Html\Builder
+     * @return \Yajra\DataTables\Html\Builder
      */
     public function html();
 

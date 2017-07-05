@@ -1,13 +1,7 @@
 <?php
 
-namespace Yajra\Datatables\Contracts;
+namespace Yajra\DataTables\Contracts;
 
-/**
- * Interface DataTableScopeContract.
- *
- * @package Yajra\Datatables\Contracts
- * @author  Arjay Angeles <aqangeles@gmail.com>
- */
 interface DataTableScopeContract
 {
     /**

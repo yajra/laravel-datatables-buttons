@@ -1,11 +1,11 @@
 <?php
 
-namespace Yajra\Datatables;
+namespace Yajra\DataTables;
 
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\ExcelServiceProvider;
-use Yajra\Datatables\Generators\DataTablesMakeCommand;
-use Yajra\Datatables\Generators\DataTablesScopeCommand;
+use Yajra\DataTables\Generators\DataTablesMakeCommand;
+use Yajra\DataTables\Generators\DataTablesScopeCommand;
 
 /**
  * Class DatatablesServiceProvider.
