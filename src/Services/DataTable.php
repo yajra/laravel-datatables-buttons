@@ -18,7 +18,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      * @var \Yajra\DataTables\Factory
      */
     protected $datatables;
-    
+
     /**
      * Datatables print preview view.
      *
@@ -99,13 +99,18 @@ abstract class DataTable implements DataTableService, DataTableButtons
     protected $actions = ['print', 'csv', 'excel', 'pdf'];
 
     /**
+     * @var \Yajra\DataTables\Utilities\Request
+     */
+    protected $request;
+
+    /**
      * DataTable constructor.
      *
-     * @param \Yajra\DataTables\Factory          $datatables
+     * @param \Yajra\DataTables\Factory $factory
      */
-    public function __construct(Factory $datatables)
+    public function __construct(Factory $factory)
     {
-        $this->datatables  = $datatables;
+        $this->datatables = $factory;
     }
 
     /**
@@ -140,7 +145,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      */
     public function request()
     {
-        return $this->datatables->getRequest();
+        return $this->request = $this->request ?? resolve('datatables.request');
     }
 
     /**
