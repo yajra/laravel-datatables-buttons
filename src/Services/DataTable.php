@@ -12,7 +12,7 @@ use Yajra\DataTables\Contracts\DataTableService;
 use Yajra\DataTables\Factory;
 use Yajra\DataTables\Transformers\DataTransformer;
 
-abstract class DataTable implements DataTableService, DataTableButtons
+abstract class DataTable implements DataTableButtons
 {
     /**
      * Datatables print preview view.
