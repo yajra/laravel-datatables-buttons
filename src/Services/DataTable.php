@@ -157,13 +157,6 @@ abstract class DataTable implements DataTableService, DataTableButtons
     }
 
     /**
-     * Build dataTable class.
-     *
-     * @return \Yajra\DataTables\DataTableAbstract
-     */
-    abstract public function dataTable();
-
-    /**
      * Display printable view of datatables.
      *
      * @return \Illuminate\Contracts\View\View
