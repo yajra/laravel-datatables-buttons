@@ -425,7 +425,7 @@ abstract class DataTable implements DataTableService, DataTableButtons
      */
     public function pdf()
     {
-        if ('snappy' == config('datatables-buttons.pdf_generator', 'excel')) {
+        if ('snappy' == config('datatables-buttons.pdf_generator', 'snappy')) {
             return $this->snappyPdf();
         } else {
             $this->buildExcelFile()->download('pdf');
