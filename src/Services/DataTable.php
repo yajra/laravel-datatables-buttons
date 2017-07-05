@@ -252,7 +252,7 @@ abstract class DataTable implements DataTableButtons
     {
         $this->request()->merge(['length' => -1]);
 
-        $response = $this->ajax();
+        $response = app()->call([$this, 'ajax']);
         $data     = $response->getData(true);
 
         return $data['data'];
