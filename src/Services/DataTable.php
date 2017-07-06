@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
-use Yajra\DataTables\Contracts\DataTableService;
 use Yajra\DataTables\Transformers\DataTransformer;
 
 abstract class DataTable implements DataTableButtons
