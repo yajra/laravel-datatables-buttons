@@ -11,12 +11,12 @@ class DummyClass extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param mixed $source Results from query() method.
+     * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($source)
+    public function dataTable($query)
     {
-        $dataTable = new EloquentDataTable($source);
+        $dataTable = new EloquentDataTable($query);
 
         return $dataTable->addColumn('action', 'DummyAction');
     }
