@@ -13,7 +13,7 @@ use Yajra\DataTables\Transformers\DataArrayTransformer;
 abstract class DataTable implements DataTableButtons
 {
     /**
-     * Datatables print preview view.
+     * DataTables print preview view.
      *
      * @var string
      */
@@ -122,7 +122,7 @@ abstract class DataTable implements DataTableButtons
     }
 
     /**
-     * Get Datatables Request instance.
+     * Get DataTables Request instance.
      *
      * @return \Yajra\DataTables\Utilities\Request
      */
@@ -215,7 +215,7 @@ abstract class DataTable implements DataTableButtons
     }
 
     /**
-     * Get Datatables Html Builder instance.
+     * Get DataTables Html Builder instance.
      *
      * @return \Yajra\DataTables\Html\Builder
      */

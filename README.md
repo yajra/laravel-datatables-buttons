@@ -7,7 +7,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/yajra/laravel-datatables-buttons.svg)](https://packagist.org/packages/yajra/laravel-datatables-buttons)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/yajra/laravel-datatables-buttons)
 
-This package is a plugin of [Laravel Datatables](https://github.com/yajra/laravel-datatables) for handling server-side function of exporting the table as csv, excel, pdf and printing.
+This package is a plugin of [Laravel DataTables](https://github.com/yajra/laravel-datatables) for handling server-side function of exporting the table as csv, excel, pdf and printing.
 
 ## Requirements
 - [PHP >=7.0](http://php.net/)
@@ -16,7 +16,7 @@ This package is a plugin of [Laravel Datatables](https://github.com/yajra/larave
 - [jQuery DataTables Button Extension](https://datatables.net/reference/button/)
 
 ## Documentations
-- [Laravel Datatables Documentation](http://yajrabox.com/docs/laravel-datatables)
+- [Laravel DataTables Documentation](http://yajrabox.com/docs/laravel-datatables)
 
 ## NOTE
 This version is still on experimental stage. Until Laravel DataTables v8.x stable version is released, 
@@ -26,7 +26,7 @@ there might be a breaking changes that may be included on future releases.
 `composer require yajra/laravel-datatables-buttons:^2.0`
 
 #### Service Provider (Optional on Laravel 5.5)
-`Yajra\Datatables\ButtonsServiceProvider::class`
+`Yajra\DataTables\ButtonsServiceProvider::class`
 
 #### Configuration and Assets (Optional)
 `$ php artisan vendor:publish --tag=datatables-buttons --force`
@@ -51,4 +51,4 @@ If you discover any security related issues, please email [aqangeles@gmail.com](
 The MIT License (MIT). Please see [License File](https://github.com/yajra/laravel-datatables-buttons/blob/master/LICENSE.md) for more information.
 
 ## Buy me a beer
-<a href='https://pledgie.com/campaigns/29515'><img alt='Click here to lend your support to: Laravel Datatables and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/29515.png?skin_name=chrome' border='0' ></a>
+<a href='https://pledgie.com/campaigns/29515'><img alt='Click here to lend your support to: Laravel DataTables and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/29515.png?skin_name=chrome' border='0' ></a>

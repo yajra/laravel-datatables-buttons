@@ -1,4 +1,4 @@
-# Laravel Datatables Buttons Plugin
+# Laravel DataTables Buttons Plugin
 
 ## Change Log
 
