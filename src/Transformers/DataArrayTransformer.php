@@ -5,12 +5,12 @@ namespace Yajra\Datatables\Transformers;
 use Illuminate\Support\Collection;
 
 /**
- * Class DataTransformer.
+ * Class DataArrayTransformer.
  *
  * @package Yajra\Datatables\Transformers
  * @author  Arjay Angeles <aqangeles@gmail.com>
  */
-class DataTransformer
+class DataArrayTransformer
 {
     /**
      * Transform row data by columns definition.

@@ -11,7 +11,7 @@ use Yajra\Datatables\Contracts\DataTableButtonsContract;
 use Yajra\Datatables\Contracts\DataTableContract;
 use Yajra\Datatables\Contracts\DataTableScopeContract;
 use Yajra\Datatables\Datatables;
-use Yajra\Datatables\Transformers\DataTransformer;
+use Yajra\Datatables\Transformers\DataArrayTransformer;
 
 /**
  * Class DataTable.
@@ -255,7 +255,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     {
         return array_map(function ($row) use ($columns, $type) {
             if ($columns) {
-                return (new DataTransformer())->transform($row, $columns, $type);
+                return (new DataArrayTransformer())->transform($row, $columns, $type);
             }
 
             return $row;
