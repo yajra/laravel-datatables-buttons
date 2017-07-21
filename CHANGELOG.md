@@ -2,6 +2,9 @@
 
 ## Change Log
 
+### v2.0.3 - 07-21-2017
+- Fix DataTransformer found twice #25, #26.
+
 ### v2.0.2 - 06-30-2017
 - Fix min php requirements.
 - Import data transformer that was removed from main package (v8.x).
