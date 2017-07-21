@@ -4,9 +4,8 @@
 
 ### v3.0-dev - UNRELEASED
 - Drop support for `laravel-datatables:7.*`.
-- Exclusive support fo `laravel-datatables:8.*`.
+- Exclusive support for `laravel-datatables:8.*`.
 - Change namespace from `Yajra\Datatables` to `Yajra\DataTables`.
-- Force implementation/upgrade of `dataTable()` method.
 - Use `snappy` as default pdf generator.
 - Remove constructor dependencies. Create DataTable instance directly from `dataTable()` method.
 - Method injections are now supported on the following methods:
@@ -14,7 +13,9 @@
 public function ajax(), dataTable(), query()
 public function csv(), excel(), pdf(), printPreview()
 ```
-- DataTableService contract removed for flexibility,
+- `DataTableService` contract removed.
+- `DataTableScopeContract` contract renamed to `DataTableScope`.
+- `DataTableButtonsContract` contract renamed to `DataTableButtons`.
 
 ### v2.0.2 - 06-30-2017
 - Fix min php requirements.
