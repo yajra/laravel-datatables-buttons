@@ -4,7 +4,7 @@ namespace Yajra\DataTables\Transformers;
 
 use Illuminate\Support\Collection;
 
-class DataTransformer
+class DataArrayTransformer
 {
     /**
      * Transform row data by columns definition.

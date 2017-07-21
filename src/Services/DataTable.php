@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
-use Yajra\DataTables\Transformers\DataTransformer;
+use Yajra\DataTables\Transformers\DataArrayTransformer;
 
 abstract class DataTable implements DataTableButtons
 {
@@ -235,7 +235,7 @@ abstract class DataTable implements DataTableButtons
     {
         return array_map(function ($row) use ($columns, $type) {
             if ($columns) {
-                return (new DataTransformer())->transform($row, $columns, $type);
+                return (new DataArrayTransformer())->transform($row, $columns, $type);
             }
 
             return $row;
