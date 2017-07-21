@@ -3,8 +3,8 @@
 ## Change Log
 
 ### v3.0-dev - UNRELEASED
-- Drop support for `laravel-datatables:7.*`.
-- Exclusive support for `laravel-datatables:8.*`.
+- Drop support for `laravel-datatables-oracle:7.*`.
+- Exclusive support for `laravel-datatables-oracle:8.*`.
 - Change namespace from `Yajra\Datatables` to `Yajra\DataTables`.
 - Use `snappy` as default pdf generator.
 - Remove constructor dependencies. Create DataTable instance directly from `dataTable()` method.
@@ -13,7 +13,7 @@
 public function ajax(), dataTable(), query()
 public function csv(), excel(), pdf(), printPreview()
 ```
-- `DataTableService` contract removed.
+- `DataTableContract` contract removed.
 - `DataTableScopeContract` contract renamed to `DataTableScope`.
 - `DataTableButtonsContract` contract renamed to `DataTableButtons`.
 
