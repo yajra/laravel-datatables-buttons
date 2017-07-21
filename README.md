@@ -13,7 +13,7 @@ This package is a plugin of [Laravel DataTables](https://github.com/yajra/larave
 - [PHP >=7.0](http://php.net/)
 - [Laravel 5.4|5.5](https://github.com/laravel/framework)
 - [jQuery DataTables v1.10.x](http://datatables.net/)
-- [jQuery DataTables Button Extension](https://datatables.net/reference/button/)
+- [jQuery DataTables Buttons Extension](https://datatables.net/reference/button/)
 
 ## Documentations
 - [Laravel DataTables Documentation](http://yajrabox.com/docs/laravel-datatables)
