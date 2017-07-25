@@ -4,8 +4,6 @@ namespace Yajra\DataTables\Services;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
-use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
 use Yajra\DataTables\Transformers\DataArrayTransformer;
@@ -312,10 +310,16 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export results to Excel file.
      *
+     * @throws \Exception
+     *
      * @return void
      */
     public function excel()
     {
+        if (! class_exists('\Maatwebsite\Excel\Excel')) {
+            throw new \Exception('Please install maatwebsite/excel to be able to use this function.');
+        }
+
         $this->buildExcelFile()->download('xls');
     }
 
@@ -329,8 +333,8 @@ abstract class DataTable implements DataTableButtons
         /** @var \Maatwebsite\Excel\Excel $excel */
         $excel = app('excel');
 
-        return $excel->create($this->getFilename(), function (LaravelExcelWriter $excel) {
-            $excel->sheet('exported-data', function (LaravelExcelWorksheet $sheet) {
+        return $excel->create($this->getFilename(), function ($excel) {
+            $excel->sheet('exported-data', function ($sheet) {
                 $sheet->fromArray($this->getDataForExport());
             });
         });
