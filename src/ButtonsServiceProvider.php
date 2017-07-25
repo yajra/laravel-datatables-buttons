@@ -3,7 +3,6 @@
 namespace Yajra\DataTables;
 
 use Illuminate\Support\ServiceProvider;
-use Maatwebsite\Excel\ExcelServiceProvider;
 use Yajra\DataTables\Generators\DataTablesMakeCommand;
 use Yajra\DataTables\Generators\DataTablesScopeCommand;
 
@@ -66,6 +65,8 @@ class ButtonsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(HtmlServiceProvider::class);
-        $this->app->register(ExcelServiceProvider::class);
+        if (class_exists('\Maatwebsite\Excel\ExcelServiceProvider')) {
+            $this->app->register('\Maatwebsite\Excel\ExcelServiceProvider');
+        }
     }
 }
