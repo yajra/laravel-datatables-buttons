@@ -18,7 +18,6 @@
     "php": ">=7.0",
     "yajra/laravel-datatables-oracle": "8.*",
     "yajra/laravel-datatables-html": "3.*",
-    "maatwebsite/excel": "^2.0",
     "illuminate/console": "5.4.*|5.5.*"
   },
   "require-dev": {
@@ -47,7 +46,8 @@
   },
   "suggest": {
     "dompdf/dompdf": "Allows exporting of dataTable to PDF using the DomPDF.",
-    "barryvdh/laravel-snappy": "Allows exporting of dataTable to PDF using the print view."
+    "barryvdh/laravel-snappy": "Allows exporting of dataTable to PDF using the print view.",
+    "maatwebsite/excel": "Allows exporting of dataTable to Excel"
   },
   "minimum-stability": "dev",
   "prefer-stable": true
