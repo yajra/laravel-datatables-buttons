@@ -446,6 +446,19 @@ abstract class DataTable implements DataTableButtons
 
         return $this;
     }
+    
+    /**
+     * Push multiples scopes to array query scopes.
+     *
+     * @param array $scopes
+     * @return $this
+     */
+    public function addScopes(array $scopes)
+    {
+        array_push($this->scopes, $scopes);
+
+        return $this;
+    }
 
     /**
      * Set a custom class attribute.
