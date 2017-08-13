@@ -2,6 +2,10 @@
 
 ## Change Log
 
+### v2.0.4 - 08-13-2017
+- Added missing dataTable method. #31, credits to @inaspasv.
+- Fix getRequest return doc. 
+
 ### v2.0.3 - 07-21-2017
 - Fix DataTransformer found twice #25, #26.
 
