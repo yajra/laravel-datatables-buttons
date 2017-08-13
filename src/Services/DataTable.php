@@ -158,6 +158,16 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     }
 
     /**
+     * Get Datatables instance.
+     *
+     * @return mixed
+     */
+    protected function dataTable()
+    {
+        return $this->datatables->of($this->query());
+    }
+    
+    /**
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
