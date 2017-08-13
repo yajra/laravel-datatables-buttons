@@ -150,7 +150,7 @@ abstract class DataTable implements DataTableContract, DataTableButtonsContract
     /**
      * Get Datatables Request instance.
      *
-     * @return \Yajra\Datatables\Request
+     * @return \Yajra\Datatables\Utilities\Request
      */
     public function request()
     {
