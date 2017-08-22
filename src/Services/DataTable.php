@@ -20,7 +20,7 @@ abstract class DataTable implements DataTableButtons
     protected $printPreview = 'datatables::print';
     
     /**
-     * Name of the dataTable variable
+     * Name of the dataTable variable.
      *
      * @var string
      */
