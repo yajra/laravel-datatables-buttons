@@ -18,7 +18,14 @@ abstract class DataTable implements DataTableButtons
      * @var string
      */
     protected $printPreview = 'datatables::print';
-
+    
+    /**
+     * Name of the dataTable variable
+     *
+     * @var string
+     */
+    protected $dataTableVariable = 'dataTable';
+    
     /**
      * List of columns to be exported.
      *
@@ -118,7 +125,7 @@ abstract class DataTable implements DataTableButtons
             return app()->call([$this, $action]);
         }
 
-        return view($view, $data, $mergeData)->with('dataTable', $this->getHtmlBuilder());
+        return view($view, $data, $mergeData)->with($this->dataTableVariable, $this->getHtmlBuilder());
     }
 
     /**
