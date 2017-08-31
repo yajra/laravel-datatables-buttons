@@ -2,7 +2,7 @@
 
 ## Change Log
 
-### v3.0-dev - UNRELEASED
+### v3.0.0 - 08-31-2017
 - Drop support for `laravel-datatables-oracle:7.*`.
 - Exclusive support for `laravel-datatables-oracle:8.*`.
 - Change namespace from `Yajra\Datatables` to `Yajra\DataTables`.
