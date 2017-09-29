@@ -45,6 +45,10 @@ class DataTablesScopeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
+        if ($stubFolder = $this->laravel['config']->get('datatables-buttons.stub')) {
+            return base_path($stubFolder . '/scopes.stub');
+        }
+
         return __DIR__ . '/stubs/scopes.stub';
     }
 }
