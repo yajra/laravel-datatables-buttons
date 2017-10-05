@@ -41,17 +41,7 @@ class DummyClass extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->addAction(['width' => '80px'])
-                    ->parameters([
-                        'dom'     => 'Bfrtip',
-                        'order'   => [[0, 'desc']],
-                        'buttons' => [
-                            'create',
-                            'export',
-                            'print',
-                            'reset',
-                            'reload',
-                        ],
-                    ]);
+                    ->parameters($this->getBuilderParameters());
     }
 
     /**
