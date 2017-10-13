@@ -28,7 +28,6 @@ class ButtonsServiceProvider extends ServiceProvider
      */
     protected function publishAssets()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'datatables-buttons');
         $this->publishes([
             __DIR__ . '/config/config.php' => config_path('datatables-buttons.php'),
         ], 'datatables-buttons');
@@ -58,6 +57,8 @@ class ButtonsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'datatables-buttons');
+
         $this->app->register(HtmlServiceProvider::class);
         $this->app->register(ExcelServiceProvider::class);
     }
