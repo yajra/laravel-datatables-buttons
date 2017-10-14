@@ -18,11 +18,9 @@ class ButtonsServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'datatables');
 
-        if ($this->app->runningInConsole()) {
-            $this->publishAssets();
+        $this->publishAssets();
 
-            $this->registerCommands();
-        }
+        $this->registerCommands();
     }
 
     /**
