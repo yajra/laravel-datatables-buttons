@@ -1,10 +1,14 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+# v3.0.2 - 10-18-2017
+- Fix ButtonsServiceProvider. [#39], credits to @ElfSundae
+- Fix doc PR links.
+
 # v3.0.1 - 10-05-2017
 - Handle scopes stub folder config. [#37]
 - Use default builder parameters from config. [#36]
 - Use datatables() helper to create dataTable instance. [#35]
-- Credits to [@ElfSundae](https://github.com/ElfSundae).
+- Credits to @ElfSundae.
 
 # v3.0.0 - 08-31-2017
 - Drop support for `laravel-datatables-oracle:7.*`.
@@ -32,7 +36,7 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 - Upgrade to laravel-datatables-html:~2.0
 
 # v1.3.2 - 06-26-2017
-- Use minifiedAjax by default. #24
+- Use minifiedAjax by default. [#24]
 - Update html package to min v1.4
 - Fix random issues occurring due to long URL.
 - Fix/Lessen IE compatibility issue due to long URL limitation.
@@ -41,14 +45,14 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 - Inline builder parameters and include `dom` on stub to assist new users. #20
 
 # v1.3.0 - 04-20-2017
-- Adding model-namespace, columns and action options to Generator #12, credits to @lk77.
+- Adding model-namespace, columns and action options to Generator [#12], credits to @lk77.
 - Allow to add custom button actions (or disable already existing ones). #18, credits to @underdpt.
 
 # v1.2.1 - 03-28-2017
-- Do not require return from before callback closure. #14
+- Do not require return from before callback closure. [#14]
 
 # v1.2.0 - 03-28-2017
-- Add html builder callback for code re-usability. #13
+- Add html builder callback for code re-usability. [#13]
 
 # v1.1.2 - 03-08-2017
 - Fix url params js script.
@@ -68,7 +72,17 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 
 # v1.0.1 - 02-16-2017
 - Fix ajax parameters when ? was used on based url. 
-- PR [#5](https://github.com/yajra/laravel-datatables-buttons/pull/5), credits to @OzanKurt.
+- PR [#5], credits to @OzanKurt.
 
 # v1.0.0 - 01-27-2017
 - First stable release.
+
+[#39]: https://github.com/yajra/laravel-datatables-buttons/pull/39
+[#37]: https://github.com/yajra/laravel-datatables-buttons/pull/37
+[#36]: https://github.com/yajra/laravel-datatables-buttons/pull/36
+[#35]: https://github.com/yajra/laravel-datatables-buttons/pull/35
+[#24]: https://github.com/yajra/laravel-datatables-buttons/pull/24
+[#14]: https://github.com/yajra/laravel-datatables-buttons/pull/14
+[#13]: https://github.com/yajra/laravel-datatables-buttons/pull/13
+[#12]: https://github.com/yajra/laravel-datatables-buttons/pull/12
+[#5]: https://github.com/yajra/laravel-datatables-buttons/pull/5
