@@ -4,7 +4,7 @@
     var _buildParams = function (dt, action) {
         var params = dt.ajax.params();
         params.action = action;
-        params._token = $.fn.dataTable.defaults.csrf_token;
+        params._token = $('meta[name="csrf-token"]').attr('content');
 
         return params;
     };
@@ -124,6 +124,21 @@
         }
     };
 
+    DataTable.ext.buttons.postCsv = {
+        className: 'buttons-csv',
+
+        text: function (dt) {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', 'CSV');
+        },
+
+        action: function (e, dt, button, config) {
+            var url = dt.ajax.url() || window.location.href;
+            var params = _buildParams(dt, 'csv');
+
+            _downloadFromUrl(url, params);
+        }
+    };
+
     DataTable.ext.buttons.pdf = {
         className: 'buttons-pdf',
 
@@ -134,6 +149,21 @@
         action: function (e, dt, button, config) {
             var url = _buildUrl(dt, 'pdf');
             window.location = url;
+        }
+    };
+
+    DataTable.ext.buttons.postPdf = {
+        className: 'buttons-pdf',
+
+        text: function (dt) {
+            return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
+        },
+
+        action: function (e, dt, button, config) {
+            var url = dt.ajax.url() || window.location.href;
+            var params = _buildParams(dt, 'pdf');
+
+            _downloadFromUrl(url, params);
         }
     };
 
