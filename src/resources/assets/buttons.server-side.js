@@ -122,7 +122,7 @@
         }
     };
 
-    DataTable.ext.buttons.exportPostPdf = {
+    DataTable.ext.buttons.postPdf = {
         className: 'buttons-pdf',
 
         text: function (dt) {
