@@ -109,7 +109,7 @@
         }
     };
 
-    DataTable.ext.buttons.exportPostCsv = {
+    DataTable.ext.buttons.postCsv = {
         className: 'buttons-csv',
 
         text: function (dt) {
