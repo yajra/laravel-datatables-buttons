@@ -84,7 +84,7 @@
         }
     };
 
-    DataTable.ext.buttons.exportPostExcel = {
+    DataTable.ext.buttons.postExcel = {
         className: 'buttons-excel',
 
         text: function (dt) {
