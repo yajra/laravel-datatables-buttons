@@ -4,7 +4,7 @@
     var _buildParams = function (dt, action) {
         var params = dt.ajax.params();
         params.action = action;
-        params._token = $.fn.dataTable.defaults.csrf_token;
+        params._token = $('meta[name="csrf-token"]').attr('content');
 
         return params;
     };
