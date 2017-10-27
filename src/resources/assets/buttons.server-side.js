@@ -84,6 +84,21 @@
         }
     };
 
+    DataTable.ext.buttons.postExcel = {
+        className: 'buttons-excel',
+
+        text: function (dt) {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', 'Excel');
+        },
+
+        action: function (e, dt, button, config) {
+            var url = dt.ajax.url() || window.location.href;
+            var params = _buildParams(dt, 'excel');
+
+            _downloadFromUrl(url, params);
+        }
+    };
+
     DataTable.ext.buttons.export = {
         extend: 'collection',
 
