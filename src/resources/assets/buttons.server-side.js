@@ -137,6 +137,21 @@
         }
     };
 
+    DataTable.ext.buttons.postPdf = {
+        className: 'buttons-pdf',
+
+        text: function (dt) {
+            return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
+        },
+
+        action: function (e, dt, button, config) {
+            var url = dt.ajax.url() || window.location.href;
+            var params = _buildParams(dt, 'pdf');
+
+            _downloadFromUrl(url, params);
+        }
+    };
+
     DataTable.ext.buttons.print = {
         className: 'buttons-print',
 
