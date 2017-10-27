@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+# v3.1.0 - 10-27-2017
+- Add export CSV with post as a method. [#41], credits to @jiwom
+- Add export PDF with post as a method. [#42], credits to @jiwom
+- Add export Excel with post as a method. [#43], credits to @jiwom
+
 # v3.0.2 - 10-18-2017
 - Fix ButtonsServiceProvider. [#39], credits to @ElfSundae
 - Fix doc PR links.
@@ -77,6 +82,9 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 # v1.0.0 - 01-27-2017
 - First stable release.
 
+[#43]: https://github.com/yajra/laravel-datatables-buttons/pull/43
+[#42]: https://github.com/yajra/laravel-datatables-buttons/pull/42
+[#41]: https://github.com/yajra/laravel-datatables-buttons/pull/41
 [#39]: https://github.com/yajra/laravel-datatables-buttons/pull/39
 [#37]: https://github.com/yajra/laravel-datatables-buttons/pull/37
 [#36]: https://github.com/yajra/laravel-datatables-buttons/pull/36
