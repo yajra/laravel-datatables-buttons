@@ -2,8 +2,8 @@
 
 namespace Yajra\DataTables\Generators;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
+use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
 class DataTablesMakeCommand extends GeneratorCommand
@@ -73,12 +73,12 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         $name           = $this->getNameInput();
         $rootNamespace  = $this->laravel->getNamespace();
-        $model = $this->option('model') || $this->option('model-namespace');
+        $model          = $this->option('model') || $this->option('model-namespace');
         $modelNamespace = $this->option('model-namespace') ? $this->option('model-namespace') : $this->laravel['config']->get('datatables-buttons.namespace.model');
 
         return $model
-            ? $rootNamespace . "\\" . ($modelNamespace ? $modelNamespace . "\\" : "") .  str_singular($name)
-            : $rootNamespace . "\\User";
+            ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') .  str_singular($name)
+            : $rootNamespace . '\\User';
     }
 
     /**
@@ -103,15 +103,15 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getColumns()
     {
-        if($this->option('columns') != ''){
+        if ($this->option('columns') != '') {
             return $this->parseArray($this->option('columns'));
-        }else{
+        } else {
             return $this->parseArray('id,add your columns,created_at,updated_at');
         }
     }
 
     /**
-     * Parse array from definition
+     * Parse array from definition.
      *
      * @param  string  $definition
      * @param  string  $delimiter
@@ -146,7 +146,6 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected function getAction()
     {
         return $this->option('action') ? $this->option('action') : Str::lower($this->getNameInput()) . '.action';
-
     }
 
     /**
@@ -172,6 +171,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected function getStub()
     {
         $config = $this->laravel['config'];
+
         return $config->get('datatables-buttons.stub')
             ? base_path() . $config->get('datatables-buttons.stub') . '/datatables.stub'
             : __DIR__ . '/stubs/datatables.stub';
@@ -239,6 +239,6 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . "\\" . $this->laravel['config']->get('datatables-buttons.namespace.base', 'DataTables');
+        return $rootNamespace . '\\' . $this->laravel['config']->get('datatables-buttons.namespace.base', 'DataTables');
     }
 }
