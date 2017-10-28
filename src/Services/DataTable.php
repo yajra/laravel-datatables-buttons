@@ -4,10 +4,10 @@ namespace Yajra\DataTables\Services;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
-use Maatwebsite\Excel\Writers\LaravelExcelWriter;
-use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
+use Yajra\DataTables\Contracts\DataTableButtons;
+use Maatwebsite\Excel\Writers\LaravelExcelWriter;
+use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Yajra\DataTables\Transformers\DataArrayTransformer;
 
 abstract class DataTable implements DataTableButtons
@@ -18,14 +18,14 @@ abstract class DataTable implements DataTableButtons
      * @var string
      */
     protected $printPreview = 'datatables::print';
-    
+
     /**
      * Name of the dataTable variable.
      *
      * @var string
      */
     protected $dataTableVariable = 'dataTable';
-    
+
     /**
      * List of columns to be exported.
      *
@@ -92,7 +92,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Available button actions. When calling an action, the value will be used
      * as the function name (so it should be available)
-     * If you want to add or disable an action, overload and modify this property
+     * If you want to add or disable an action, overload and modify this property.
      *
      * @var array
      */
@@ -117,7 +117,7 @@ abstract class DataTable implements DataTableButtons
             return app()->call([$this, 'ajax']);
         }
 
-        if ($action = $this->request()->get('action') AND in_array($action, $this->actions)) {
+        if ($action = $this->request()->get('action') and in_array($action, $this->actions)) {
             if ($action == 'print') {
                 return app()->call([$this, 'printPreview']);
             }
@@ -438,7 +438,7 @@ abstract class DataTable implements DataTableButtons
                ->setOrientation($orientation);
 
         return $snappy->loadHTML($this->printPreview())
-                      ->download($this->getFilename() . ".pdf");
+                      ->download($this->getFilename() . '.pdf');
     }
 
     /**
@@ -453,7 +453,7 @@ abstract class DataTable implements DataTableButtons
 
         return $this;
     }
-    
+
     /**
      * Push multiples scopes to array query scopes.
      *
@@ -496,8 +496,6 @@ abstract class DataTable implements DataTableButtons
         if (array_key_exists($key, $this->attributes)) {
             return $this->attributes[$key];
         }
-
-        return null;
     }
 
     /**
