@@ -63,6 +63,6 @@ class DummyClass extends DataTable
      */
     protected function filename()
     {
-        return 'DummyFilename_' . time();
+        return 'DummyFilename_' . date('YmdHis');
     }
 }
