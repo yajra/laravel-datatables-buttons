@@ -4,7 +4,7 @@ return [
     /*
      * Namespaces used by the generator.
      */
-    'namespace'       => [
+    'namespace' => [
         /*
          * Base namespace/directory to create the new file.
          * This is appended on default Laravel namespace.
@@ -13,7 +13,7 @@ return [
          * With Model: App\User (default model)
          * Export filename: users_timestamp
          */
-        'base'  => 'DataTables',
+        'base' => 'DataTables',
 
         /*
          * Base namespace/directory where your model's are located.
@@ -37,13 +37,13 @@ return [
      * Snappy package: barryvdh/laravel-snappy
      * Excel package: maatwebsite/excel
      */
-    'pdf_generator'   => 'snappy',
+    'pdf_generator' => 'snappy',
 
     /*
      * Snappy PDF options.
      */
-    'snappy'          => [
-        'options'     => [
+    'snappy' => [
+        'options' => [
             'no-outline'    => true,
             'margin-left'   => '0',
             'margin-right'  => '0',
