@@ -373,7 +373,7 @@ abstract class DataTable implements DataTableButtons
      */
     protected function filename()
     {
-        return 'export_' . time();
+        return class_basename($this) . '_' . date('YmdHis');
     }
 
     /**

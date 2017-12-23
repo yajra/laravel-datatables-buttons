@@ -186,7 +186,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected function replaceFilename(&$stub)
     {
         $stub = str_replace(
-            'DummyFilename', str_slug($this->getNameInput()), $stub
+            'DummyFilename', preg_replace('#datatable$#i', '', $this->getNameInput()), $stub
         );
 
         return $stub;
