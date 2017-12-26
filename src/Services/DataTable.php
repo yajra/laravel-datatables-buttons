@@ -162,6 +162,10 @@ abstract class DataTable implements DataTableButtons
             return app()->call([$this, $action]);
         }
 
+        if ($this->isSmartDataTable) {
+        	return false;
+        }
+
         return view($view, $data, $mergeData)->with($this->dataTableVariable, $this->getHtmlBuilder());
     }
 
