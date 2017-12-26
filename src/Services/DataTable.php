@@ -69,11 +69,25 @@ abstract class DataTable implements DataTableButtons
     protected $filename = '';
 
     /**
+     * ID of the DataTable to be used in builder and ajax requests.
+     *
+     * @var string|null
+     */
+    protected $id = null;
+
+    /**
      * Custom attributes set on the class.
      *
      * @var array
      */
     protected $attributes = [];
+
+    /**
+     * Dynamically detects which DataTable to initialize for backend processing and responds.
+     *
+     * @var boolean
+     */
+    protected $isSmartDataTable = false;
 
     /**
      * Callback before sending the response.
@@ -102,6 +116,29 @@ abstract class DataTable implements DataTableButtons
      * @var \Yajra\DataTables\Utilities\Request
      */
     protected $request;
+
+    /**
+     * Sets DataTable "id" attribute.
+     *
+     * @param string $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets DataTable "id" attribute.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Process dataTables needed render output.
@@ -228,7 +265,17 @@ abstract class DataTable implements DataTableButtons
      */
     public function builder()
     {
-        return $this->htmlBuilder ?: $this->htmlBuilder = app('datatables.html');
+        $builder = $this->htmlBuilder ?: $this->htmlBuilder = app('datatables.html');
+
+        if ($this->id) {
+            $builder->setTableAttribute('id', $this->id);
+        }
+            
+        if ($this->isSmartDataTable) {
+            $builder->setSmartDataTable(get_class($this));
+        }
+
+        return $builder;
     }
 
     /**
@@ -521,5 +568,15 @@ abstract class DataTable implements DataTableButtons
     protected function getBuilderParameters()
     {
         return config('datatables-buttons.parameters');
+    }
+
+    /**
+     * Get actions.
+     *
+     * @return array
+     */
+    protected function getActions()
+    {
+        return $this->actions;
     }
 }
