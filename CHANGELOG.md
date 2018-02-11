@@ -1,5 +1,8 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+# v3.2.0 - 02-11-2018
+- Add support for Laravel 5.6. [#57]
+
 # v3.1.2 - 12-23-2017
 - Change the default export filename [#49], credits to @ElfSundae.
 
@@ -88,6 +91,7 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 # v1.0.0 - 01-27-2017
 - First stable release.
 
+[#57]: https://github.com/yajra/laravel-datatables-buttons/pull/57
 [#49]: https://github.com/yajra/laravel-datatables-buttons/pull/49
 [#54]: https://github.com/yajra/laravel-datatables-buttons/pull/54
 [#43]: https://github.com/yajra/laravel-datatables-buttons/pull/43
