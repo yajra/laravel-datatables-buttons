@@ -188,7 +188,9 @@
         },
 
         action: function (e, dt, button, config) {
-            dt.search('').draw();
+            dt.search('');
+            dt.columns().search('');
+            dt.draw();
         }
     };
 
