@@ -188,7 +188,9 @@
         },
 
         action: function (e, dt, button, config) {
-            dt.search('').draw();
+            dt.search('');
+            dt.columns().search('');
+            dt.draw();
         }
     };
 
@@ -215,4 +217,20 @@
             window.location = window.location.href.replace(/\/+$/, "") + '/create';
         }
     };
+
+    if (typeof DataTable.ext.buttons.copyHtml5 !== 'undefined') {
+        $.extend(DataTable.ext.buttons.copyHtml5, {
+            text: function (dt) {
+                return '<i class="fa fa-copy"></i> ' + dt.i18n('buttons.copy', 'Copy');
+            }
+        });
+    }
+
+    if (typeof DataTable.ext.buttons.colvis !== 'undefined') {
+        $.extend(DataTable.ext.buttons.colvis, {
+            text: function (dt) {
+                return '<i class="fa fa-eye"></i> ' + dt.i18n('buttons.colvis', 'Column visibility');
+            }
+        });
+    }
 })(jQuery, jQuery.fn.dataTable);
