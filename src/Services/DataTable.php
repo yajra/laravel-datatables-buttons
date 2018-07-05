@@ -26,6 +26,14 @@ abstract class DataTable implements DataTableButtons
      */
     protected $dataTableVariable = 'dataTable';
 
+
+    /**
+     * List of columns to be excluded from export.
+     *
+     * @var string|array
+     */
+    protected $excludeFromExport = [];
+
     /**
      * List of columns to be exported.
      *
@@ -198,8 +206,20 @@ abstract class DataTable implements DataTableButtons
      */
     protected function printColumns()
     {
-        return is_array($this->printColumns) ? $this->printColumns : $this->getColumnsFromBuilder();
+        return is_array($this->printColumns) ? $this->printColumns : $this->getFilteredColumnsFromBuilder();
     }
+
+
+    /**
+     * Get filtered print columns definition from html builder.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getFilteredColumnsFromBuilder()
+    {
+        return $this->html()->removeColumn(...$this->excludeFromExport)->getColumns();
+    }
+
 
     /**
      * Get columns definition from html builder.
@@ -395,7 +415,7 @@ abstract class DataTable implements DataTableButtons
      */
     private function exportColumns()
     {
-        return is_array($this->exportColumns) ? $this->exportColumns : $this->getColumnsFromBuilder();
+        return is_array($this->exportColumns) ? $this->exportColumns : $this->getFilteredColumnsFromBuilder();
     }
 
     /**
@@ -435,10 +455,10 @@ abstract class DataTable implements DataTableButtons
         $orientation = config('datatables-buttons.snappy.orientation');
 
         $snappy->setOptions($options)
-               ->setOrientation($orientation);
+            ->setOrientation($orientation);
 
         return $snappy->loadHTML($this->printPreview())
-                      ->download($this->getFilename() . '.pdf');
+            ->download($this->getFilename() . '.pdf');
     }
 
     /**
