@@ -454,11 +454,9 @@ abstract class DataTable implements DataTableButtons
         $options     = config('datatables-buttons.snappy.options');
         $orientation = config('datatables-buttons.snappy.orientation');
 
-        $snappy->setOptions($options)
-            ->setOrientation($orientation);
+        $snappy->setOptions($options)->setOrientation($orientation);
 
-        return $snappy->loadHTML($this->printPreview())
-            ->download($this->getFilename() . '.pdf');
+        return $snappy->loadHTML($this->printPreview())->download($this->getFilename() . '.pdf');
     }
 
     /**
