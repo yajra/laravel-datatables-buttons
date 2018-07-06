@@ -293,7 +293,7 @@ abstract class DataTable implements DataTableButtons
         $this->request()->merge(['length' => -1]);
 
         $response = app()->call([$this, 'ajax']);
-        $data = $response->getData(true);
+        $data     = $response->getData(true);
 
         return $data['data'];
     }
@@ -464,8 +464,8 @@ abstract class DataTable implements DataTableButtons
     public function snappyPdf()
     {
         /** @var \Barryvdh\Snappy\PdfWrapper $snappy */
-        $snappy = resolve('snappy.pdf.wrapper');
-        $options = config('datatables-buttons.snappy.options');
+        $snappy      = resolve('snappy.pdf.wrapper');
+        $options     = config('datatables-buttons.snappy.options');
         $orientation = config('datatables-buttons.snappy.orientation');
 
         $snappy->setOptions($options)->setOrientation($orientation);
