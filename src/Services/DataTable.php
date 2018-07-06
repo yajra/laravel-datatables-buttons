@@ -26,7 +26,6 @@ abstract class DataTable implements DataTableButtons
      */
     protected $dataTableVariable = 'dataTable';
 
-
     /**
      * List of columns to be excluded from export.
      *
@@ -209,7 +208,6 @@ abstract class DataTable implements DataTableButtons
         return is_array($this->printColumns) ? $this->printColumns : $this->getFilteredColumnsFromBuilder();
     }
 
-
     /**
      * Get filtered print columns definition from html builder.
      *
@@ -219,7 +217,6 @@ abstract class DataTable implements DataTableButtons
     {
         return $this->html()->removeColumn(...$this->excludeFromExport)->getColumns();
     }
-
 
     /**
      * Get columns definition from html builder.
