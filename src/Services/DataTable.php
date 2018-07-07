@@ -226,7 +226,7 @@ abstract class DataTable implements DataTableButtons
     }
 
     /**
-     * Get filtered print columns definition from html builder.
+     * Get filtered export columns definition from html builder.
      *
      * @return \Illuminate\Support\Collection
      */
