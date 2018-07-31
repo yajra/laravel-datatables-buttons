@@ -39,8 +39,10 @@ class DataArrayTransformer
                 $title = $column['title'];
                 $data  = array_get($row, $column['data']);
                 if ($type == 'exportable') {
-                    $data  = $this->decodeContent($data);
-                    $title = $this->decodeContent($title);
+                    $title    = $this->decodeContent($title);
+                    $dataType = gettype($data);
+                    $data     = $this->decodeContent($data);
+                    settype($data, $dataType);
                 }
 
                 $results[$title] = $data;
