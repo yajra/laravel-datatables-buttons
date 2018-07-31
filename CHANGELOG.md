@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v3.2.2 - 07-31-2018
+
+- Keep original type in exportable array. [#67] credits to @FabienLucini.
+
 ## v3.2.1 - 02-21-2018
 
 - Add reset to column search and icons to copy and colvis buttons [#59], credits to @Namoshek.
@@ -117,6 +121,7 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 
 - First stable release.
 
+[#67]: https://github.com/yajra/laravel-datatables-buttons/pull/67
 [#59]: https://github.com/yajra/laravel-datatables-buttons/pull/59
 [#57]: https://github.com/yajra/laravel-datatables-buttons/pull/57
 [#49]: https://github.com/yajra/laravel-datatables-buttons/pull/49
