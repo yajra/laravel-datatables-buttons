@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.0.0 - 08-15-2018
+
+- Bump Laravel Excel to version 3.0
+
 ## v3.3.0 - 08-15-2018
 
 - Implemented the 'exclude column from export' [#65], credits to @rylxes.
