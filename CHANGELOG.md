@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v3.3.0 - 08-15-2018
+
+- Implemented the 'exclude column from export' [#65], credits to @rylxes.
+
 ## v3.2.2 - 07-31-2018
 
 - Keep original type in exportable array. [#67] credits to @FabienLucini.
@@ -121,6 +125,7 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 
 - First stable release.
 
+[#65]: https://github.com/yajra/laravel-datatables-buttons/pull/65
 [#67]: https://github.com/yajra/laravel-datatables-buttons/pull/67
 [#59]: https://github.com/yajra/laravel-datatables-buttons/pull/59
 [#57]: https://github.com/yajra/laravel-datatables-buttons/pull/57
