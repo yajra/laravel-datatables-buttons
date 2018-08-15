@@ -25,6 +25,20 @@ abstract class DataTable implements DataTableButtons
     protected $dataTableVariable = 'dataTable';
 
     /**
+     * List of columns to be excluded from export.
+     *
+     * @var string|array
+     */
+    protected $excludeFromExport = [];
+
+    /**
+     * List of columns to be excluded from printing.
+     *
+     * @var string|array
+     */
+    protected $excludeFromPrint = [];
+
+    /**
      * List of columns to be exported.
      *
      * @var string|array
@@ -133,8 +147,8 @@ abstract class DataTable implements DataTableButtons
      * Process dataTables needed render output.
      *
      * @param string $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      * @return mixed
      */
     public function render($view, $data = [], $mergeData = [])
@@ -224,7 +238,27 @@ abstract class DataTable implements DataTableButtons
      */
     protected function printColumns()
     {
-        return is_array($this->printColumns) ? $this->printColumns : $this->getColumnsFromBuilder();
+        return is_array($this->printColumns) ? $this->printColumns : $this->getPrintColumnsFromBuilder();
+    }
+
+    /**
+     * Get filtered print columns definition from html builder.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getPrintColumnsFromBuilder()
+    {
+        return $this->html()->removeColumn(...$this->excludeFromPrint)->getColumns();
+    }
+
+    /**
+     * Get filtered export columns definition from html builder.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getExportColumnsFromBuilder()
+    {
+        return $this->html()->removeColumn(...$this->excludeFromExport)->getColumns();
     }
 
     /**
@@ -260,7 +294,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Map ajax response to columns definition.
      *
-     * @param mixed  $columns
+     * @param mixed $columns
      * @param string $type
      * @return array
      */
@@ -418,7 +452,7 @@ abstract class DataTable implements DataTableButtons
      */
     private function exportColumns()
     {
-        return is_array($this->exportColumns) ? $this->exportColumns : $this->getColumnsFromBuilder();
+        return is_array($this->exportColumns) ? $this->exportColumns : $this->getExportColumnsFromBuilder();
     }
 
     /**
@@ -459,11 +493,9 @@ abstract class DataTable implements DataTableButtons
         $options     = config('datatables-buttons.snappy.options');
         $orientation = config('datatables-buttons.snappy.orientation');
 
-        $snappy->setOptions($options)
-               ->setOrientation($orientation);
+        $snappy->setOptions($options)->setOrientation($orientation);
 
-        return $snappy->loadHTML($this->printPreview())
-                      ->download($this->getFilename() . '.pdf');
+        return $snappy->loadHTML($this->printPreview())->download($this->getFilename() . '.pdf');
     }
 
     /**
@@ -495,7 +527,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Set a custom class attribute.
      *
-     * @param mixed      $key
+     * @param mixed $key
      * @param mixed|null $value
      * @return $this
      */
