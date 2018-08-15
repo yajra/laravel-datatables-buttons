@@ -127,21 +127,21 @@ abstract class DataTable implements DataTableButtons
      *
      * @var string
      */
-    protected $csvWriter = "Csv";
+    protected $csvWriter = 'Csv';
 
     /**
      * Excel export type writer.
      *
      * @var string
      */
-    protected $excelWriter = "Xlsx";
+    protected $excelWriter = 'Xlsx';
 
     /**
      * PDF export type writer.
      *
      * @var string
      */
-    protected $pdfWriter = "Dompdf";
+    protected $pdfWriter = 'Dompdf';
 
     /**
      * Process dataTables needed render output.
@@ -383,7 +383,7 @@ abstract class DataTable implements DataTableButtons
      */
     public function excel()
     {
-        $ext = "." . strtolower($this->excelWriter);
+        $ext = '.' . strtolower($this->excelWriter);
 
         return $this->buildExcelFile()->download($this->getFilename() . $ext, $this->excelWriter);
     }
@@ -462,7 +462,7 @@ abstract class DataTable implements DataTableButtons
      */
     public function csv()
     {
-        $ext = "." . strtolower($this->csvWriter);
+        $ext = '.' . strtolower($this->csvWriter);
 
         return $this->buildExcelFile()->download($this->getFilename() . $ext, $this->csvWriter);
     }
@@ -478,7 +478,7 @@ abstract class DataTable implements DataTableButtons
             return $this->snappyPdf();
         }
 
-        return $this->buildExcelFile()->download($this->getFilename() . ".pdf", $this->pdfWriter);
+        return $this->buildExcelFile()->download($this->getFilename() . '.pdf', $this->pdfWriter);
     }
 
     /**
