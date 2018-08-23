@@ -571,6 +571,23 @@ abstract class DataTable implements DataTableButtons
     }
 
     /**
+     * Determine if the DataTable has scopes.
+     *
+     * @param  array $scopes
+     * @param  bool $validateAll
+     * @return bool
+     */
+    protected function hasScopes(array $scopes, $validateAll = false)
+    {
+        $filteredScopes = array_filter($this->scopes, function ($scope) use ($scopes) {
+            return in_array(get_class($scope), $scopes);
+        });
+
+        return $validateAll ? count($filteredScopes) === count($scopes) :
+            ! empty($filteredScopes);
+    }
+
+    /**
      * Get default builder parameters.
      *
      * @return array
