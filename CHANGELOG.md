@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.2.0 - 09-05-2018
+
+- Added hasScopes method. [#70], credits to @alfa6661
+
 ## v4.1.0 - 09-05-2018
 
 - Add support for Laravel 5.7
@@ -151,5 +155,6 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 [#13]: https://github.com/yajra/laravel-datatables-buttons/pull/13
 [#12]: https://github.com/yajra/laravel-datatables-buttons/pull/12
 [#5]: https://github.com/yajra/laravel-datatables-buttons/pull/5
+[#70]: https://github.com/yajra/laravel-datatables-buttons/pull/70
 
 [#19]: https://github.com/yajra/laravel-datatables-buttons/issues/19
