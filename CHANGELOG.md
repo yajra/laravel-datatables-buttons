@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.1.0 - 09-05-2018
+
+- Add support for Laravel 5.7
+
 ## v4.0.0 - 08-15-2018
 
 - Bump Laravel Excel to version 3.0
