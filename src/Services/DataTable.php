@@ -301,12 +301,10 @@ abstract class DataTable implements DataTableButtons
      */
     protected function mapResponseToColumns($columns, $type)
     {
-        return array_map(function ($row) use ($columns, $type) {
-            if ($columns) {
-                return (new DataArrayTransformer())->transform($row, $columns, $type);
-            }
+        $transformer = new DataArrayTransformer;
 
-            return $row;
+        return array_map(function ($row) use ($columns, $type, $transformer) {
+            return $transformer->transform($row, $columns, $type);
         }, $this->getAjaxResponseData());
     }
 
@@ -608,8 +606,7 @@ abstract class DataTable implements DataTableButtons
             return in_array(get_class($scope), $scopes);
         });
 
-        return $validateAll ? count($filteredScopes) === count($scopes) :
-            ! empty($filteredScopes);
+        return $validateAll ? count($filteredScopes) === count($scopes) : ! empty($filteredScopes);
     }
 
     /**
