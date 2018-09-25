@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.3.0 - 09-25-2018
+
+- Allow customization of export and print columns. [#76]
+
 ## v4.2.0 - 09-05-2018
 
 - Added hasScopes method. [#70], credits to @alfa6661
@@ -156,5 +160,6 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 [#12]: https://github.com/yajra/laravel-datatables-buttons/pull/12
 [#5]: https://github.com/yajra/laravel-datatables-buttons/pull/5
 [#70]: https://github.com/yajra/laravel-datatables-buttons/pull/70
+[#76]: https://github.com/yajra/laravel-datatables-buttons/pull/76
 
 [#19]: https://github.com/yajra/laravel-datatables-buttons/issues/19
