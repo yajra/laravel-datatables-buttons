@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Yajra\DataTables\Contracts\DataTableScope;
 use Yajra\DataTables\Contracts\DataTableButtons;
+use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Transformers\DataArrayTransformer;
 
 abstract class DataTable implements DataTableButtons
@@ -238,7 +239,7 @@ abstract class DataTable implements DataTableButtons
      */
     protected function printColumns()
     {
-        return is_array($this->printColumns) ? $this->printColumns : $this->getPrintColumnsFromBuilder();
+        return is_array($this->printColumns) ? $this->toColumnsCollection($this->printColumns) : $this->getPrintColumnsFromBuilder();
     }
 
     /**
@@ -452,7 +453,30 @@ abstract class DataTable implements DataTableButtons
      */
     private function exportColumns()
     {
-        return is_array($this->exportColumns) ? $this->exportColumns : $this->getExportColumnsFromBuilder();
+        return is_array($this->exportColumns) ? $this->toColumnsCollection($this->exportColumns) : $this->getExportColumnsFromBuilder();
+    }
+
+    /**
+     * Convert array to collection of Column class.
+     *
+     * @param array $columns
+     * @return Collection
+     */
+    private function toColumnsCollection(array $columns) {
+        $collection = collect();
+        foreach ($columns as $column) {
+            if (isset($column['data'])) {
+                $column['title'] = $column['title'] ?? $column['data'];
+                $collection->push(new Column($column));
+            } else {
+                $data = [];
+                $data['data'] = $column;
+                $data['title'] = $column;
+                $collection->push(new Column($data));
+            }
+        }
+
+        return $collection;
     }
 
     /**
