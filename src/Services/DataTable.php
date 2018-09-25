@@ -3,10 +3,10 @@
 namespace Yajra\DataTables\Services;
 
 use Illuminate\Http\JsonResponse;
+use Yajra\DataTables\Html\Column;
 use Illuminate\Support\Collection;
 use Yajra\DataTables\Contracts\DataTableScope;
 use Yajra\DataTables\Contracts\DataTableButtons;
-use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Transformers\DataArrayTransformer;
 
 abstract class DataTable implements DataTableButtons
@@ -462,15 +462,16 @@ abstract class DataTable implements DataTableButtons
      * @param array $columns
      * @return Collection
      */
-    private function toColumnsCollection(array $columns) {
+    private function toColumnsCollection(array $columns)
+    {
         $collection = collect();
         foreach ($columns as $column) {
             if (isset($column['data'])) {
                 $column['title'] = $column['title'] ?? $column['data'];
                 $collection->push(new Column($column));
             } else {
-                $data = [];
-                $data['data'] = $column;
+                $data          = [];
+                $data['data']  = $column;
                 $data['title'] = $column;
                 $collection->push(new Column($data));
             }
