@@ -1,12 +1,30 @@
 (function ($, DataTable) {
     "use strict";
 
-    var _buildParams = function (dt, action) {
+    var _buildParams = function (dt, action, onlyVisibles) {
         var params = dt.ajax.params();
         params.action = action;
         params._token = $('meta[name="csrf-token"]').attr('content');
 
+        if (onlyVisibles) {
+            params.visible_columns = _getVisibleColumns();
+        } else {
+            params.visible_columns = null;
+        }
+        
         return params;
+    };
+    
+    var _getVisibleColumns = function () {
+
+        var visible_columns = [];
+        $.each(DataTable.settings[0].aoColumns, function (key, col) {
+            if (col.bVisible) {
+                visible_columns.push(col.name);
+            }
+        });
+
+        return visible_columns;
     };
 
     var _downloadFromUrl = function (url, params) {
@@ -98,6 +116,21 @@
             _downloadFromUrl(url, params);
         }
     };
+    
+    DataTable.ext.buttons.postExcelVisibleColumns = {
+        className: 'buttons-excel',
+
+        text: function (dt) {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', 'Excel (only visible columns)');
+        },
+
+        action: function (e, dt, button, config) {
+            var url = dt.ajax.url() || window.location.href;
+            var params = _buildParams(dt, 'excel', true);
+
+            _downloadFromUrl(url, params);
+        }
+    };
 
     DataTable.ext.buttons.export = {
         extend: 'collection',
@@ -124,6 +157,21 @@
         }
     };
 
+    DataTable.ext.buttons.postCsvVisibleColumns = {
+        className: 'buttons-csv',
+
+        text: function (dt) {
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', 'CSV (only visible columns)');
+        },
+
+        action: function (e, dt, button, config) {
+            var url = dt.ajax.url() || window.location.href;
+            var params = _buildParams(dt, 'csv', true);
+
+            _downloadFromUrl(url, params);
+        }
+    };
+    
     DataTable.ext.buttons.postCsv = {
         className: 'buttons-csv',
 
