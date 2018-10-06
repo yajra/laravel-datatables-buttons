@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.4.0 - 10-05-2018
+
+- Add option to export only visible columns. [#78], credits to @FabienLucini
+- Fix [#1558].
+
 ## v4.3.0 - 09-25-2018
 
 - Allow customization of export and print columns. [#76]
@@ -161,5 +166,7 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 [#5]: https://github.com/yajra/laravel-datatables-buttons/pull/5
 [#70]: https://github.com/yajra/laravel-datatables-buttons/pull/70
 [#76]: https://github.com/yajra/laravel-datatables-buttons/pull/76
+[#78]: https://github.com/yajra/laravel-datatables-buttons/pull/78
 
 [#19]: https://github.com/yajra/laravel-datatables-buttons/issues/19
+[#1558]: https://github.com/yajra/laravel-datatables/issues/1558
