@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.5.0 - 11-14-2018
+
+- Add support for html 4.0
+
 ## v4.4.0 - 10-05-2018
 
 - Add option to export only visible columns. [#78], credits to @FabienLucini
