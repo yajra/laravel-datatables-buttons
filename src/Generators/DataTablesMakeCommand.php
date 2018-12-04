@@ -77,7 +77,7 @@ class DataTablesMakeCommand extends GeneratorCommand
         $modelNamespace = $this->option('model-namespace') ? $this->option('model-namespace') : $this->laravel['config']->get('datatables-buttons.namespace.model');
 
         return $model
-            ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') .  str_singular($name)
+            ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') .  $this->option('model')
             : $rootNamespace . '\\User';
     }
 
