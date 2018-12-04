@@ -15,7 +15,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected $signature = 'datatables:make
                             {name : The name of the datatable.}
-                            {--model : The name of the model to be used.}
+                            {--model= : The name of the model to be used.}
                             {--model-namespace= : The namespace of the model to be used.}
                             {--action= : The path of the action view.}
                             {--columns= : The columns of the datatable.}';
