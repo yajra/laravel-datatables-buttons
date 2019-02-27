@@ -16,7 +16,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "yajra/laravel-datatables-oracle": "8.*",
+    "yajra/laravel-datatables-oracle": "8.*|9.*",
     "yajra/laravel-datatables-html": "3.*|4.*",
     "maatwebsite/excel": "^3.0",
     "illuminate/console": "^5.5"
