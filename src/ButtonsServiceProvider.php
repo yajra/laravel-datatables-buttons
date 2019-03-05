@@ -33,7 +33,7 @@ class ButtonsServiceProvider extends ServiceProvider
         ], 'datatables-buttons');
 
         $this->publishes([
-            __DIR__ . '/resources/assets/buttons.server-side.js' => public_path('vendor/datatables/buttons.server-side.js'),
+            __DIR__ . '/resources/assets/buttons.server-side.js' => public_path('js/datatables/buttons.server-side.js'),
         ], 'datatables-buttons');
 
         $this->publishes([
