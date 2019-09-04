@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.7.0 - 09-04-2019
+
+- Add support Laravel 6.0 & remove deprecated functions. [#98], credits to @sangnguyenplus.
+
 ## v4.6.0 - 02-27-2019
 
 - Add support for dataTable 9.0 / Laravel 5.8 [#89].
