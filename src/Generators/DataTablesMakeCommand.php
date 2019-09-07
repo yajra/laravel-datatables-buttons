@@ -18,6 +18,8 @@ class DataTablesMakeCommand extends GeneratorCommand
                             {--model : The name of the model to be used.}
                             {--model-namespace= : The namespace of the model to be used.}
                             {--action= : The path of the action view.}
+                            {--dom= : The dom of the datatable.}
+                            {--buttons= : The buttons of the datatable.}
                             {--columns= : The columns of the datatable.}';
 
     /**
@@ -25,7 +27,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $description = 'Create a new DataTable service class.';
+    protected $description = 'Create a new dataTable service class.';
 
     /**
      * The type of class being generated.
@@ -34,10 +36,31 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected $type = 'DataTable';
 
+    public function handle()
+    {
+        parent::handle();
+
+        $this->call('datatables:html', [
+            'name'      => $this->getNameInput(),
+            '--columns' => $this->option('columns') ?: $this->laravel['config']->get(
+                'datatables-buttons.generator.columns',
+                'id,add your columns,created_at,updated_at'
+            ),
+            '--buttons' => $this->option('buttons') ?: $this->laravel['config']->get(
+                'datatables-buttons.generator.buttons',
+                'create,export,print,reset,reload'
+            ),
+            '--dom'     => $this->option('dom') ?: $this->laravel['config']->get(
+                'datatables-buttons.generator.dom',
+                'Bfrtip'
+            ),
+        ]);
+    }
+
     /**
      * Build the class with the given name.
      *
-     * @param  string $name
+     * @param string $name
      * @return string
      */
     protected function buildClass($name)
@@ -46,9 +69,101 @@ class DataTablesMakeCommand extends GeneratorCommand
 
         return $this->replaceModelImport($stub)
                     ->replaceModel($stub)
-                    ->replaceColumns($stub)
+                    ->replaceBuilder($stub)
                     ->replaceAction($stub)
                     ->replaceFilename($stub);
+    }
+
+    /**
+     * Replace the filename.
+     *
+     * @param string $stub
+     * @return string
+     */
+    protected function replaceFilename(&$stub)
+    {
+        $stub = str_replace(
+            'DummyFilename', preg_replace('#datatable$#i', '', $this->getNameInput()), $stub
+        );
+
+        return $stub;
+    }
+
+    /**
+     * Replace the action.
+     *
+     * @param string $stub
+     * @return \Yajra\DataTables\Generators\DataTablesMakeCommand
+     */
+    protected function replaceAction(&$stub)
+    {
+        $stub = str_replace(
+            'DummyAction', $this->getAction(), $stub
+        );
+
+        return $this;
+    }
+
+    /**
+     * Set the action view to be used.
+     *
+     * @return string
+     */
+    protected function getAction()
+    {
+        return $this->option('action') ? $this->option('action') : Str::lower($this->getNameInput()) . '.action';
+    }
+
+    /**
+     * Replace builder name.
+     *
+     * @param string $stub
+     * @return \Yajra\DataTables\Generators\DataTablesMakeCommand
+     */
+    protected function replaceBuilder(&$stub)
+    {
+        $name  = $this->qualifyClass($this->getNameInput());
+        $class = str_replace($this->getNamespace($name) . '\\', '', $name);
+
+        $stub = str_replace('DummyBuilder', $class . 'Html', $stub);
+
+        return $this;
+    }
+
+    /**
+     * Parse the name and format according to the root namespace.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function qualifyClass($name)
+    {
+        $rootNamespace = $this->laravel->getNamespace();
+
+        if (Str::startsWith($name, $rootNamespace)) {
+            return $name;
+        }
+
+        if (Str::contains($name, '/')) {
+            $name = str_replace('/', '\\', $name);
+        }
+
+        if (! Str::contains(Str::lower($name), 'datatable')) {
+            $name .= 'DataTable';
+        }
+
+        return $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name;
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param string $rootNamespace
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace)
+    {
+        return $rootNamespace . '\\' . $this->laravel['config']->get('datatables-buttons.namespace.base', 'DataTables');
     }
 
     /**
@@ -77,75 +192,8 @@ class DataTablesMakeCommand extends GeneratorCommand
         $modelNamespace = $this->option('model-namespace') ? $this->option('model-namespace') : $this->laravel['config']->get('datatables-buttons.namespace.model');
 
         return $model
-            ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') .  Str::singular($name)
+            ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') . Str::singular($name)
             : $rootNamespace . '\\User';
-    }
-
-    /**
-     * Replace columns.
-     *
-     * @param string $stub
-     * @return $this
-     */
-    protected function replaceColumns(&$stub)
-    {
-        $stub = str_replace(
-            'DummyColumns', $this->getColumns(), $stub
-        );
-
-        return $this;
-    }
-
-    /**
-     * Get the columns to be used.
-     *
-     * @return string
-     */
-    protected function getColumns()
-    {
-        if ($this->option('columns') != '') {
-            return $this->parseArray($this->option('columns'));
-        } else {
-            return $this->parseArray('id,add your columns,created_at,updated_at');
-        }
-    }
-
-    /**
-     * Parse array from definition.
-     *
-     * @param  string  $definition
-     * @param  string  $delimiter
-     * @param  int     $indentation
-     * @return string
-     */
-    protected function parseArray($definition, $delimiter = ',', $indentation = 12)
-    {
-        return str_replace($delimiter, "',\n" . str_repeat(' ', $indentation) . "'", $definition);
-    }
-
-    /**
-     * Replace the action.
-     *
-     * @param string $stub
-     * @return \Yajra\DataTables\Generators\DataTablesMakeCommand
-     */
-    protected function replaceAction(&$stub)
-    {
-        $stub = str_replace(
-            'DummyAction', $this->getAction(), $stub
-        );
-
-        return $this;
-    }
-
-    /**
-     * Set the action view to be used.
-     *
-     * @return string
-     */
-    protected function getAction()
-    {
-        return $this->option('action') ? $this->option('action') : Str::lower($this->getNameInput()) . '.action';
     }
 
     /**
@@ -178,21 +226,6 @@ class DataTablesMakeCommand extends GeneratorCommand
     }
 
     /**
-     * Replace the filename.
-     *
-     * @param string $stub
-     * @return string
-     */
-    protected function replaceFilename(&$stub)
-    {
-        $stub = str_replace(
-            'DummyFilename', preg_replace('#datatable$#i', '', $this->getNameInput()), $stub
-        );
-
-        return $stub;
-    }
-
-    /**
      * Get the console command options.
      *
      * @return array
@@ -204,41 +237,5 @@ class DataTablesMakeCommand extends GeneratorCommand
             ['action', null, InputOption::VALUE_OPTIONAL, 'Path to action column template.', null],
             ['columns', null, InputOption::VALUE_OPTIONAL, 'Use the provided columns.', null],
         ];
-    }
-
-    /**
-     * Parse the name and format according to the root namespace.
-     *
-     * @param  string $name
-     * @return string
-     */
-    protected function qualifyClass($name)
-    {
-        $rootNamespace = $this->laravel->getNamespace();
-
-        if (Str::startsWith($name, $rootNamespace)) {
-            return $name;
-        }
-
-        if (Str::contains($name, '/')) {
-            $name = str_replace('/', '\\', $name);
-        }
-
-        if (! Str::contains(Str::lower($name), 'datatable')) {
-            $name .= 'DataTable';
-        }
-
-        return $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name;
-    }
-
-    /**
-     * Get the default namespace for the class.
-     *
-     * @param  string $rootNamespace
-     * @return string
-     */
-    protected function getDefaultNamespace($rootNamespace)
-    {
-        return $rootNamespace . '\\' . $this->laravel['config']->get('datatables-buttons.namespace.base', 'DataTables');
     }
 }

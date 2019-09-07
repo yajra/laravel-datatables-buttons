@@ -15,7 +15,8 @@ class DummyClass extends DataTable
      */
     public function dataTable($query)
     {
-        return datatables($query)
+        return datatables()
+            ->eloquent($query)
             ->addColumn('action', 'DummyAction');
     }
 
@@ -27,33 +28,17 @@ class DummyClass extends DataTable
      */
     public function query(ModelName $model)
     {
-        return $model->newQuery()->select('id', 'add-your-columns-here', 'created_at', 'updated_at');
+        return $model->newQuery();
     }
 
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return \Yajra\DataTables\Html\Builder|DummyBuilder
      */
-    public function html()
+    public function htmlBuilder()
     {
-        return $this->builder()
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->addAction(['width' => '80px'])
-                    ->parameters($this->getBuilderParameters());
-    }
-
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
-    protected function getColumns()
-    {
-        return [
-            'DummyColumns'
-        ];
+        return DummyBuilder::make();
     }
 
     /**
