@@ -3,6 +3,7 @@
 namespace Yajra\DataTables\Generators;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -17,6 +18,7 @@ class DataTablesHtmlCommand extends GeneratorCommand
                             {name : The name of the datatable html.}
                             {--dom= : The dom of the datatable.}
                             {--buttons= : The buttons of the datatable.}
+                            {--table= : Scaffold columns from the table.}
                             {--columns= : The columns of the datatable.}';
 
     /**
@@ -168,6 +170,10 @@ class DataTablesHtmlCommand extends GeneratorCommand
      */
     protected function getColumns()
     {
+        if ($this->option('table')) {
+            return $this->parseColumns(Schema::getColumnListing($this->option('table')));
+        }
+
         if ($this->option('columns') != '') {
             return $this->parseColumns($this->option('columns'));
         } else {
@@ -189,7 +195,7 @@ class DataTablesHtmlCommand extends GeneratorCommand
      */
     protected function parseColumns($definition, $indentation = 12)
     {
-        $columns = explode(',', $definition);
+        $columns = is_array($definition) ? $definition : explode(',', $definition);
         $stub    = '';
         foreach ($columns as $key => $column) {
             $stub .= "Column::make('{$column}'),";
