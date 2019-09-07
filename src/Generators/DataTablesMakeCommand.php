@@ -122,7 +122,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getAction()
     {
-        return $this->option('action') ? $this->option('action') : Str::lower($this->getNameInput()) . '.action';
+        return $this->option('action') ?: Str::lower($this->getNameInput()) . '.action';
     }
 
     /**
