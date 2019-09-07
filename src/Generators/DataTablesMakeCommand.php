@@ -15,7 +15,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected $signature = 'datatables:make
                             {name : The name of the datatable.}
-                            {--model : The name of the model to be used.}
+                            {--model= : The name of the model to be used.}
                             {--model-namespace= : The namespace of the model to be used.}
                             {--action= : The path of the action view.}
                             {--table= : Scaffold columns from the table.}
@@ -190,8 +190,12 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         $name           = $this->getNameInput();
         $rootNamespace  = $this->laravel->getNamespace();
-        $model          = $this->option('model') || $this->option('model-namespace');
+        $model          = $this->option('model') == '' || $this->option('model-namespace');
         $modelNamespace = $this->option('model-namespace') ? $this->option('model-namespace') : $this->laravel['config']->get('datatables-buttons.namespace.model');
+
+        if ($this->option('model') != '') {
+            return $this->option('model');
+        }
 
         return $model
             ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') . Str::singular($name)
