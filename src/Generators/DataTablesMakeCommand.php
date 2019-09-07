@@ -42,7 +42,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         parent::handle();
 
-        if ($this->hasOption('builder') && $this->option('builder')) {
+        if ($this->option('builder')) {
             $this->call('datatables:html', [
                 'name'      => $this->getNameInput(),
                 '--columns' => $this->option('columns') ?: $this->laravel['config']->get(

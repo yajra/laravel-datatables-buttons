@@ -16,6 +16,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
                             {--dom= : The dom of the datatable.}
                             {--buttons= : The buttons of the datatable.}
                             {--table= : Scaffold columns from the table.}
+                            {--builder : Ignore, added to work with parent generator.}
                             {--columns= : The columns of the datatable.}';
 
     /**
