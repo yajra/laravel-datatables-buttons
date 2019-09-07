@@ -2,8 +2,6 @@
 
 namespace Yajra\DataTables\Contracts;
 
-use Yajra\DataTables\Html\Builder;
-
 interface DataTableHtmlBuilder
 {
     /**
