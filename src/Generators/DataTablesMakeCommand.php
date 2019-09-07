@@ -18,6 +18,7 @@ class DataTablesMakeCommand extends GeneratorCommand
                             {--model : The name of the model to be used.}
                             {--model-namespace= : The namespace of the model to be used.}
                             {--action= : The path of the action view.}
+                            {--table= : Scaffold columns from the table.}
                             {--dom= : The dom of the datatable.}
                             {--buttons= : The buttons of the datatable.}
                             {--columns= : The columns of the datatable.}';
@@ -54,6 +55,7 @@ class DataTablesMakeCommand extends GeneratorCommand
                 'datatables-buttons.generator.dom',
                 'Bfrtip'
             ),
+            '--table'   => $this->option('table'),
         ]);
     }
 
