@@ -14,22 +14,22 @@ class DataTablesMakeCommand extends GeneratorCommand
      * @var string
      */
     protected $signature = 'datatables:make
-                            {name : The name of the datatable.}
+                            {name : The name of the DataTable.}
                             {--model= : The name of the model to be used.}
                             {--model-namespace= : The namespace of the model to be used.}
                             {--action= : The path of the action view.}
                             {--table= : Scaffold columns from the table.}
                             {--builder : Extract html() to a Builder class.}
-                            {--dom= : The dom of the datatable.}
-                            {--buttons= : The buttons of the datatable.}
-                            {--columns= : The columns of the datatable.}';
+                            {--dom= : The dom of the DataTable.}
+                            {--buttons= : The buttons of the DataTable.}
+                            {--columns= : The columns of the DataTable.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new dataTable service class.';
+    protected $description = 'Create a new DataTable service class.';
 
     /**
      * The type of class being generated.

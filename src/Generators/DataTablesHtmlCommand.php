@@ -12,19 +12,19 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
      * @var string
      */
     protected $signature = 'datatables:html
-                            {name : The name of the datatable html.}
-                            {--dom= : The dom of the datatable.}
-                            {--buttons= : The buttons of the datatable.}
+                            {name : The name of the DataTable html.}
+                            {--dom= : The dom of the DataTable.}
+                            {--buttons= : The buttons of the DataTable.}
                             {--table= : Scaffold columns from the table.}
                             {--builder : Ignore, added to work with parent generator.}
-                            {--columns= : The columns of the datatable.}';
+                            {--columns= : The columns of the DataTable.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new dataTable html class.';
+    protected $description = 'Create a new DataTable html class.';
 
     /**
      * The type of class being generated.
