@@ -68,21 +68,21 @@ return [
         ],
     ],
 
-    /**
+    /*
      * Generator command default options value.
      */
     'generator'     => [
-        /**
+        /*
          * Default columns to generate when not set.
          */
         'columns' => 'id,add your columns,created_at,updated_at',
 
-        /**
+        /*
          * Default buttons to generate when not set.
          */
         'buttons' => 'create,export,print,reset,reload',
 
-        /**
+        /*
          * Default DOM to generate when not set.
          */
         'dom' => 'Bfrtip',
