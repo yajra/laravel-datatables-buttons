@@ -248,14 +248,14 @@ class DataTablesMakeCommand extends GeneratorCommand
 
         if ($this->option('columns') != '') {
             return $this->parseColumns($this->option('columns'));
-        } else {
-            return $this->parseColumns(
-                $this->laravel['config']->get(
-                    'datatables-buttons.generator.columns',
-                    'id,add your columns,created_at,updated_at'
-                )
-            );
         }
+
+        return $this->parseColumns(
+            $this->laravel['config']->get(
+                'datatables-buttons.generator.columns',
+                'id,add your columns,created_at,updated_at'
+            )
+        );
     }
 
     /**
