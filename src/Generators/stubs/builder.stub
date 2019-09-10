@@ -3,11 +3,7 @@
 namespace DummyNamespace;
 
 use DummyModel;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
-use Yajra\DataTables\Html\Editor\Fields;
-use Yajra\DataTables\Html\Editor\Editor;
 
 class DummyClass extends DataTable
 {
@@ -40,34 +36,9 @@ class DummyClass extends DataTable
      *
      * @return \Yajra\DataTables\Html\Builder
      */
-    public function html()
+    public function htmlBuilder()
     {
-        return $this->builder()
-                    ->setTableId('DummyTableId')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('DummyDOM')
-                    ->orderBy(1)
-                    ->buttons(
-                        DummyButtons
-                    );
-    }
-
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
-    protected function getColumns()
-    {
-        return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            DummyColumns
-        ];
+        return DummyBuilder::make();
     }
 
     /**

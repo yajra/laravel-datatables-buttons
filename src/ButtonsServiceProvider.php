@@ -4,6 +4,7 @@ namespace Yajra\DataTables;
 
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\ExcelServiceProvider;
+use Yajra\DataTables\Generators\DataTablesHtmlCommand;
 use Yajra\DataTables\Generators\DataTablesMakeCommand;
 use Yajra\DataTables\Generators\DataTablesScopeCommand;
 
@@ -48,6 +49,7 @@ class ButtonsServiceProvider extends ServiceProvider
     {
         $this->commands(DataTablesMakeCommand::class);
         $this->commands(DataTablesScopeCommand::class);
+        $this->commands(DataTablesHtmlCommand::class);
     }
 
     /**

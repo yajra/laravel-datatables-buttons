@@ -289,7 +289,15 @@ abstract class DataTable implements DataTableButtons
      */
     public function builder()
     {
-        return $this->htmlBuilder ?: $this->htmlBuilder = app('datatables.html');
+        if ($this->htmlBuilder) {
+            return $this->htmlBuilder;
+        }
+
+        if (method_exists($this, 'htmlBuilder')) {
+            return $this->htmlBuilder = app()->call([$this, 'htmlBuilder']);
+        }
+
+        return $this->htmlBuilder = app('datatables.html');
     }
 
     /**

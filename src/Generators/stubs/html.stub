@@ -1,0 +1,45 @@
+<?php
+
+namespace DummyNamespace;
+
+use Yajra\DataTables\Html\Button;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\DataTableHtml;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Html\Editor\Editor;
+
+class DummyClass extends DataTableHtml
+{
+    /**
+     * Build the html builder.
+     *
+     * @return \Yajra\DataTables\Html\Builder
+     * @throws \Exception
+     */
+    public function handle()
+    {
+        return $this->setTableId('DummyTableId')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->dom('DummyDOM')
+                    ->orderBy(1)
+                    ->buttons(
+                        DummyButtons
+                    );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getColumns()
+    {
+        return [
+            Column::computed('action')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
+            DummyColumns
+        ];
+    }
+}
