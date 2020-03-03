@@ -19,7 +19,7 @@
     "yajra/laravel-datatables-oracle": "8.*|9.*",
     "yajra/laravel-datatables-html": "3.*|4.*",
     "maatwebsite/excel": "^3.0",
-    "illuminate/console": "^5.5|^6.0"
+    "illuminate/console": "^5.5|^6|^7"
   },
   "require-dev": {
     "mockery/mockery": "~1.0",
