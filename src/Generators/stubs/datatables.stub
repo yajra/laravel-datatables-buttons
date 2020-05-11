@@ -43,6 +43,7 @@ class DummyClass extends DataTable
     public function html()
     {
         return $this->builder()
+                    ->parameters($this->getBuilderParameters())
                     ->setTableId('DummyTableId')
                     ->columns($this->getColumns())
                     ->minifiedAjax()

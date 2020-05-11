@@ -38,7 +38,8 @@ class DummyClass extends DataTable
      */
     public function htmlBuilder()
     {
-        return DummyBuilder::make();
+        return DummyBuilder::make()
+            ->parameters($this->getBuilderParameters());
     }
 
     /**

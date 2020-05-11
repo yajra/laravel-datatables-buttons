@@ -279,7 +279,8 @@ abstract class DataTable implements DataTableButtons
      */
     public function html()
     {
-        return $this->builder();
+        return $this->builder()
+            ->parameters($this->getBuilderParameters());
     }
 
     /**
