@@ -388,15 +388,15 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        $config = $this->laravel['config'];
+        $config = collect(($this->laravel['config'])->get('datatables-buttons'));
         $stub   = 'datatables.stub';
 
         if ($this->option('builder')) {
-            $stub = 'builder.stub';
+            $stub = ($config->get('stub')) ? 'datatables.builder.stub' : 'builder.stub';
         }
 
-        return $config->get('datatables-buttons.stub')
-            ? base_path() . $config->get('datatables-buttons.stub') . "/{$stub}"
+        return $config->get('stub')
+            ? base_path() . $config->get('stub') . "/{$stub}"
             : __DIR__ . "/stubs/{$stub}";
     }
 }
