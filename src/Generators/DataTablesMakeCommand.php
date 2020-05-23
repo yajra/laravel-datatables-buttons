@@ -2,9 +2,9 @@
 
 namespace Yajra\DataTables\Generators;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class DataTablesMakeCommand extends GeneratorCommand
 {
