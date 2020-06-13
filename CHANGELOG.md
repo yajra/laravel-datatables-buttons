@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.9.2 - 09-13-2020
+
+- Use app helper instead of resolve.
+- Fix [#2351].
+
 ## v4.9.1 - 04-23-2020
 
 - Fix BindingResolutionException when using Laravel 7.7.0 or greater [#105], credits to @singhofmarco.
@@ -200,3 +205,4 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 
 [#19]: https://github.com/yajra/laravel-datatables-buttons/issues/19
 [#1558]: https://github.com/yajra/laravel-datatables/issues/1558
+[#2351]: https://github.com/yajra/laravel-datatables/issues/2351
