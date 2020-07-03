@@ -6,9 +6,8 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class DataTablesExportHandler implements FromCollection, WithHeadings, WithStrictNullComparison
+class DataTablesExportHandler implements FromCollection, WithHeadings
 {
     use Exportable;
 
