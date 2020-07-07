@@ -1,6 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
-## v4.9.2 - 09-13-2020
+## v4.9.3 - 07-07-2020
+
+- Use Blade's helper to check for the first row [#111], credits to @AdrienPoupa.
+
+## v4.9.2 - 06-13-2020
 
 - Use app helper instead of resolve.
 - Fix [#2351].
