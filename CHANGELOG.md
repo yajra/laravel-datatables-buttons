@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.10.0 - 09-09-2020
+
+- Add support for Laravel 8.
+
 ## v4.9.3 - 07-07-2020
 
 - Use Blade's helper to check for the first row [#111], credits to @AdrienPoupa.
