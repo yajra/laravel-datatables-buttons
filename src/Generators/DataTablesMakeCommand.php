@@ -362,7 +362,7 @@ class DataTablesMakeCommand extends GeneratorCommand
         }
 
         // check if model namespace is not set in command and Models directory already exists then use that directory in namespace.
-        if($modelNamespace == '') {
+        if ($modelNamespace == '') {
             $modelNamespace = is_dir(app_path('Models')) ? 'Models' : $rootNamespace;
         }
 
