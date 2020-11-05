@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.10.2 - 11-05-2020
+
+- Set the start to 0 on export [#118], credits to @nmfzone.
+
+
 ## v4.10.1 - 10-31-2020
 
 - Fix model namespace for Laravel 8.x [#117], credits to @luckys383.
