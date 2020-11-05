@@ -324,7 +324,7 @@ abstract class DataTable implements DataTableButtons
     protected function getAjaxResponseData()
     {
         $this->request()->merge([
-            'start' => 0,
+            'start'  => 0,
             'length' => -1,
         ]);
 
