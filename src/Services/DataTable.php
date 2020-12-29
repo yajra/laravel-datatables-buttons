@@ -154,7 +154,7 @@ abstract class DataTable implements DataTableButtons
      */
     public function render($view, $data = [], $mergeData = [])
     {
-        if ($this->request()->ajax() && $this->request()->wantsJson()) {
+        if ($this->request()->expectsJson()) {
             return app()->call([$this, 'ajax']);
         }
 
