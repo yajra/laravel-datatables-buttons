@@ -1,9 +1,12 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.10.3 - 01-02-2021
+
+- Request expects JSON [#120]
+
 ## v4.10.2 - 11-05-2020
 
 - Set the start to 0 on export [#118], credits to @nmfzone.
-
 
 ## v4.10.1 - 10-31-2020
 
@@ -220,6 +223,7 @@ ajax(), dataTable(), query(), csv(), excel(), pdf(), printPreview()
 [#102]: https://github.com/yajra/laravel-datatables-buttons/pull/102
 [#105]: https://github.com/yajra/laravel-datatables-buttons/pull/105
 [#117]: https://github.com/yajra/laravel-datatables-buttons/pull/117
+[#120]: https://github.com/yajra/laravel-datatables-buttons/pull/120
 
 [#19]: https://github.com/yajra/laravel-datatables-buttons/issues/19
 [#1558]: https://github.com/yajra/laravel-datatables/issues/1558
