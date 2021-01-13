@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.10.4 - 01-13-2021
+
+- Reverts [#120] as it breaks several installations.
+
 ## v4.10.3 - 01-02-2021
 
 - Request expects JSON [#120]
