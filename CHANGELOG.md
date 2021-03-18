@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.11.1 - 03-18-2021
+
+- Fix class file ext.
+
 ## v4.11.0 - 03-18-2021
 
 - Improve support for custom laravel-excel export class using collection. [#122](https://github.com/yajra/laravel-datatables-buttons/pull/122)
