@@ -405,7 +405,7 @@ abstract class DataTable implements DataTableButtons
      */
     protected function buildExcelFile()
     {
-        if ($this->exportClass <> DataTablesExportHandler::class) {
+        if ($this->exportClass != DataTablesExportHandler::class) {
             $collection = collect($this->getAjaxResponseData());
         } else {
             $collection = collect($this->getDataForExport());
