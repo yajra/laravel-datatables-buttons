@@ -4,9 +4,11 @@ namespace Yajra\DataTables\Services;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\QueryDataTable;
 use Yajra\DataTables\Transformers\DataArrayTransformer;
 
 abstract class DataTable implements DataTableButtons
@@ -115,6 +117,13 @@ abstract class DataTable implements DataTableButtons
      * @var \Yajra\DataTables\Utilities\Request
      */
     protected $request;
+
+    /**
+     * Flag to use fast-excel package for export.
+     *
+     * @var bool
+     */
+    protected $fastExcel = false;
 
     /**
      * Export class handler.
@@ -395,7 +404,7 @@ abstract class DataTable implements DataTableButtons
     {
         $ext = '.' . strtolower($this->excelWriter);
 
-        return $this->buildExcelFile()->download($this->getFilename() . $ext, $this->excelWriter);
+        return $this->buildExcelFile()->download($this->getFilename() . $ext);
     }
 
     /**
@@ -405,17 +414,39 @@ abstract class DataTable implements DataTableButtons
      */
     protected function buildExcelFile()
     {
+        if ($this->fastExcel) {
+            $query = null;
+            if (method_exists($this, 'query')) {
+                $query = app()->call([$this, 'query']);
+                $query = $this->applyScopes($query);
+            }
+
+            /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
+            $dataTable = app()->call([$this, 'dataTable'], compact('query'));
+            $dataTable->skipPaging();
+
+            if ($dataTable instanceof QueryDataTable) {
+                function queryGenerator($dataTable) {
+                    foreach ($dataTable->getFilteredQuery()->cursor() as $row) {
+                        yield $row;
+                    }
+                }
+
+                return new FastExcel(queryGenerator($dataTable));
+            }
+
+            return new FastExcel($this->convertToLazyCollection($dataTable->toArray()['data']));
+        }
+
         if ($this->exportClass != DataTablesExportHandler::class) {
-            $collection = collect($this->getAjaxResponseData());
-        } else {
-            $collection = collect($this->getDataForExport());
+            $collection = $this->getAjaxResponseData();
+
+            return new $this->exportClass($this->convertToLazyCollection($collection));
         }
 
-        if (method_exists($collection, 'lazy')) {
-            $collection->lazy();
-        }
+        $collection = $this->getDataForExport();
 
-        return new $this->exportClass($collection);
+        return new $this->exportClass($this->convertToLazyCollection($collection));
     }
 
     /**
@@ -506,7 +537,7 @@ abstract class DataTable implements DataTableButtons
     {
         $ext = '.' . strtolower($this->csvWriter);
 
-        return $this->buildExcelFile()->download($this->getFilename() . $ext, $this->csvWriter);
+        return $this->buildExcelFile()->download($this->getFilename() . $ext);
     }
 
     /**
@@ -636,5 +667,22 @@ abstract class DataTable implements DataTableButtons
     protected function getBuilderParameters()
     {
         return config('datatables-buttons.parameters');
+    }
+
+    /**
+     * @param  \Illuminate\Support\|array  $collection
+     * @return \Illuminate\Support\Collection
+     */
+    protected function convertToLazyCollection($collection)
+    {
+        if (is_array($collection)) {
+            $collection = collect($collection);
+        }
+
+        if (method_exists($collection, 'lazy')) {
+            $collection->lazy();
+        }
+
+        return $collection;
     }
 }
