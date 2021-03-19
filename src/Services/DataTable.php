@@ -126,6 +126,16 @@ abstract class DataTable implements DataTableButtons
     protected $fastExcel = false;
 
     /**
+     * Flag to enable/disable fast-excel callback.
+     * Note: Disabling this flag can improve you export time.
+     * Enabled by default to emulate the same output
+     * with laravel-excel.
+     *
+     * @var bool
+     */
+    protected $fastExcelCallback = true;
+
+    /**
      * Export class handler.
      *
      * @var string
@@ -402,8 +412,12 @@ abstract class DataTable implements DataTableButtons
      */
     public function excel()
     {
+        set_time_limit(3600);
+
         $ext = '.' . strtolower($this->excelWriter);
-        $callback = $this->fastExcel ? $this->fastExcelCallback() : $this->excelWriter;
+        $callback = $this->fastExcel ?
+            ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
+            : $this->excelWriter;
 
         return $this->buildExcelFile()->download($this->getFilename() . $ext, $callback);
     }
@@ -416,27 +430,7 @@ abstract class DataTable implements DataTableButtons
     protected function buildExcelFile()
     {
         if ($this->fastExcel) {
-            $query = null;
-            if (method_exists($this, 'query')) {
-                $query = app()->call([$this, 'query']);
-                $query = $this->applyScopes($query);
-            }
-
-            /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
-            $dataTable = app()->call([$this, 'dataTable'], compact('query'));
-            $dataTable->skipPaging();
-
-            if ($dataTable instanceof QueryDataTable) {
-                function queryGenerator($dataTable) {
-                    foreach ($dataTable->getFilteredQuery()->cursor() as $row) {
-                        yield $row;
-                    }
-                }
-
-                return new FastExcel(queryGenerator($dataTable));
-            }
-
-            return new FastExcel($this->convertToLazyCollection($dataTable->toArray()['data']));
+            return $this->buildFastExcelFile();
         }
 
         if ($this->exportClass != DataTablesExportHandler::class) {
@@ -500,7 +494,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return array|string
      */
-    private function exportColumns()
+    protected function exportColumns()
     {
         return is_array($this->exportColumns) ? $this->toColumnsCollection($this->exportColumns) : $this->getExportColumnsFromBuilder();
     }
@@ -536,8 +530,11 @@ abstract class DataTable implements DataTableButtons
      */
     public function csv()
     {
+        set_time_limit(3600);
         $ext = '.' . strtolower($this->csvWriter);
-        $callback = $this->fastExcel ? $this->fastExcelCallback() : $this->csvWriter;
+        $callback = $this->fastExcel ?
+            ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
+            : $this->csvWriter;
 
         return $this->buildExcelFile()->download($this->getFilename() . $ext, $callback);
     }
@@ -693,17 +690,42 @@ abstract class DataTable implements DataTableButtons
      */
     public function fastExcelCallback()
     {
-        $columns = $this->exportColumns();
-
-        $callback = function ($row) use ($columns) {
+        return function ($row) {
             $mapped = [];
-            foreach ($columns as $column) {
+            foreach ($this->exportColumns() as $column) {
                 $mapped[$column['title']] = $row[$column['data']];
             }
 
             return $mapped;
         };
+    }
 
-        return $callback;
+    /**
+     * @return \Rap2hpoutre\FastExcel\FastExcel
+     */
+    protected function buildFastExcelFile()
+    {
+        $query = null;
+        if (method_exists($this, 'query')) {
+            $query = app()->call([$this, 'query']);
+            $query = $this->applyScopes($query);
+        }
+
+        /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
+        $dataTable = app()->call([$this, 'dataTable'], compact('query'));
+        $dataTable->skipPaging();
+
+        if ($dataTable instanceof QueryDataTable) {
+            function queryGenerator($dataTable)
+            {
+                foreach ($dataTable->getFilteredQuery()->cursor() as $row) {
+                    yield $row;
+                }
+            }
+
+            return new FastExcel(queryGenerator($dataTable));
+        }
+
+        return new FastExcel($this->convertToLazyCollection($dataTable->toArray()['data']));
     }
 }
