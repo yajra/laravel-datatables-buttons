@@ -414,7 +414,7 @@ abstract class DataTable implements DataTableButtons
     {
         set_time_limit(3600);
 
-        $ext = '.' . strtolower($this->excelWriter);
+        $ext      = '.' . strtolower($this->excelWriter);
         $callback = $this->fastExcel ?
             ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
             : $this->excelWriter;
@@ -531,7 +531,7 @@ abstract class DataTable implements DataTableButtons
     public function csv()
     {
         set_time_limit(3600);
-        $ext = '.' . strtolower($this->csvWriter);
+        $ext      = '.' . strtolower($this->csvWriter);
         $callback = $this->fastExcel ?
             ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
             : $this->csvWriter;
