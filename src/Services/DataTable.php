@@ -403,8 +403,9 @@ abstract class DataTable implements DataTableButtons
     public function excel()
     {
         $ext = '.' . strtolower($this->excelWriter);
+        $callback = $this->fastExcel ? $this->fastExcelCallback() : $this->excelWriter;
 
-        return $this->buildExcelFile()->download($this->getFilename() . $ext);
+        return $this->buildExcelFile()->download($this->getFilename() . $ext, $callback);
     }
 
     /**
@@ -536,8 +537,9 @@ abstract class DataTable implements DataTableButtons
     public function csv()
     {
         $ext = '.' . strtolower($this->csvWriter);
+        $callback = $this->fastExcel ? $this->fastExcelCallback() : $this->csvWriter;
 
-        return $this->buildExcelFile()->download($this->getFilename() . $ext);
+        return $this->buildExcelFile()->download($this->getFilename() . $ext, $callback);
     }
 
     /**
@@ -684,5 +686,24 @@ abstract class DataTable implements DataTableButtons
         }
 
         return $collection;
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function fastExcelCallback()
+    {
+        $columns = $this->exportColumns();
+
+        $callback = function ($row) use ($columns) {
+            $mapped = [];
+            foreach ($columns as $column) {
+                $mapped[$column['title']] = $row[$column['data']];
+            }
+
+            return $mapped;
+        };
+
+        return $callback;
     }
 }
