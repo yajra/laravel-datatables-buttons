@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.12.1 - 04-03-2021
+
+- Use same export data if export handler extends DataTablesExportHandler [#127](https://github.com/yajra/laravel-datatables-buttons/pull/127)
+- Fix [#126](https://github.com/yajra/laravel-datatables-buttons/issue/126)
+
 ## v4.12.0 - 03-19-2021
 
 - Add support for fast-excel when exporting to excel and csv. [#124](https://github.com/yajra/laravel-datatables-buttons/pull/124)
