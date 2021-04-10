@@ -433,7 +433,7 @@ abstract class DataTable implements DataTableButtons
             return $this->buildFastExcelFile();
         }
 
-        if (! is_subclass_of($this->exportClass, DataTablesExportHandler::class)) {
+        if (! new $this->exportClass(collect()) instanceof DataTablesExportHandler) {
             $collection = $this->getAjaxResponseData();
 
             return new $this->exportClass($this->convertToLazyCollection($collection));
