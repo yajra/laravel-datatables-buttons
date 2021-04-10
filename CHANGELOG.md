@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.12.2 - 04-10-2021
+
+- Fix checking of custom export handler. #130
+- Fix #129 and #127
+
 ## v4.12.1 - 04-03-2021
 
 - Use same export data if export handler extends DataTablesExportHandler [#127](https://github.com/yajra/laravel-datatables-buttons/pull/127)
