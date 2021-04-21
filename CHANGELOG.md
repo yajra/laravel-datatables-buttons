@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.13.0 - 04-21-2021
+
+- Allow passing of constructor arguments on make method helper. #131
+
 ## v4.12.2 - 04-10-2021
 
 - Fix checking of custom export handler. #130
