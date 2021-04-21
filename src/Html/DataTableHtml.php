@@ -20,6 +20,10 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
      */
     public static function make()
     {
+        if (func_get_args()) {
+            return (new static(...func_get_args()))->handle();
+        }
+
         return app(static::class)->handle();
     }
 
