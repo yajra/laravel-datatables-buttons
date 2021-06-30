@@ -550,7 +550,7 @@ abstract class DataTable implements DataTableButtons
      */
     public function addScopes(array $scopes)
     {
-        array_push($this->scopes, $scopes);
+        array_merge($this->scopes, $scopes);
 
         return $this;
     }
