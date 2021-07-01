@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.13.1 - 07-01-2021
+
+- Fix addScopes method pushing the array of scopes. #133
+
 ## v4.13.0 - 04-21-2021
 
 - Allow passing of constructor arguments on make method helper. #131
