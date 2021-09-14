@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.13.2 - 09-14-2021
+
+- Fix export with array values. #136
+
 ## v4.13.1 - 07-01-2021
 
 - Fix addScopes method pushing the array of scopes. #133
