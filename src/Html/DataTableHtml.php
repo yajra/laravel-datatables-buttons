@@ -28,9 +28,10 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     }
 
     /**
-     * @param string $name
-     * @param mixed $arguments
+     * @param  string  $name
+     * @param  mixed  $arguments
      * @return mixed
+     *
      * @throws \Exception
      */
     public function __call($name, $arguments)
@@ -55,7 +56,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     }
 
     /**
-     * @param mixed $builder
+     * @param  mixed  $builder
      * @return static
      */
     public function setHtmlBuilder($builder)

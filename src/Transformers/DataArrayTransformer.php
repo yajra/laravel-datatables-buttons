@@ -10,9 +10,9 @@ class DataArrayTransformer
     /**
      * Transform row data by columns definition.
      *
-     * @param array  $row
-     * @param mixed  $columns
-     * @param string $type
+     * @param  array  $row
+     * @param  mixed  $columns
+     * @param  string  $type
      * @return array
      */
     public function transform(array $row, $columns, $type = 'printable')
@@ -27,9 +27,9 @@ class DataArrayTransformer
     /**
      * Transform row column by collection.
      *
-     * @param array                          $row
-     * @param \Illuminate\Support\Collection $columns
-     * @param string                         $type
+     * @param  array  $row
+     * @param  \Illuminate\Support\Collection  $columns
+     * @param  string  $type
      * @return array
      */
     protected function buildColumnByCollection(array $row, Collection $columns, $type = 'printable')
@@ -56,7 +56,7 @@ class DataArrayTransformer
     /**
      * Decode content to a readable text value.
      *
-     * @param string $data
+     * @param  string  $data
      * @return string
      */
     protected function decodeContent($data)

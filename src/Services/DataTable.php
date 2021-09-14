@@ -166,9 +166,9 @@ abstract class DataTable implements DataTableButtons
     /**
      * Process dataTables needed render output.
      *
-     * @param string $view
-     * @param array $data
-     * @param array $mergeData
+     * @param  string  $view
+     * @param  array  $data
+     * @param  array  $mergeData
      * @return mixed
      */
     public function render($view, $data = [], $mergeData = [])
@@ -322,8 +322,8 @@ abstract class DataTable implements DataTableButtons
     /**
      * Map ajax response to columns definition.
      *
-     * @param mixed $columns
-     * @param string $type
+     * @param  mixed  $columns
+     * @param  string  $type
      * @return array
      */
     protected function mapResponseToColumns($columns, $type)
@@ -369,7 +369,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Add html builder callback hook.
      *
-     * @param callable $callback
+     * @param  callable  $callback
      * @return $this
      */
     public function withHtml(callable $callback)
@@ -382,7 +382,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Add callback before sending the response.
      *
-     * @param callable $callback
+     * @param  callable  $callback
      * @return $this
      */
     public function before(callable $callback)
@@ -395,7 +395,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Add callback after the response was processed.
      *
-     * @param callable $callback
+     * @param  callable  $callback
      * @return $this
      */
     public function response(callable $callback)
@@ -457,7 +457,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Set export filename.
      *
-     * @param string $filename
+     * @param  string  $filename
      * @return DataTable
      */
     public function setFilename($filename)
@@ -502,7 +502,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Convert array to collection of Column class.
      *
-     * @param array $columns
+     * @param  array  $columns
      * @return Collection
      */
     private function toColumnsCollection(array $columns)
@@ -573,7 +573,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Add basic array query scopes.
      *
-     * @param \Yajra\DataTables\Contracts\DataTableScope $scope
+     * @param  \Yajra\DataTables\Contracts\DataTableScope  $scope
      * @return $this
      */
     public function addScope(DataTableScope $scope)
@@ -586,7 +586,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Push multiples scopes to array query scopes.
      *
-     * @param array $scopes
+     * @param  array  $scopes
      * @return $this
      */
     public function addScopes(array $scopes)
@@ -599,8 +599,8 @@ abstract class DataTable implements DataTableButtons
     /**
      * Set a custom class attribute.
      *
-     * @param mixed $key
-     * @param mixed|null $value
+     * @param  mixed  $key
+     * @param  mixed|null  $value
      * @return $this
      */
     public function with($key, $value = null)
@@ -617,7 +617,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Dynamically retrieve the value of an attribute.
      *
-     * @param string $key
+     * @param  string  $key
      * @return mixed|null
      */
     public function __get($key)
@@ -630,7 +630,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Apply query scopes.
      *
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
      * @return mixed
      */
     protected function applyScopes($query)
@@ -645,8 +645,8 @@ abstract class DataTable implements DataTableButtons
     /**
      * Determine if the DataTable has scopes.
      *
-     * @param  array $scopes
-     * @param  bool $validateAll
+     * @param  array  $scopes
+     * @param  bool  $validateAll
      * @return bool
      */
     protected function hasScopes(array $scopes, $validateAll = false)
