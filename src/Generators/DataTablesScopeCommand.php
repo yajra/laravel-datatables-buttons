@@ -30,7 +30,7 @@ class DataTablesScopeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)

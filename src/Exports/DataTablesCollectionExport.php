@@ -17,7 +17,7 @@ abstract class DataTablesCollectionExport implements FromCollection, WithHeading
     protected $collection;
 
     /**
-     * @param Collection $collection
+     * @param  Collection  $collection
      */
     public function __construct(Collection $collection)
     {

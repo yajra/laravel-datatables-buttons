@@ -36,7 +36,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
      */
     protected function buildClass($name)
@@ -71,7 +71,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
     /**
      * Parse the name and format according to the root namespace.
      *
-     * @param string $name
+     * @param  string  $name
      * @return string
      */
     protected function qualifyClass($name)
