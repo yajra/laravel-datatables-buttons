@@ -694,7 +694,7 @@ abstract class DataTable implements DataTableButtons
             $mapped = [];
             foreach ($this->exportColumns() as $column) {
                 if ($column['exportable']) {
-                    $mapped[$column['title']] = $row[$column['name']];
+                    $mapped[$column['title']] = $row[$column['data']];
                 }
             }
 
