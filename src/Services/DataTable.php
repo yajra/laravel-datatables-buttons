@@ -433,6 +433,10 @@ abstract class DataTable implements DataTableButtons
             return $this->buildFastExcelFile();
         }
 
+        if (! class_exists(\Maatwebsite\Excel\ExcelServiceProvider::class)) {
+            throw new \Exception('Please install maatwebsite/excel to be able to use this function.');
+        }
+
         if (! new $this->exportClass(collect()) instanceof DataTablesExportHandler) {
             $collection = $this->getAjaxResponseData();
 
