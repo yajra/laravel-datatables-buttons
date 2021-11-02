@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## UNRELEASED
+
+- Move `maatwebsite/excel` to suggest. #139
+
 ## v4.13.3 - 09-14-2021
 
 - Fix FastExcel Integration: Use data as source. #138
