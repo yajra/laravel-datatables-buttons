@@ -18,16 +18,11 @@
     "php": ">=7.0",
     "yajra/laravel-datatables-oracle": "8.*|9.*",
     "yajra/laravel-datatables-html": "3.*|4.*",
-    "maatwebsite/excel": "^3.0",
     "illuminate/console": "*"
   },
   "require-dev": {
     "mockery/mockery": "~1.0",
     "phpunit/phpunit": "~7.0"
-  },
-  "suggest": {
-    "rap2hpoutre/fast-excel": "Faster exporting of dataTables using fast-excel package.",
-    "barryvdh/laravel-snappy": "For exporting of dataTables to PDF."
   },
   "autoload": {
     "psr-4": {
@@ -50,6 +45,8 @@
     }
   },
   "suggest": {
+    "maatwebsite/excel": "Exporting of dataTables (excel, csv and PDF) using maatwebsite package.",
+    "rap2hpoutre/fast-excel": "Faster exporting of dataTables using fast-excel package.",
     "dompdf/dompdf": "Allows exporting of dataTable to PDF using the DomPDF.",
     "barryvdh/laravel-snappy": "Allows exporting of dataTable to PDF using the print view."
   },

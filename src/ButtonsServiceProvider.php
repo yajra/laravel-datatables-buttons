@@ -62,6 +62,9 @@ class ButtonsServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'datatables-buttons');
 
         $this->app->register(HtmlServiceProvider::class);
-        $this->app->register(ExcelServiceProvider::class);
+
+        if (class_exists(ExcelServiceProvider::class)) {
+            $this->app->register(ExcelServiceProvider::class);
+        }
     }
 }
