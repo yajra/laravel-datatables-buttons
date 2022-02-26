@@ -62,7 +62,7 @@ class DataArrayTransformer
     protected function decodeContent($data)
     {
         try {
-            $decoded = html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8');
+            $decoded = html_entity_decode(trim(strip_tags($data)), ENT_QUOTES, 'UTF-8');
 
             return str_replace("\xc2\xa0", ' ', $decoded);
         } catch (\Throwable $e) {
