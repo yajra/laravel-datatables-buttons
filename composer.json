@@ -15,14 +15,14 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
-    "yajra/laravel-datatables-oracle": "8.*|9.*",
+    "php": "^8.0.2",
+    "yajra/laravel-datatables-oracle": "10.*",
     "yajra/laravel-datatables-html": "3.*|4.*",
     "illuminate/console": "*"
   },
   "require-dev": {
-    "mockery/mockery": "~1.0",
-    "phpunit/phpunit": "~7.0"
+    "mockery/mockery": "^1.1",
+    "phpunit/phpunit": "^7.3"
   },
   "autoload": {
     "psr-4": {
@@ -36,7 +36,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "5.0-dev"
+      "dev-master": "9.0-dev"
     },
     "laravel": {
       "providers": [
