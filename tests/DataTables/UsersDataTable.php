@@ -23,7 +23,7 @@ class UsersDataTable extends DataTable
         return $user->newQuery()->select('*');
     }
 
-    public function html()
+    public function html(): \Yajra\DataTables\Html\Builder
     {
         return $this->builder()
                     ->setTableId('users-table')
