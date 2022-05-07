@@ -19,12 +19,15 @@ This package is a plugin of [Laravel DataTables](https://github.com/yajra/larave
 ## Documentations
 - [Laravel DataTables Documentation](http://yajrabox.com/docs/laravel-datatables)
 
-## NOTE
-This version is still on experimental stage. Until Laravel DataTables v8.x stable version is released,
-there might be a breaking changes that may be included on future releases.
+## Laravel Version Compatibility
+
+| Laravel       | Package |
+|:--------------|:--------|
+| 8.x and below | 4.x     |
+| 9.x           | 9.x     |
 
 ## Quick Installation
-`composer require yajra/laravel-datatables-buttons:^4.0`
+`composer require yajra/laravel-datatables-buttons:^9.0`
 
 #### Service Provider (Optional on Laravel 5.5)
 `Yajra\DataTables\ButtonsServiceProvider::class`

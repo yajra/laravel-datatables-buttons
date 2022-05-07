@@ -1,6 +1,6 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
-## UNRELEASED
+## v9.0.0 - UNRELEASED
 
 - Added Laravel 9 specific support
 - Bump major version to match with the framework
