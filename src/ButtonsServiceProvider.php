@@ -27,7 +27,7 @@ class ButtonsServiceProvider extends ServiceProvider
     /**
      * Publish datatables assets.
      */
-    protected function publishAssets()
+    protected function publishAssets(): void
     {
         $this->publishes([
             __DIR__.'/config/config.php' => config_path('datatables-buttons.php'),
@@ -45,7 +45,7 @@ class ButtonsServiceProvider extends ServiceProvider
     /**
      * Register datatables commands.
      */
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         $this->commands(DataTablesMakeCommand::class);
         $this->commands(DataTablesScopeCommand::class);

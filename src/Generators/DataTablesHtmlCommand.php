@@ -62,11 +62,9 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
      */
     protected function getStub(): string
     {
-        $config = $this->laravel['config'];
-
-        return $config->get('datatables-buttons.stub')
-            ? base_path() . $config->get('datatables-buttons.stub') . '/html.stub'
-            : __DIR__ . '/stubs/html.stub';
+        return config('datatables-buttons.stub')
+            ? base_path().config('datatables-buttons.stub').'/html.stub'
+            : __DIR__.'/stubs/html.stub';
     }
 
     /**
@@ -91,6 +89,6 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
             $name .= 'DataTableHtml';
         }
 
-        return $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name;
+        return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
     }
 }

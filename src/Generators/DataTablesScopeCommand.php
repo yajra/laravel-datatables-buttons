@@ -33,9 +33,9 @@ class DataTablesScopeCommand extends GeneratorCommand
      * @param  string  $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\DataTables\Scopes';
+        return $rootNamespace.'\DataTables\Scopes';
     }
 
     /**
@@ -43,12 +43,12 @@ class DataTablesScopeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
-        if ($stubFolder = $this->laravel['config']->get('datatables-buttons.stub')) {
-            return base_path($stubFolder . '/scopes.stub');
+        if ($stubFolder = config('datatables-buttons.stub')) {
+            return base_path($stubFolder.'/scopes.stub');
         }
 
-        return __DIR__ . '/stubs/scopes.stub';
+        return __DIR__.'/stubs/scopes.stub';
     }
 }

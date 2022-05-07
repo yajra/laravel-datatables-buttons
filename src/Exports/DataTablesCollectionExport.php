@@ -14,20 +14,20 @@ abstract class DataTablesCollectionExport implements FromCollection, WithHeading
     /**
      * @var Collection
      */
-    protected $collection;
+    protected Collection $collection;
 
     /**
-     * @param  Collection  $collection
+     * @param  \Illuminate\Support\Collection|null  $collection
      */
-    public function __construct(Collection $collection)
+    public function __construct(Collection $collection = null)
     {
-        $this->collection = $collection;
+        $this->collection = $collection ?? new Collection;
     }
 
     /**
      * @return Collection
      */
-    public function collection()
+    public function collection(): Collection
     {
         return $this->collection;
     }

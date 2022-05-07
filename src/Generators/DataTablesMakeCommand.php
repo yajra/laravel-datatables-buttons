@@ -43,20 +43,15 @@ class DataTablesMakeCommand extends GeneratorCommand
         parent::handle();
 
         if ($this->option('builder')) {
+            $columns = config('datatables-buttons.generator.columns', 'id,add your columns,created_at,updated_at');
+            $buttons = config('datatables-buttons.generator.buttons', 'create,export,print,reset,reload');
+            $dom = config('datatables-buttons.generator.dom', 'Bfrtip');
+
             $this->call('datatables:html', [
                 'name' => $this->getNameInput(),
-                '--columns' => $this->option('columns') ?: $this->laravel['config']->get(
-                    'datatables-buttons.generator.columns',
-                    'id,add your columns,created_at,updated_at'
-                ),
-                '--buttons' => $this->option('buttons') ?: $this->laravel['config']->get(
-                    'datatables-buttons.generator.buttons',
-                    'create,export,print,reset,reload'
-                ),
-                '--dom' => $this->option('dom') ?: $this->laravel['config']->get(
-                    'datatables-buttons.generator.dom',
-                    'Bfrtip'
-                ),
+                '--columns' => $this->option('columns') ?: $columns,
+                '--buttons' => $this->option('buttons') ?: $buttons,
+                '--dom' => $this->option('dom') ?: $dom,
                 '--table' => $this->option('table'),
             ]);
         }
@@ -95,7 +90,9 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected function replaceFilename(string &$stub): static
     {
         $stub = str_replace(
-            'DummyFilename', preg_replace('#datatable$#i', '', $this->getNameInput()), $stub
+            'DummyFilename',
+            (string) preg_replace('#datatable$#i', '', $this->getNameInput()),
+            $stub
         );
 
         return $this;
@@ -123,7 +120,14 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getAction(): string
     {
-        return $this->option('action') ?: Str::lower($this->getNameInput()).'.action';
+        /** @var string $action */
+        $action = $this->option('action');
+
+        if ($action) {
+            return $action;
+        }
+
+        return Str::lower($this->getNameInput()).'.action';
     }
 
     /**
@@ -151,7 +155,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         $stub = str_replace(
             'DummyDOM',
-            $this->option('dom') ?: $this->laravel['config']->get('datatables-buttons.generator.dom', 'Bfrtip'),
+            $this->option('dom') ?: config('datatables-buttons.generator.dom', 'Bfrtip'),
             $stub
         );
 
@@ -180,16 +184,19 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getButtons(): string
     {
-        if ($this->option('buttons') != '') {
-            return $this->parseButtons($this->option('buttons'));
-        } else {
-            return $this->parseButtons(
-                $this->laravel['config']->get(
-                    'datatables-buttons.generator.buttons',
-                    'create,export,print,reset,reload'
-                )
-            );
+        /** @var string $buttons */
+        $buttons = $this->option('buttons');
+
+        if ($buttons) {
+            return $this->parseButtons($buttons);
         }
+
+        return $this->parseButtons(
+            config(
+                'datatables-buttons.generator.buttons',
+                'create,export,print,reset,reload'
+            )
+        );
     }
 
     /**
@@ -243,22 +250,23 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getColumns(): string
     {
+        /** @var string $table */
         $table = $this->option('table');
 
         if ($table) {
             return $this->parseColumns(Schema::getColumnListing($table));
         }
 
-        if ($this->option('columns') != '') {
-            return $this->parseColumns($this->option('columns'));
+        /** @var string $columns */
+        $columns = $this->option('columns');
+
+        if ($columns) {
+            return $this->parseColumns($columns);
         }
 
-        return $this->parseColumns(
-            $this->laravel['config']->get(
-                'datatables-buttons.generator.columns',
-                'id,add your columns,created_at,updated_at'
-            )
-        );
+        $columns = config('datatables-buttons.generator.columns', 'id,add your columns,created_at,updated_at');
+
+        return $this->parseColumns($columns);
     }
 
     /**
@@ -332,7 +340,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\\'.$this->laravel['config']->get('datatables-buttons.namespace.base', 'DataTables');
+        return $rootNamespace.'\\'.config('datatables-buttons.namespace.base', 'DataTables');
     }
 
     /**
@@ -359,11 +367,15 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         $name = $this->getNameInput();
         $rootNamespace = $this->laravel->getNamespace();
-        $model = $this->option('model') == '' || $this->option('model-namespace');
-        $modelNamespace = $this->option('model-namespace') ? $this->option('model-namespace') : $this->laravel['config']->get('datatables-buttons.namespace.model');
 
-        if ($this->option('model') != '') {
-            return $this->option('model');
+        /** @var string $modelFromOption */
+        $modelFromOption = $this->option('model');
+
+        $model = $modelFromOption == '' || $this->option('model-namespace');
+        $modelNamespace = $this->option('model-namespace') ? $this->option('model-namespace') : config('datatables-buttons.namespace.model');
+
+        if ($modelFromOption) {
+            return $modelFromOption;
         }
 
         // check if model namespace is not set in command and Models directory already exists then use that directory in namespace.
@@ -398,15 +410,14 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        $config = $this->laravel['config'];
         $stub = 'datatables.stub';
 
         if ($this->option('builder')) {
             $stub = 'builder.stub';
         }
 
-        return $config->get('datatables-buttons.stub')
-            ? base_path().$config->get('datatables-buttons.stub')."/{$stub}"
+        return config('datatables-buttons.stub')
+            ? base_path().config('datatables-buttons.stub')."/$stub"
             : __DIR__."/stubs/{$stub}";
     }
 }

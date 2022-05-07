@@ -10,9 +10,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
+use Maatwebsite\Excel\ExcelServiceProvider;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
+use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\QueryDataTable;
@@ -24,6 +26,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * DataTables print preview view.
      *
+     * @phpstan-var view-string
      * @var string
      */
     protected string $printPreview = 'datatables::print';
@@ -38,16 +41,16 @@ abstract class DataTable implements DataTableButtons
     /**
      * List of columns to be excluded from export.
      *
-     * @var string|array
+     * @var array
      */
-    protected string|array $excludeFromExport = [];
+    protected array $excludeFromExport = [];
 
     /**
      * List of columns to be excluded from printing.
      *
-     * @var string|array
+     * @var array
      */
-    protected string|array $excludeFromPrint = [];
+    protected array $excludeFromPrint = [];
 
     /**
      * List of columns to be exported.
@@ -146,7 +149,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export class handler.
      *
-     * @var string
+     * @var class-string
      */
     protected string $exportClass = DataTablesExportHandler::class;
 
@@ -174,6 +177,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Process dataTables needed render output.
      *
+     * @phpstan-param view-string $view
      * @param  string  $view
      * @param  array  $data
      * @param  array  $mergeData
@@ -193,6 +197,7 @@ abstract class DataTable implements DataTableButtons
                 return app()->call([$this, 'printPreview']);
             }
 
+            // @phpstan-ignore-next-line
             return app()->call([$this, $action]);
         }
 
@@ -223,6 +228,7 @@ abstract class DataTable implements DataTableButtons
         }
 
         /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
+        // @phpstan-ignore-next-line
         $dataTable = app()->call([$this, 'dataTable'], compact('query'));
 
         if (is_callable($this->beforeCallback)) {
@@ -267,9 +273,9 @@ abstract class DataTable implements DataTableButtons
     /**
      * Get printable columns.
      *
-     * @return array|string
+     * @return array|\Illuminate\Support\Collection
      */
-    protected function printColumns()
+    protected function printColumns(): array|Collection
     {
         return is_array($this->printColumns) ? $this->toColumnsCollection($this->printColumns) : $this->getPrintColumnsFromBuilder();
     }
@@ -279,7 +285,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getPrintColumnsFromBuilder()
+    protected function getPrintColumnsFromBuilder(): Collection
     {
         return $this->html()->removeColumn(...$this->excludeFromPrint)->getColumns();
     }
@@ -289,7 +295,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getExportColumnsFromBuilder()
+    protected function getExportColumnsFromBuilder(): Collection
     {
         return $this->html()->removeColumn(...$this->excludeFromExport)->getColumns();
     }
@@ -448,11 +454,11 @@ abstract class DataTable implements DataTableButtons
             return $this->buildFastExcelFile();
         }
 
-        if (! class_exists(\Maatwebsite\Excel\ExcelServiceProvider::class)) {
-            throw new \Exception('Please install maatwebsite/excel to be able to use this function.');
+        if (! class_exists(ExcelServiceProvider::class)) {
+            throw new Exception('Please install maatwebsite/excel to be able to use this function.');
         }
 
-        if (! new $this->exportClass(collect()) instanceof DataTablesExportHandler) {
+        if (! new $this->exportClass instanceof DataTablesExportHandler) {
             $collection = $this->getAjaxResponseData();
 
             return new $this->exportClass($this->convertToLazyCollection($collection));
@@ -526,7 +532,8 @@ abstract class DataTable implements DataTableButtons
      */
     private function toColumnsCollection(array $columns): Collection
     {
-        $collection = collect();
+        $collection = new Collection;
+
         foreach ($columns as $column) {
             if (isset($column['data'])) {
                 $column['title'] = $column['title'] ?? $column['data'];
@@ -740,6 +747,7 @@ abstract class DataTable implements DataTableButtons
         }
 
         /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
+        // @phpstan-ignore-next-line
         $dataTable = app()->call([$this, 'dataTable'], compact('query'));
         $dataTable->skipPaging();
 
@@ -756,6 +764,6 @@ abstract class DataTable implements DataTableButtons
             return new FastExcel(queryGenerator($dataTable));
         }
 
-        return new FastExcel(collect($dataTable->toArray()['data']));
+        return new FastExcel($dataTable->toArray()['data']);
     }
 }
