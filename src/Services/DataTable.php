@@ -77,16 +77,16 @@ abstract class DataTable implements DataTableButtons
     /**
      * Html builder.
      *
-     * @var \Yajra\DataTables\Html\Builder|null
+     * @var \Yajra\DataTables\Html\Builder
      */
-    protected ?Builder $htmlBuilder;
+    protected Builder $htmlBuilder;
 
     /**
      * Html builder extension callback.
      *
      * @var callable|null
      */
-    protected $htmlCallback = null;
+    protected $htmlCallback;
 
     /**
      * Export filename.
@@ -107,14 +107,14 @@ abstract class DataTable implements DataTableButtons
      *
      * @var callable|null
      */
-    protected $beforeCallback = null;
+    protected $beforeCallback;
 
     /**
      * Callback after processing the response.
      *
      * @var callable|null
      */
-    protected $responseCallback = null;
+    protected $responseCallback;
 
     /**
      * Available button actions. When calling an action, the value will be used
@@ -126,9 +126,9 @@ abstract class DataTable implements DataTableButtons
     protected array $actions = ['print', 'csv', 'excel', 'pdf'];
 
     /**
-     * @var \Yajra\DataTables\Utilities\Request|null
+     * @var \Yajra\DataTables\Utilities\Request
      */
-    protected ?Request $request;
+    protected Request $request;
 
     /**
      * Flag to use fast-excel package for export.
@@ -175,6 +175,18 @@ abstract class DataTable implements DataTableButtons
      */
     protected string $pdfWriter = 'Dompdf';
 
+    public function __construct()
+    {
+        /** @var Request $request */
+        $request = app('datatables.request');
+
+        /** @var Builder $builder */
+        $builder = app('datatables.html');
+
+        $this->request = $request;
+        $this->htmlBuilder = $builder;
+    }
+
     /**
      * Process dataTables needed render output.
      *
@@ -212,7 +224,7 @@ abstract class DataTable implements DataTableButtons
      */
     public function request(): Request
     {
-        return $this->request ?: $this->request = app('datatables.request');
+        return $this->request;
     }
 
     /**
@@ -307,7 +319,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getColumnsFromBuilder()
+    protected function getColumnsFromBuilder(): Collection
     {
         return $this->html()->getColumns();
     }
@@ -329,15 +341,11 @@ abstract class DataTable implements DataTableButtons
      */
     public function builder(): Builder
     {
-        if ($this->htmlBuilder) {
-            return $this->htmlBuilder;
-        }
-
         if (method_exists($this, 'htmlBuilder')) {
             return $this->htmlBuilder = $this->htmlBuilder();
         }
 
-        return $this->htmlBuilder = app('datatables.html');
+        return $this->htmlBuilder;
     }
 
     /**
