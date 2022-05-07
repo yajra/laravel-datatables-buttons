@@ -37,6 +37,7 @@ abstract class DataTablesCollectionExport implements FromCollection, WithHeading
      */
     public function headings(): array
     {
+        /** @var array $first */
         $first = $this->collection->first();
         if ($first) {
             return array_keys($first);

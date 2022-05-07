@@ -2,6 +2,7 @@
 
 namespace Yajra\DataTables\Services;
 
+use Closure;
 use Generator;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -223,6 +224,7 @@ abstract class DataTable implements DataTableButtons
     {
         $query = null;
         if (method_exists($this, 'query')) {
+            /** @var EloquentBuilder|QueryBuilder $query */
             $query = app()->call([$this, 'query']);
             $query = $this->applyScopes($query);
         }
@@ -332,7 +334,7 @@ abstract class DataTable implements DataTableButtons
         }
 
         if (method_exists($this, 'htmlBuilder')) {
-            return $this->htmlBuilder = app()->call([$this, 'htmlBuilder']);
+            return $this->htmlBuilder = $this->htmlBuilder();
         }
 
         return $this->htmlBuilder = app('datatables.html');
@@ -366,7 +368,10 @@ abstract class DataTable implements DataTableButtons
             'length' => -1,
         ]);
 
+        /** @var JsonResponse $response */
         $response = app()->call([$this, 'ajax']);
+
+        /** @var array{data: array} $data */
         $data = $response->getData(true);
 
         return $data['data'];
@@ -434,18 +439,24 @@ abstract class DataTable implements DataTableButtons
     {
         set_time_limit(3600);
 
-        $ext = '.'.strtolower($this->excelWriter);
-        $callback = $this->fastExcel ?
-            ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
-            : $this->excelWriter;
+        $path = $this->getFilename().'.'.strtolower($this->excelWriter);
 
-        return $this->buildExcelFile()->download($this->getFilename().$ext, $callback);
+        $excelFile = $this->buildExcelFile();
+
+        if ($excelFile instanceof FastExcel) {
+            $callback = $this->fastExcelCallback ? $this->fastExcelCallback() : null;
+
+            return $excelFile->download($path, $callback);
+        }
+
+        // @phpstan-ignore-next-line
+        return $excelFile->download($path, $this->excelWriter);
     }
 
     /**
      * Build Excel file and prepare for export.
      *
-     * @return mixed|\Rap2hpoutre\FastExcel\FastExcel
+     * @return mixed|FastExcel
      * @throws \Exception
      */
     protected function buildExcelFile()
@@ -517,7 +528,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Get export columns definition.
      *
-     * @return Collection
+     * @return Collection<int, Column>
      */
     protected function exportColumns(): Collection
     {
@@ -552,24 +563,30 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export results to CSV file.
      *
-     * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @return string|\Symfony\Component\HttpFoundation\StreamedResponse
      * @throws \Exception
      */
     public function csv()
     {
         set_time_limit(3600);
-        $ext = '.'.strtolower($this->csvWriter);
-        $callback = $this->fastExcel ?
-            ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
-            : $this->csvWriter;
+        $path = $this->getFilename().'.'.strtolower($this->excelWriter);
 
-        return $this->buildExcelFile()->download($this->getFilename().$ext, $callback);
+        $excelFile = $this->buildExcelFile();
+
+        if ($excelFile instanceof FastExcel) {
+            $callback = $this->fastExcelCallback ? $this->fastExcelCallback() : null;
+
+            return $excelFile->download($path, $callback);
+        }
+
+        // @phpstan-ignore-next-line
+        return $this->buildExcelFile()->download($path, $this->csvWriter);
     }
 
     /**
      * Export results to PDF file.
      *
-     * @return \Illuminate\Http\Response|string|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @return \Illuminate\Http\Response|string|\Symfony\Component\HttpFoundation\StreamedResponse
      * @throws \Box\Spout\Common\Exception\IOException
      * @throws \Box\Spout\Common\Exception\InvalidArgumentException
      * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
@@ -582,6 +599,7 @@ abstract class DataTable implements DataTableButtons
             return $this->snappyPdf();
         }
 
+        // @phpstan-ignore-next-line
         return $this->buildExcelFile()->download($this->getFilename().'.pdf', $this->pdfWriter);
     }
 
@@ -594,7 +612,9 @@ abstract class DataTable implements DataTableButtons
     {
         /** @var \Barryvdh\Snappy\PdfWrapper $snappy */
         $snappy = app('snappy.pdf.wrapper');
-        $options = config('datatables-buttons.snappy.options');
+        $options = (array) config('datatables-buttons.snappy.options');
+
+        /** @var string $orientation */
         $orientation = config('datatables-buttons.snappy.orientation');
 
         $snappy->setOptions($options)->setOrientation($orientation);
@@ -721,15 +741,16 @@ abstract class DataTable implements DataTableButtons
     /**
      * @return \Closure
      */
-    public function fastExcelCallback(): \Closure
+    public function fastExcelCallback(): Closure
     {
         return function ($row) {
             $mapped = [];
-            foreach ($this->exportColumns() as $column) {
+
+            $this->exportColumns()->each(function (Column $column) use (&$mapped, $row) {
                 if ($column['exportable']) {
                     $mapped[$column['title']] = $row[$column['data']];
                 }
-            }
+            });
 
             return $mapped;
         };
@@ -742,6 +763,7 @@ abstract class DataTable implements DataTableButtons
     {
         $query = null;
         if (method_exists($this, 'query')) {
+            /** @var EloquentBuilder|QueryBuilder $query */
             $query = app()->call([$this, 'query']);
             $query = $this->applyScopes($query);
         }

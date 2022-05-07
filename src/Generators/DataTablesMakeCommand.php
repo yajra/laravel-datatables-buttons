@@ -153,11 +153,10 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function replaceDOM(string &$stub): static
     {
-        $stub = str_replace(
-            'DummyDOM',
-            $this->option('dom') ?: config('datatables-buttons.generator.dom', 'Bfrtip'),
-            $stub
-        );
+        /** @var string $dom */
+        $dom = $this->option('dom') ?: config('datatables-buttons.generator.dom', 'Bfrtip');
+
+        $stub = str_replace('DummyDOM', $dom, $stub);
 
         return $this;
     }
@@ -191,12 +190,10 @@ class DataTablesMakeCommand extends GeneratorCommand
             return $this->parseButtons($buttons);
         }
 
-        return $this->parseButtons(
-            config(
-                'datatables-buttons.generator.buttons',
-                'create,export,print,reset,reload'
-            )
-        );
+        /** @var string $buttons */
+        $buttons = config('datatables-buttons.generator.buttons', 'create,export,print,reset,reload');
+
+        return $this->parseButtons($buttons);
     }
 
     /**
@@ -264,6 +261,7 @@ class DataTablesMakeCommand extends GeneratorCommand
             return $this->parseColumns($columns);
         }
 
+        /** @var string $columns */
         $columns = config('datatables-buttons.generator.columns', 'id,add your columns,created_at,updated_at');
 
         return $this->parseColumns($columns);
