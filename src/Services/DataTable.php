@@ -2,6 +2,7 @@
 
 namespace Yajra\DataTables\Services;
 
+use Barryvdh\Snappy\PdfWrapper;
 use Closure;
 use Generator;
 use Illuminate\Contracts\Support\Renderable;
@@ -621,9 +622,14 @@ abstract class DataTable implements DataTableButtons
      * PDF version of the table using print preview blade template.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Yajra\DataTables\Exceptions\Exception
      */
     public function snappyPdf(): Response
     {
+        if (! class_exists(PdfWrapper::class)) {
+            throw new Exception("You need to install barryvdh/laravel-snappy to be able to use this feature.");
+        }
+
         /** @var \Barryvdh\Snappy\PdfWrapper $snappy */
         $snappy = app('snappy.pdf.wrapper');
         $options = (array) config('datatables-buttons.snappy.options');
