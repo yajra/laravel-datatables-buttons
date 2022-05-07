@@ -28,6 +28,7 @@ abstract class DataTable implements DataTableButtons
      * DataTables print preview view.
      *
      * @phpstan-var view-string
+     *
      * @var string
      */
     protected string $printPreview = 'datatables::print';
@@ -191,6 +192,7 @@ abstract class DataTable implements DataTableButtons
      * Process dataTables needed render output.
      *
      * @phpstan-param view-string $view
+     *
      * @param  string  $view
      * @param  array  $data
      * @param  array  $mergeData
@@ -441,6 +443,7 @@ abstract class DataTable implements DataTableButtons
      * Export results to Excel file.
      *
      * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+     *
      * @throws \Exception
      */
     public function excel()
@@ -465,6 +468,7 @@ abstract class DataTable implements DataTableButtons
      * Build Excel file and prepare for export.
      *
      * @return mixed|FastExcel
+     *
      * @throws \Exception
      */
     protected function buildExcelFile()
@@ -572,6 +576,7 @@ abstract class DataTable implements DataTableButtons
      * Export results to CSV file.
      *
      * @return string|\Symfony\Component\HttpFoundation\StreamedResponse
+     *
      * @throws \Exception
      */
     public function csv()
@@ -595,6 +600,7 @@ abstract class DataTable implements DataTableButtons
      * Export results to PDF file.
      *
      * @return \Illuminate\Http\Response|string|\Symfony\Component\HttpFoundation\StreamedResponse
+     *
      * @throws \Box\Spout\Common\Exception\IOException
      * @throws \Box\Spout\Common\Exception\InvalidArgumentException
      * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
