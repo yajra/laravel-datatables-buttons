@@ -3,6 +3,7 @@
 namespace Yajra\DataTables\Exports;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,22 +13,22 @@ abstract class DataTablesCollectionExport implements FromCollection, WithHeading
     use Exportable;
 
     /**
-     * @var Collection
+     * @var Collection|LazyCollection
      */
-    protected Collection $collection;
+    protected $collection;
 
     /**
-     * @param  \Illuminate\Support\Collection|null  $collection
+     * @param  Collection|LazyCollection|null  $collection
      */
-    public function __construct(Collection $collection = null)
+    public function __construct($collection = null)
     {
         $this->collection = $collection ?? new Collection;
     }
 
     /**
-     * @return Collection
+     * @return Collection|LazyCollection
      */
-    public function collection(): Collection
+    public function collection()
     {
         return $this->collection;
     }
