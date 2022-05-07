@@ -38,6 +38,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
      *
      * @param  string  $name
      * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildClass($name)
     {
@@ -59,7 +60,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         $config = $this->laravel['config'];
 
@@ -74,7 +75,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
      * @param  string  $name
      * @return string
      */
-    protected function qualifyClass($name)
+    protected function qualifyClass($name): string
     {
         $rootNamespace = $this->laravel->getNamespace();
 

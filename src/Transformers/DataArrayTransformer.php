@@ -4,18 +4,20 @@ namespace Yajra\DataTables\Transformers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Throwable;
+use Yajra\DataTables\Html\Column;
 
 class DataArrayTransformer
 {
     /**
-     * Transform row data by columns definition.
+     * Transform row data by column's definition.
      *
      * @param  array  $row
-     * @param  mixed  $columns
+     * @param  array|Collection<array-key, Column>  $columns
      * @param  string  $type
      * @return array
      */
-    public function transform(array $row, $columns, $type = 'printable')
+    public function transform(array $row, array|Collection $columns, string $type = 'printable'): array
     {
         if ($columns instanceof Collection) {
             return $this->buildColumnByCollection($row, $columns, $type);
@@ -28,27 +30,28 @@ class DataArrayTransformer
      * Transform row column by collection.
      *
      * @param  array  $row
-     * @param  \Illuminate\Support\Collection  $columns
+     * @param  Collection<array-key, Column>  $columns
      * @param  string  $type
      * @return array
      */
-    protected function buildColumnByCollection(array $row, Collection $columns, $type = 'printable')
+    protected function buildColumnByCollection(array $row, Collection $columns, string $type = 'printable'): array
     {
         $results = [];
-        foreach ($columns->all() as $column) {
+        $columns->each(function (Column $column) use ($row, $type, &$results) {
             if ($column[$type]) {
-                $title = $column['title'];
-                $data  = Arr::get($row, $column['data']);
+                $title = $column->title;
+                $data = $row[$column->data] ?? '';
+
                 if ($type == 'exportable') {
-                    $title    = $this->decodeContent($title);
+                    $title = $this->decodeContent($title);
                     $dataType = gettype($data);
-                    $data     = $this->decodeContent($data);
+                    $data = $this->decodeContent($data);
                     settype($data, $dataType);
                 }
 
                 $results[$title] = $data;
             }
-        }
+        });
 
         return $results;
     }
@@ -59,13 +62,13 @@ class DataArrayTransformer
      * @param  string  $data
      * @return string
      */
-    protected function decodeContent($data)
+    protected function decodeContent(string $data): string
     {
         try {
             $decoded = html_entity_decode(trim(strip_tags($data)), ENT_QUOTES, 'UTF-8');
 
             return str_replace("\xc2\xa0", ' ', $decoded);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $data;
         }
     }

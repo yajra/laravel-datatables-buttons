@@ -2,14 +2,22 @@
 
 namespace Yajra\DataTables\Services;
 
+use Generator;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
+use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\QueryDataTable;
 use Yajra\DataTables\Transformers\DataArrayTransformer;
+use Yajra\DataTables\Utilities\Request;
 
 abstract class DataTable implements DataTableButtons
 {
@@ -18,91 +26,91 @@ abstract class DataTable implements DataTableButtons
      *
      * @var string
      */
-    protected $printPreview = 'datatables::print';
+    protected string $printPreview = 'datatables::print';
 
     /**
      * Name of the dataTable variable.
      *
      * @var string
      */
-    protected $dataTableVariable = 'dataTable';
+    protected string $dataTableVariable = 'dataTable';
 
     /**
      * List of columns to be excluded from export.
      *
      * @var string|array
      */
-    protected $excludeFromExport = [];
+    protected string|array $excludeFromExport = [];
 
     /**
      * List of columns to be excluded from printing.
      *
      * @var string|array
      */
-    protected $excludeFromPrint = [];
+    protected string|array $excludeFromPrint = [];
 
     /**
      * List of columns to be exported.
      *
      * @var string|array
      */
-    protected $exportColumns = '*';
+    protected string|array $exportColumns = '*';
 
     /**
      * List of columns to be printed.
      *
      * @var string|array
      */
-    protected $printColumns = '*';
+    protected string|array $printColumns = '*';
 
     /**
      * Query scopes.
      *
      * @var \Yajra\DataTables\Contracts\DataTableScope[]
      */
-    protected $scopes = [];
+    protected array $scopes = [];
 
     /**
      * Html builder.
      *
-     * @var \Yajra\DataTables\Html\Builder
+     * @var \Yajra\DataTables\Html\Builder|null
      */
-    protected $htmlBuilder;
+    protected ?Builder $htmlBuilder;
 
     /**
      * Html builder extension callback.
      *
-     * @var callable
+     * @var callable|null
      */
-    protected $htmlCallback;
+    protected $htmlCallback = null;
 
     /**
      * Export filename.
      *
      * @var string
      */
-    protected $filename = '';
+    protected string $filename = '';
 
     /**
      * Custom attributes set on the class.
      *
      * @var array
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * Callback before sending the response.
      *
-     * @var callable
+     * @var callable|null
      */
-    protected $beforeCallback;
+    protected $beforeCallback = null;
 
     /**
      * Callback after processing the response.
      *
-     * @var callable
+     * @var callable|null
      */
-    protected $responseCallback;
+    protected $responseCallback = null;
 
     /**
      * Available button actions. When calling an action, the value will be used
@@ -111,19 +119,19 @@ abstract class DataTable implements DataTableButtons
      *
      * @var array
      */
-    protected $actions = ['print', 'csv', 'excel', 'pdf'];
+    protected array $actions = ['print', 'csv', 'excel', 'pdf'];
 
     /**
-     * @var \Yajra\DataTables\Utilities\Request
+     * @var \Yajra\DataTables\Utilities\Request|null
      */
-    protected $request;
+    protected ?Request $request;
 
     /**
      * Flag to use fast-excel package for export.
      *
      * @var bool
      */
-    protected $fastExcel = false;
+    protected bool $fastExcel = false;
 
     /**
      * Flag to enable/disable fast-excel callback.
@@ -133,35 +141,35 @@ abstract class DataTable implements DataTableButtons
      *
      * @var bool
      */
-    protected $fastExcelCallback = true;
+    protected bool $fastExcelCallback = true;
 
     /**
      * Export class handler.
      *
      * @var string
      */
-    protected $exportClass = DataTablesExportHandler::class;
+    protected string $exportClass = DataTablesExportHandler::class;
 
     /**
-     * CSV export type writer.
+     * CSV export typewriter.
      *
      * @var string
      */
-    protected $csvWriter = 'Csv';
+    protected string $csvWriter = 'Csv';
 
     /**
-     * Excel export type writer.
+     * Excel export typewriter.
      *
      * @var string
      */
-    protected $excelWriter = 'Xlsx';
+    protected string $excelWriter = 'Xlsx';
 
     /**
-     * PDF export type writer.
+     * PDF export typewriter.
      *
      * @var string
      */
-    protected $pdfWriter = 'Dompdf';
+    protected string $pdfWriter = 'Dompdf';
 
     /**
      * Process dataTables needed render output.
@@ -171,13 +179,16 @@ abstract class DataTable implements DataTableButtons
      * @param  array  $mergeData
      * @return mixed
      */
-    public function render($view, $data = [], $mergeData = [])
+    public function render(string $view, array $data = [], array $mergeData = [])
     {
         if ($this->request()->ajax() && $this->request()->wantsJson()) {
             return app()->call([$this, 'ajax']);
         }
 
-        if ($action = $this->request()->get('action') and in_array($action, $this->actions)) {
+        /** @var string $action */
+        $action = $this->request()->get('action');
+
+        if (in_array($action, $this->actions)) {
             if ($action == 'print') {
                 return app()->call([$this, 'printPreview']);
             }
@@ -193,7 +204,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Yajra\DataTables\Utilities\Request
      */
-    public function request()
+    public function request(): Request
     {
         return $this->request ?: $this->request = app('datatables.request');
     }
@@ -203,7 +214,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function ajax()
+    public function ajax(): JsonResponse
     {
         $query = null;
         if (method_exists($this, 'query')) {
@@ -214,14 +225,16 @@ abstract class DataTable implements DataTableButtons
         /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
         $dataTable = app()->call([$this, 'dataTable'], compact('query'));
 
-        if ($callback = $this->beforeCallback) {
-            $callback($dataTable);
+        if (is_callable($this->beforeCallback)) {
+            app()->call($this->beforeCallback, compact('dataTable'));
         }
 
-        if ($callback = $this->responseCallback) {
+        if (is_callable($this->responseCallback)) {
             $data = new Collection($dataTable->toArray());
 
-            return new JsonResponse($callback($data));
+            $response = app()->call($this->responseCallback, compact('data'));
+
+            return new JsonResponse($response);
         }
 
         return $dataTable->toJson();
@@ -232,7 +245,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function printPreview()
+    public function printPreview(): Renderable
     {
         $data = $this->getDataForPrint();
 
@@ -244,7 +257,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return array
      */
-    protected function getDataForPrint()
+    protected function getDataForPrint(): array
     {
         $columns = $this->printColumns();
 
@@ -306,7 +319,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Yajra\DataTables\Html\Builder
      */
-    public function builder()
+    public function builder(): Builder
     {
         if ($this->htmlBuilder) {
             return $this->htmlBuilder;
@@ -322,11 +335,11 @@ abstract class DataTable implements DataTableButtons
     /**
      * Map ajax response to columns definition.
      *
-     * @param  mixed  $columns
+     * @param  array|Collection  $columns
      * @param  string  $type
      * @return array
      */
-    protected function mapResponseToColumns($columns, $type)
+    protected function mapResponseToColumns($columns, string $type): array
     {
         $transformer = new DataArrayTransformer;
 
@@ -340,15 +353,15 @@ abstract class DataTable implements DataTableButtons
      *
      * @return array
      */
-    protected function getAjaxResponseData()
+    protected function getAjaxResponseData(): array
     {
         $this->request()->merge([
-            'start'  => 0,
+            'start' => 0,
             'length' => -1,
         ]);
 
         $response = app()->call([$this, 'ajax']);
-        $data     = $response->getData(true);
+        $data = $response->getData(true);
 
         return $data['data'];
     }
@@ -356,11 +369,11 @@ abstract class DataTable implements DataTableButtons
     /**
      * @return \Yajra\DataTables\Html\Builder
      */
-    protected function getHtmlBuilder()
+    protected function getHtmlBuilder(): Builder
     {
         $builder = $this->html();
-        if ($this->htmlCallback) {
-            call_user_func($this->htmlCallback, $builder);
+        if (is_callable($this->htmlCallback)) {
+            app()->call($this->htmlCallback, compact('builder'));
         }
 
         return $builder;
@@ -372,7 +385,7 @@ abstract class DataTable implements DataTableButtons
      * @param  callable  $callback
      * @return $this
      */
-    public function withHtml(callable $callback)
+    public function withHtml(callable $callback): static
     {
         $this->htmlCallback = $callback;
 
@@ -385,7 +398,7 @@ abstract class DataTable implements DataTableButtons
      * @param  callable  $callback
      * @return $this
      */
-    public function before(callable $callback)
+    public function before(callable $callback): static
     {
         $this->beforeCallback = $callback;
 
@@ -398,7 +411,7 @@ abstract class DataTable implements DataTableButtons
      * @param  callable  $callback
      * @return $this
      */
-    public function response(callable $callback)
+    public function response(callable $callback): static
     {
         $this->responseCallback = $callback;
 
@@ -408,24 +421,26 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export results to Excel file.
      *
-     * @return void
+     * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Exception
      */
     public function excel()
     {
         set_time_limit(3600);
 
-        $ext      = '.' . strtolower($this->excelWriter);
+        $ext = '.'.strtolower($this->excelWriter);
         $callback = $this->fastExcel ?
             ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
             : $this->excelWriter;
 
-        return $this->buildExcelFile()->download($this->getFilename() . $ext, $callback);
+        return $this->buildExcelFile()->download($this->getFilename().$ext, $callback);
     }
 
     /**
-     * Build excel file and prepare for export.
+     * Build Excel file and prepare for export.
      *
-     * @return \Maatwebsite\Excel\Concerns\Exportable
+     * @return mixed|\Rap2hpoutre\FastExcel\FastExcel
+     * @throws \Exception
      */
     protected function buildExcelFile()
     {
@@ -453,7 +468,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return string
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename ?: $this->filename();
     }
@@ -462,9 +477,9 @@ abstract class DataTable implements DataTableButtons
      * Set export filename.
      *
      * @param  string  $filename
-     * @return DataTable
+     * @return $this
      */
-    public function setFilename($filename)
+    public function setFilename(string $filename): static
     {
         $this->filename = $filename;
 
@@ -476,9 +491,9 @@ abstract class DataTable implements DataTableButtons
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
-        return class_basename($this) . '_' . date('YmdHis');
+        return class_basename($this).'_'.date('YmdHis');
     }
 
     /**
@@ -486,7 +501,7 @@ abstract class DataTable implements DataTableButtons
      *
      * @return array
      */
-    protected function getDataForExport()
+    protected function getDataForExport(): array
     {
         $columns = $this->exportColumns();
 
@@ -496,9 +511,9 @@ abstract class DataTable implements DataTableButtons
     /**
      * Get export columns definition.
      *
-     * @return array|string
+     * @return Collection
      */
-    protected function exportColumns()
+    protected function exportColumns(): Collection
     {
         return is_array($this->exportColumns) ? $this->toColumnsCollection($this->exportColumns) : $this->getExportColumnsFromBuilder();
     }
@@ -509,7 +524,7 @@ abstract class DataTable implements DataTableButtons
      * @param  array  $columns
      * @return Collection
      */
-    private function toColumnsCollection(array $columns)
+    private function toColumnsCollection(array $columns): Collection
     {
         $collection = collect();
         foreach ($columns as $column) {
@@ -517,8 +532,8 @@ abstract class DataTable implements DataTableButtons
                 $column['title'] = $column['title'] ?? $column['data'];
                 $collection->push(new Column($column));
             } else {
-                $data          = [];
-                $data['data']  = $column;
+                $data = [];
+                $data['data'] = $column;
                 $data['title'] = $column;
                 $collection->push(new Column($data));
             }
@@ -530,23 +545,29 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export results to CSV file.
      *
-     * @return mixed
+     * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Exception
      */
     public function csv()
     {
         set_time_limit(3600);
-        $ext      = '.' . strtolower($this->csvWriter);
+        $ext = '.'.strtolower($this->csvWriter);
         $callback = $this->fastExcel ?
             ($this->fastExcelCallback ? $this->fastExcelCallback() : null)
             : $this->csvWriter;
 
-        return $this->buildExcelFile()->download($this->getFilename() . $ext, $callback);
+        return $this->buildExcelFile()->download($this->getFilename().$ext, $callback);
     }
 
     /**
      * Export results to PDF file.
      *
-     * @return mixed
+     * @return \Illuminate\Http\Response|string|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Box\Spout\Common\Exception\IOException
+     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
+     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
+     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
+     * @throws \Exception
      */
     public function pdf()
     {
@@ -554,24 +575,24 @@ abstract class DataTable implements DataTableButtons
             return $this->snappyPdf();
         }
 
-        return $this->buildExcelFile()->download($this->getFilename() . '.pdf', $this->pdfWriter);
+        return $this->buildExcelFile()->download($this->getFilename().'.pdf', $this->pdfWriter);
     }
 
     /**
      * PDF version of the table using print preview blade template.
      *
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
-    public function snappyPdf()
+    public function snappyPdf(): Response
     {
         /** @var \Barryvdh\Snappy\PdfWrapper $snappy */
-        $snappy      = app('snappy.pdf.wrapper');
-        $options     = config('datatables-buttons.snappy.options');
+        $snappy = app('snappy.pdf.wrapper');
+        $options = config('datatables-buttons.snappy.options');
         $orientation = config('datatables-buttons.snappy.orientation');
 
         $snappy->setOptions($options)->setOrientation($orientation);
 
-        return $snappy->loadHTML($this->printPreview())->download($this->getFilename() . '.pdf');
+        return $snappy->loadHTML($this->printPreview())->download($this->getFilename().'.pdf');
     }
 
     /**
@@ -580,7 +601,7 @@ abstract class DataTable implements DataTableButtons
      * @param  \Yajra\DataTables\Contracts\DataTableScope  $scope
      * @return $this
      */
-    public function addScope(DataTableScope $scope)
+    public function addScope(DataTableScope $scope): static
     {
         $this->scopes[] = $scope;
 
@@ -593,7 +614,7 @@ abstract class DataTable implements DataTableButtons
      * @param  array  $scopes
      * @return $this
      */
-    public function addScopes(array $scopes)
+    public function addScopes(array $scopes): static
     {
         $this->scopes = array_merge($this->scopes, $scopes);
 
@@ -603,11 +624,11 @@ abstract class DataTable implements DataTableButtons
     /**
      * Set a custom class attribute.
      *
-     * @param  mixed  $key
-     * @param  mixed|null  $value
+     * @param  array|string  $key
+     * @param  array|string|null  $value
      * @return $this
      */
-    public function with($key, $value = null)
+    public function with(array|string $key, array|string $value = null): static
     {
         if (is_array($key)) {
             $this->attributes = array_merge($this->attributes, $key);
@@ -624,20 +645,22 @@ abstract class DataTable implements DataTableButtons
      * @param  string  $key
      * @return mixed|null
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         if (array_key_exists($key, $this->attributes)) {
             return $this->attributes[$key];
         }
+
+        return null;
     }
 
     /**
      * Apply query scopes.
      *
-     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  $query
-     * @return mixed
+     * @param  EloquentBuilder|QueryBuilder  $query
+     * @return EloquentBuilder|QueryBuilder
      */
-    protected function applyScopes($query)
+    protected function applyScopes(EloquentBuilder|QueryBuilder $query): EloquentBuilder|QueryBuilder
     {
         foreach ($this->scopes as $scope) {
             $scope->apply($query);
@@ -653,7 +676,7 @@ abstract class DataTable implements DataTableButtons
      * @param  bool  $validateAll
      * @return bool
      */
-    protected function hasScopes(array $scopes, $validateAll = false)
+    protected function hasScopes(array $scopes, bool $validateAll = false): bool
     {
         $filteredScopes = array_filter($this->scopes, function ($scope) use ($scopes) {
             return in_array(get_class($scope), $scopes);
@@ -667,32 +690,31 @@ abstract class DataTable implements DataTableButtons
      *
      * @return array
      */
-    protected function getBuilderParameters()
+    protected function getBuilderParameters(): array
     {
-        return config('datatables-buttons.parameters');
+        /** @var array $defaults */
+        $defaults = config('datatables-buttons.parameters', []);
+
+        return $defaults;
     }
 
     /**
-     * @param  \Illuminate\Support\|array  $collection
-     * @return \Illuminate\Support\Collection
+     * @param  array|\Illuminate\Support\Collection  $collection
+     * @return \Illuminate\Support\LazyCollection
      */
-    protected function convertToLazyCollection($collection)
+    protected function convertToLazyCollection(array|Collection $collection): LazyCollection
     {
         if (is_array($collection)) {
             $collection = collect($collection);
         }
 
-        if (method_exists($collection, 'lazy')) {
-            $collection->lazy();
-        }
-
-        return $collection;
+        return $collection->lazy();
     }
 
     /**
      * @return \Closure
      */
-    public function fastExcelCallback()
+    public function fastExcelCallback(): \Closure
     {
         return function ($row) {
             $mapped = [];
@@ -709,7 +731,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * @return \Rap2hpoutre\FastExcel\FastExcel
      */
-    protected function buildFastExcelFile()
+    protected function buildFastExcelFile(): FastExcel
     {
         $query = null;
         if (method_exists($this, 'query')) {
@@ -722,16 +744,18 @@ abstract class DataTable implements DataTableButtons
         $dataTable->skipPaging();
 
         if ($dataTable instanceof QueryDataTable) {
-            function queryGenerator($dataTable)
+            // @phpstan-ignore-next-line
+            function queryGenerator($dataTable): Generator
             {
                 foreach ($dataTable->getFilteredQuery()->cursor() as $row) {
                     yield $row;
                 }
             }
 
+            // @phpstan-ignore-next-line
             return new FastExcel(queryGenerator($dataTable));
         }
 
-        return new FastExcel($this->convertToLazyCollection($dataTable->toArray()['data']));
+        return new FastExcel(collect($dataTable->toArray()['data']));
     }
 }

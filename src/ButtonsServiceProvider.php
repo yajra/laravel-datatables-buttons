@@ -15,9 +15,9 @@ class ButtonsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'datatables');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'datatables');
 
         $this->publishAssets();
 
@@ -30,15 +30,15 @@ class ButtonsServiceProvider extends ServiceProvider
     protected function publishAssets()
     {
         $this->publishes([
-            __DIR__ . '/config/config.php' => config_path('datatables-buttons.php'),
+            __DIR__.'/config/config.php' => config_path('datatables-buttons.php'),
         ], 'datatables-buttons');
 
         $this->publishes([
-            __DIR__ . '/resources/assets/buttons.server-side.js' => public_path('vendor/datatables/buttons.server-side.js'),
+            __DIR__.'/resources/assets/buttons.server-side.js' => public_path('vendor/datatables/buttons.server-side.js'),
         ], 'datatables-buttons');
 
         $this->publishes([
-            __DIR__ . '/resources/views' => base_path('/resources/views/vendor/datatables'),
+            __DIR__.'/resources/views' => base_path('/resources/views/vendor/datatables'),
         ], 'datatables-buttons');
     }
 
@@ -57,9 +57,9 @@ class ButtonsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'datatables-buttons');
+        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'datatables-buttons');
 
         $this->app->register(HtmlServiceProvider::class);
 
