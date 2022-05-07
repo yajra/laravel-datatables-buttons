@@ -38,6 +38,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
      *
      * @param  string  $name
      * @return string
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildClass($name)

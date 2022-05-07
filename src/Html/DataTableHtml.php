@@ -17,6 +17,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
 
     /**
      * @return \Yajra\DataTables\Html\Builder
+     *
      * @throws \Exception
      */
     public static function make(): Builder
