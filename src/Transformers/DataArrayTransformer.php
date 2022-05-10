@@ -40,7 +40,11 @@ class DataArrayTransformer
         $columns->each(function (Column $column) use ($row, $type, &$results) {
             if ($column[$type]) {
                 $title = $column->title;
-                $data = $row[$column->data] ?? '';
+                if (is_array($column->data)) {
+                    $data = $row[$column->data['filter'] ?? $column->name] ?? '';
+                } else {
+                    $data = $row[$column->data] ?? '';
+                }
 
                 if ($type == 'exportable') {
                     $title = $this->decodeContent($title);
