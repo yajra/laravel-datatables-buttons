@@ -90,7 +90,7 @@ class DataTableServiceTest extends TestCase
 
         $router->get('/users/before', function (UsersDataTable $dataTable) {
             return $dataTable->before(function (EloquentDataTable $dataTable) {
-                $dataTable->addColumn('nameX', fn(User $user) => $user->name.'X');
+                $dataTable->addColumn('nameX', fn (User $user) => $user->name.'X');
             })->render('tests::users');
         });
 
