@@ -583,7 +583,7 @@ abstract class DataTable implements DataTableButtons
     public function csv()
     {
         set_time_limit(3600);
-        $path = $this->getFilename().'.'.strtolower($this->excelWriter);
+        $path = $this->getFilename().'.'.strtolower($this->csvWriter);
 
         $excelFile = $this->buildExcelFile();
 
