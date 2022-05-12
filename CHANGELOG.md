@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.2 - 2022-05-12
+
+- Fix csv export extension
+
 ## v9.0.1 - 2022-05-10
 
 - Quick fix for orthogonal column data
