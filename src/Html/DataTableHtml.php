@@ -13,7 +13,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     /**
      * @var \Yajra\DataTables\Html\Builder|null
      */
-    protected ?Builder $htmlBuilder;
+    protected ?Builder $htmlBuilder = null;
 
     /**
      * @return \Yajra\DataTables\Html\Builder
