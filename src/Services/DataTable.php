@@ -79,9 +79,9 @@ abstract class DataTable implements DataTableButtons
     /**
      * Html builder.
      *
-     * @var \Yajra\DataTables\Html\Builder
+     * @var \Yajra\DataTables\Html\Builder|null
      */
-    protected Builder $htmlBuilder;
+    protected ?Builder $htmlBuilder = null;
 
     /**
      * Html builder extension callback.
@@ -128,9 +128,9 @@ abstract class DataTable implements DataTableButtons
     protected array $actions = ['print', 'csv', 'excel', 'pdf'];
 
     /**
-     * @var \Yajra\DataTables\Utilities\Request
+     * @var \Yajra\DataTables\Utilities\Request|null
      */
-    protected Request $request;
+    protected ?Request $request = null;
 
     /**
      * Flag to use fast-excel package for export.
@@ -227,6 +227,10 @@ abstract class DataTable implements DataTableButtons
      */
     public function request(): Request
     {
+        if (! $this->request) {
+            $this->request = app(Request::class);
+        }
+
         return $this->request;
     }
 
@@ -346,6 +350,10 @@ abstract class DataTable implements DataTableButtons
     {
         if (method_exists($this, 'htmlBuilder')) {
             return $this->htmlBuilder = $this->htmlBuilder();
+        }
+
+        if (! $this->htmlBuilder) {
+            $this->htmlBuilder = app(Builder::class);
         }
 
         return $this->htmlBuilder;
