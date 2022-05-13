@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.4 - 2022-05-13
+
+- Fix nullable builder and request
+
 ## v9.0.3 - 2022-05-12
 
 - Fix $htmlBuilder must not be accessed before initialization
