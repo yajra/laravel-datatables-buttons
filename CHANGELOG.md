@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.5 - 2022-05-19
+
+- Fix exporting data via relationship
+
 ## v9.0.4 - 2022-05-13
 
 - Fix nullable builder and request
