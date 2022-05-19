@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.8 - 2022-05-19
+
+- Improve exporting of array & other data type values
+
 ## v9.0.7 - 2022-05-19
 
 - Remove try catch, fix stan
