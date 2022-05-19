@@ -45,14 +45,11 @@ class DataArrayTransformer
                     $key = $column->data ?? $column->name;
                 }
 
-                /** @var string $data */
                 $data = Arr::get($row, $key) ?? '';
 
                 if ($type == 'exportable') {
                     $title = $this->decodeContent($title);
-                    $dataType = gettype($data);
-                    $data = $this->decodeContent($data);
-                    settype($data, $dataType);
+                    $data = is_array($data) ? json_encode($data) : $this->decodeContent($data);
                 }
 
                 $results[$title] = $data;
@@ -65,17 +62,21 @@ class DataArrayTransformer
     /**
      * Decode content to a readable text value.
      *
-     * @param  bool|string  $data
-     * @return string
+     * @param  mixed  $data
+     * @return mixed
      */
-    protected function decodeContent(bool|string $data): string
+    protected function decodeContent(mixed $data): mixed
     {
         if (is_bool($data)) {
             return $data ? 'True' : 'False';
         }
 
-        $decoded = html_entity_decode(trim(strip_tags($data)), ENT_QUOTES, 'UTF-8');
+        if (is_string($data)) {
+            $decoded = html_entity_decode(trim(strip_tags($data)), ENT_QUOTES, 'UTF-8');
 
-        return str_replace("\xc2\xa0", ' ', $decoded);
+            return (string) str_replace("\xc2\xa0", ' ', $decoded);
+        }
+
+        return $data;
     }
 }
