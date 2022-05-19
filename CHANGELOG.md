@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.6 - 2022-05-19
+
+- Fix exporting of boolean values
+
 ## v9.0.5 - 2022-05-19
 
 - Fix exporting data via relationship
