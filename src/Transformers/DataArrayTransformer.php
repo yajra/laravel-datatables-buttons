@@ -66,12 +66,16 @@ class DataArrayTransformer
     /**
      * Decode content to a readable text value.
      *
-     * @param  string  $data
+     * @param  bool|string  $data
      * @return string
      */
-    protected function decodeContent(string $data): string
+    protected function decodeContent(bool|string $data): string
     {
         try {
+            if (is_bool($data)) {
+                return $data ? 'True' : 'False';
+            }
+
             $decoded = html_entity_decode(trim(strip_tags($data)), ENT_QUOTES, 'UTF-8');
 
             return str_replace("\xc2\xa0", ' ', $decoded);
