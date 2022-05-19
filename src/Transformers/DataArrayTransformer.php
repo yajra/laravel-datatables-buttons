@@ -41,10 +41,13 @@ class DataArrayTransformer
             if ($column[$type]) {
                 $title = $column->title;
                 if (is_array($column->data)) {
-                    $data = $row[$column->data['filter'] ?? $column->name] ?? '';
+                    $key = $column->data['filter'] ?? $column->name ?? '';
                 } else {
-                    $data = $row[$column->data] ?? '';
+                    $key = $column->data ?? $column->name;
                 }
+
+                /** @var string $data */
+                $data = Arr::get($row, $key) ?? '';
 
                 if ($type == 'exportable') {
                     $title = $this->decodeContent($title);
