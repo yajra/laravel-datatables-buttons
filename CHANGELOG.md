@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.7 - 2022-05-19
+
+- Remove try catch, fix stan
+
 ## v9.0.6 - 2022-05-19
 
 - Fix exporting of boolean values
