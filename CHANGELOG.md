@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.9 - 2022-06-21
+
+- Fix datatables.stub #149
+- Add type hint and return type on stubs.
+
 ## v9.0.8 - 2022-05-19
 
 - Improve exporting of array & other data type values
