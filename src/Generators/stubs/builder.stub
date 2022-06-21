@@ -3,6 +3,9 @@
 namespace DummyNamespace;
 
 use DummyModel;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Services\DataTable;
 
 class DummyClass extends DataTable
@@ -10,14 +13,15 @@ class DummyClass extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
+     * @param QueryBuilder $query Results from query() method.
+     * @return \Yajra\DataTables\EloquentDataTable
      */
-    public function dataTable($query)
+    public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'DummyAction');
+            ->addColumn('action', 'DummyAction')
+            ->setRowId('id');
     }
 
     /**
@@ -26,7 +30,7 @@ class DummyClass extends DataTable
      * @param \DummyModel $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(ModelName $model)
+    public function query(ModelName $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -36,7 +40,7 @@ class DummyClass extends DataTable
      *
      * @return \Yajra\DataTables\Html\Builder
      */
-    public function htmlBuilder()
+    public function html(): HtmlBuilder
     {
         return DummyBuilder::make();
     }
@@ -46,7 +50,7 @@ class DummyClass extends DataTable
      *
      * @return string
      */
-    protected function filename()
+    protected function filename(): string
     {
         return 'DummyFilename_' . date('YmdHis');
     }

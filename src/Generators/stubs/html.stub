@@ -16,7 +16,7 @@ class DummyClass extends DataTableHtml
      * @return \Yajra\DataTables\Html\Builder
      * @throws \Exception
      */
-    public function handle()
+    public function handle(): Builder
     {
         return $this->setTableId('DummyTableId')
                     ->columns($this->getColumns())
@@ -31,7 +31,7 @@ class DummyClass extends DataTableHtml
     /**
      * @return array
      */
-    protected function getColumns()
+    protected function getColumns(): array
     {
         return [
             Column::computed('action')
