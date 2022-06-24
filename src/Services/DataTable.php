@@ -7,6 +7,7 @@ use Closure;
 use Generator;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Relations\Relation as EloquentRelation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -22,7 +23,6 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\QueryDataTable;
 use Yajra\DataTables\Transformers\DataArrayTransformer;
 use Yajra\DataTables\Utilities\Request;
-use Illuminate\Database\Eloquent\Relations\Relation as EloquentRelation;
 
 abstract class DataTable implements DataTableButtons
 {
