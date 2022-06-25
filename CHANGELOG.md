@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.0.10 - 2022-06-25
+
+- Fix scopes for Eloquent Relation - Exception: "TypeError" #150
+
 ## v9.0.9 - 2022-06-21
 
 - Fix datatables.stub #149
