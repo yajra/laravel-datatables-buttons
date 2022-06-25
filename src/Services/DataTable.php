@@ -7,6 +7,7 @@ use Closure;
 use Generator;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Relations\Relation as EloquentRelation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -243,7 +244,7 @@ abstract class DataTable implements DataTableButtons
     {
         $query = null;
         if (method_exists($this, 'query')) {
-            /** @var EloquentBuilder|QueryBuilder $query */
+            /** @var EloquentBuilder|QueryBuilder|EloquentRelation $query */
             $query = app()->call([$this, 'query']);
             $query = $this->applyScopes($query);
         }
@@ -713,10 +714,10 @@ abstract class DataTable implements DataTableButtons
     /**
      * Apply query scopes.
      *
-     * @param  EloquentBuilder|QueryBuilder  $query
-     * @return EloquentBuilder|QueryBuilder
+     * @param  EloquentBuilder|QueryBuilder|EloquentRelation  $query
+     * @return EloquentBuilder|QueryBuilder|EloquentRelation
      */
-    protected function applyScopes(EloquentBuilder|QueryBuilder $query): EloquentBuilder|QueryBuilder
+    protected function applyScopes(EloquentBuilder|QueryBuilder|EloquentRelation $query): EloquentBuilder|QueryBuilder|EloquentRelation
     {
         foreach ($this->scopes as $scope) {
             $scope->apply($query);
