@@ -193,14 +193,14 @@ abstract class DataTable implements DataTableButtons
     /**
      * Process dataTables needed render output.
      *
-     * @phpstan-param view-string $view
+     * @phpstan-param view-string|null $view
      *
-     * @param  string  $view
+     * @param  string|null  $view
      * @param  array  $data
      * @param  array  $mergeData
      * @return mixed
      */
-    public function render(string $view, array $data = [], array $mergeData = [])
+    public function render(string $view = null, array $data = [], array $mergeData = [])
     {
         if ($this->request()->ajax() && $this->request()->wantsJson()) {
             return app()->call([$this, 'ajax']);
@@ -209,13 +209,15 @@ abstract class DataTable implements DataTableButtons
         /** @var string $action */
         $action = $this->request()->get('action');
 
-        if (in_array($action, $this->actions)) {
-            if ($action == 'print') {
-                return app()->call([$this, 'printPreview']);
-            }
+        if ($action == 'print') {
+            $action = 'printPreview';
+        }
 
-            // @phpstan-ignore-next-line
-            return app()->call([$this, $action]);
+        if (in_array($action, $this->actions) && method_exists($this, $action)) {
+            /** @var callable $callback */
+            $callback = [$this, $action];
+
+            return app()->call($callback);
         }
 
         return view($view, $data, $mergeData)->with($this->dataTableVariable, $this->getHtmlBuilder());
