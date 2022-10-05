@@ -681,8 +681,8 @@ abstract class DataTable implements DataTableButtons
     /**
      * Set a custom class attribute.
      *
-     * @param  array|string $key
-     * @param  mixed|null $value
+     * @param  array|string  $key
+     * @param  mixed|null  $value
      * @return $this
      */
     public function with(array|string $key, mixed $value = null): static
