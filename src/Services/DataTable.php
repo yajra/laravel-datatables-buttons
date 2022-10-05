@@ -681,11 +681,11 @@ abstract class DataTable implements DataTableButtons
     /**
      * Set a custom class attribute.
      *
-     * @param  array|string  $key
-     * @param  array|string|null  $value
+     * @param  array|string $key
+     * @param  mixed|null $value
      * @return $this
      */
-    public function with(array|string $key, array|string $value = null): static
+    public function with(array|string $key, mixed $value = null): static
     {
         if (is_array($key)) {
             $this->attributes = array_merge($this->attributes, $key);
