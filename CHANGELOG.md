@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v9.1.1 - 2022-10-06
+
+- fix(phpstan) Downgrade to 2.1.12 #158
+- fix: Allow null on view #152
+
 ## v9.1.0 - 2022-10-05
 
 - Correcting with parameter typehints #155
