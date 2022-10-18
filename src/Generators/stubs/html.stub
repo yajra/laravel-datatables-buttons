@@ -21,17 +21,18 @@ class DummyClass extends DataTableHtml
         return $this->setTableId('DummyTableId')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('DummyDOM')
+                    //->dom('DummyDOM')
                     ->orderBy(1)
-                    ->buttons(
+                    ->selectStyleSingle()
+                    ->buttons([
                         DummyButtons
-                    );
+                    ]);
     }
 
     /**
      * @return array
      */
-    protected function getColumns(): array
+    public function getColumns(): array
     {
         return [
             Column::computed('action')

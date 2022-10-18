@@ -49,11 +49,12 @@ class DummyClass extends DataTable
                     ->setTableId('DummyTableId')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->dom('DummyDOM')
+                    //->dom('DummyDOM')
                     ->orderBy(1)
-                    ->buttons(
+                    ->selectStyleSingle()
+                    ->buttons([
                         DummyButtons
-                    );
+                    ]);
     }
 
     /**
@@ -61,7 +62,7 @@ class DummyClass extends DataTable
      *
      * @return array
      */
-    protected function getColumns(): array
+    public function getColumns(): array
     {
         return [
             Column::computed('action')
