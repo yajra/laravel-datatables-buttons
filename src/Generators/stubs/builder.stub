@@ -18,8 +18,7 @@ class DummyClass extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return datatables()
-            ->eloquent($query)
+        return (new EloquentDataTable($query))
             ->addColumn('action', 'DummyAction')
             ->setRowId('id');
     }

@@ -4,7 +4,7 @@ return [
     /*
      * Namespaces used by the generator.
      */
-    'namespace'     => [
+    'namespace' => [
         /*
          * Base namespace/directory to create the new file.
          * This is appended on default Laravel namespace.
@@ -13,7 +13,7 @@ return [
          * With Model: App\User (default model)
          * Export filename: users_timestamp
          */
-        'base'  => 'DataTables',
+        'base' => 'DataTables',
 
         /*
          * Base namespace/directory where your model's are located.
@@ -42,12 +42,12 @@ return [
     /*
      * Snappy PDF options.
      */
-    'snappy'        => [
-        'options'     => [
-            'no-outline'    => true,
-            'margin-left'   => '0',
-            'margin-right'  => '0',
-            'margin-top'    => '10mm',
+    'snappy' => [
+        'options' => [
+            'no-outline' => true,
+            'margin-left' => '0',
+            'margin-right' => '0',
+            'margin-top' => '10mm',
             'margin-bottom' => '10mm',
         ],
         'orientation' => 'landscape',
@@ -56,12 +56,13 @@ return [
     /*
      * Default html builder parameters.
      */
-    'parameters'    => [
-        'dom'     => 'Bfrtip',
-        'order'   => [[0, 'desc']],
+    'parameters' => [
+        'dom' => 'Bfrtip',
+        'order' => [[0, 'desc']],
         'buttons' => [
-            'create',
-            'export',
+            'excel',
+            'csv',
+            'pdf',
             'print',
             'reset',
             'reload',
@@ -71,7 +72,7 @@ return [
     /*
      * Generator command default options value.
      */
-    'generator'     => [
+    'generator' => [
         /*
          * Default columns to generate when not set.
          */
@@ -80,7 +81,7 @@ return [
         /*
          * Default buttons to generate when not set.
          */
-        'buttons' => 'create,export,print,reset,reload',
+        'buttons' => 'excel,csv,pdf,print,reset,reload',
 
         /*
          * Default DOM to generate when not set.
