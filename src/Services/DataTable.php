@@ -227,7 +227,7 @@ abstract class DataTable implements DataTableButtons
      */
     public function request(): Request
     {
-        if (!$this->request) {
+        if (! $this->request) {
             $this->request = app(Request::class);
         }
 
@@ -352,7 +352,7 @@ abstract class DataTable implements DataTableButtons
             return $this->htmlBuilder = $this->htmlBuilder();
         }
 
-        if (!$this->htmlBuilder) {
+        if (! $this->htmlBuilder) {
             $this->htmlBuilder = app(Builder::class);
         }
 
@@ -459,7 +459,7 @@ abstract class DataTable implements DataTableButtons
     {
         set_time_limit(3600);
 
-        $path = $this->getFilename() . '.' . strtolower($this->excelWriter);
+        $path = $this->getFilename().'.'.strtolower($this->excelWriter);
 
         $excelFile = $this->buildExcelFile();
 
@@ -486,11 +486,11 @@ abstract class DataTable implements DataTableButtons
             return $this->buildFastExcelFile();
         }
 
-        if (!class_exists(ExcelServiceProvider::class)) {
+        if (! class_exists(ExcelServiceProvider::class)) {
             throw new Exception('Please install maatwebsite/excel to be able to use this function.');
         }
 
-        if (!new $this->exportClass instanceof DataTablesExportHandler) {
+        if (! new $this->exportClass instanceof DataTablesExportHandler) {
             $collection = $this->getAjaxResponseData();
 
             return new $this->exportClass($this->convertToLazyCollection($collection));
@@ -531,7 +531,7 @@ abstract class DataTable implements DataTableButtons
      */
     protected function filename(): string
     {
-        return class_basename($this) . '_' . date('YmdHis');
+        return class_basename($this).'_'.date('YmdHis');
     }
 
     /**
@@ -591,7 +591,7 @@ abstract class DataTable implements DataTableButtons
     public function csv()
     {
         set_time_limit(3600);
-        $path = $this->getFilename() . '.' . strtolower($this->csvWriter);
+        $path = $this->getFilename().'.'.strtolower($this->csvWriter);
 
         $excelFile = $this->buildExcelFile();
 
@@ -623,7 +623,7 @@ abstract class DataTable implements DataTableButtons
         }
 
         // @phpstan-ignore-next-line
-        return $this->buildExcelFile()->download($this->getFilename() . '.pdf', $this->pdfWriter);
+        return $this->buildExcelFile()->download($this->getFilename().'.pdf', $this->pdfWriter);
     }
 
     /**
@@ -635,7 +635,7 @@ abstract class DataTable implements DataTableButtons
      */
     public function snappyPdf(): Response
     {
-        if (!class_exists(PdfWrapper::class)) {
+        if (! class_exists(PdfWrapper::class)) {
             throw new Exception('You need to install barryvdh/laravel-snappy to be able to use this feature.');
         }
 
@@ -648,7 +648,7 @@ abstract class DataTable implements DataTableButtons
 
         $snappy->setOptions($options)->setOrientation($orientation);
 
-        return $snappy->loadHTML($this->printPreview())->download($this->getFilename() . '.pdf');
+        return $snappy->loadHTML($this->printPreview())->download($this->getFilename().'.pdf');
     }
 
     /**
@@ -738,7 +738,7 @@ abstract class DataTable implements DataTableButtons
             return in_array(get_class($scope), $scopes);
         });
 
-        return $validateAll ? count($filteredScopes) === count($scopes) : !empty($filteredScopes);
+        return $validateAll ? count($filteredScopes) === count($scopes) : ! empty($filteredScopes);
     }
 
     /**
