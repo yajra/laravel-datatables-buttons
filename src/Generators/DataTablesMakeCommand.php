@@ -83,6 +83,16 @@ class DataTablesMakeCommand extends GeneratorCommand
     }
 
     /**
+     * Prepare model name from input
+     * 
+     * @return string
+     */
+    protected function prepareModelName(): string
+    {
+        return basename(preg_replace('#datatable$#i', '', $this->getNameInput()));
+    }
+
+    /**
      * Replace the filename.
      *
      * @param  string  $stub
@@ -92,7 +102,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         $stub = str_replace(
             'DummyFilename',
-            (string) preg_replace('#datatable$#i', '', $this->getNameInput()),
+            (string) $this->prepareModelName(),
             $stub
         );
 
@@ -128,7 +138,7 @@ class DataTablesMakeCommand extends GeneratorCommand
             return $action;
         }
 
-        return Str::lower($this->getNameInput()).'.action';
+        return Str::lower($this->prepareModelName()).'.action';
     }
 
     /**
@@ -140,7 +150,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     protected function replaceTableId(string &$stub): static
     {
         $stub = str_replace(
-            'DummyTableId', Str::lower($this->getNameInput()).'-table', $stub
+            'DummyTableId', Str::lower($this->prepareModelName()).'-table', $stub
         );
 
         return $this;
@@ -326,6 +336,8 @@ class DataTablesMakeCommand extends GeneratorCommand
 
         if (! Str::contains(Str::lower($name), 'datatable')) {
             $name .= 'DataTable';
+        } else {
+            $name = preg_replace('#datatable$#i', 'DataTable', $name);
         }
 
         return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
@@ -364,27 +376,17 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getModel(): string
     {
-        $name = $this->getNameInput();
-        $rootNamespace = $this->laravel->getNamespace();
-
-        /** @var string $modelFromOption */
         $modelFromOption = $this->option('model');
+        $modelNamespaceFromOption = $this->option('model-namespace') ? $this->option('model-namespace') : config('datatables-buttons.namespace.model');
 
-        $model = $modelFromOption == '' || $this->option('model-namespace');
-        $modelNamespace = $this->option('model-namespace') ? $this->option('model-namespace') : config('datatables-buttons.namespace.model');
+        $name = $modelFromOption ?: $this->prepareModelName();
+        $modelNamespace = $modelNamespaceFromOption ?: $this->laravel->getNamespace();
 
-        if ($modelFromOption) {
-            return $modelFromOption;
+        if (empty($modelNamespaceFromOption) && is_dir(app_path('Models'))) {
+            $modelNamespace = $modelNamespace.'\\Models\\';
         }
 
-        // check if model namespace is not set in command and Models directory already exists then use that directory in namespace.
-        if ($modelNamespace == '') {
-            $modelNamespace = is_dir(app_path('Models')) ? 'Models' : $rootNamespace;
-        }
-
-        return $model
-            ? $rootNamespace.'\\'.($modelNamespace ? $modelNamespace.'\\' : '').Str::singular($name)
-            : $rootNamespace.'\\User';
+        return $modelNamespace.'\\'.Str::singular($name);
     }
 
     /**

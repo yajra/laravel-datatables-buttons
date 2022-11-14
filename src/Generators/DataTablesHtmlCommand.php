@@ -86,8 +86,10 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
             $name = str_replace('/', '\\', $name);
         }
 
-        if (! Str::contains(Str::lower($name), 'datatable')) {
+        if (! Str::contains(Str::lower($name), 'datatablehtml')) {
             $name .= 'DataTableHtml';
+        } else {
+            $name = preg_replace('#datatablehtml$#i', 'DataTableHtml', $name);
         }
 
         return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
