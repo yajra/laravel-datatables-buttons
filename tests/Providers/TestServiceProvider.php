@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 class TestServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/../views', 'tests');
     }

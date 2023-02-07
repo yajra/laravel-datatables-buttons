@@ -15,17 +15,17 @@
     }
   ],
   "require": {
-    "php": "^8.0.2",
-    "yajra/laravel-datatables-oracle": "10.*",
-    "yajra/laravel-datatables-html": "9.*",
-    "illuminate/console": "*"
+    "php": "^8.1",
+    "yajra/laravel-datatables-oracle": "^10",
+    "yajra/laravel-datatables-html": "^10",
+    "illuminate/console": "^10"
   },
   "require-dev": {
-    "maatwebsite/excel": "^3.1.40",
-    "nunomaduro/larastan": "2.1.*",
-    "orchestra/testbench": "^7.3",
-    "rap2hpoutre/fast-excel": "^3.2",
-    "barryvdh/laravel-snappy": "^1.0"
+    "maatwebsite/excel": "^3.1.46",
+    "nunomaduro/larastan": "^2.4",
+    "orchestra/testbench": "^8",
+    "rap2hpoutre/fast-excel": "^5.1",
+    "barryvdh/laravel-snappy": "^1.0.1"
   },
   "autoload": {
     "psr-4": {
@@ -39,7 +39,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "9.0-dev"
+      "dev-master": "10.0-dev"
     },
     "laravel": {
       "providers": [
@@ -48,6 +48,7 @@
     }
   },
   "suggest": {
+    "yajra/laravel-datatables-export": "Exporting of dataTables (excel, csv and PDF) via livewire and queue worker.",
     "maatwebsite/excel": "Exporting of dataTables (excel, csv and PDF) using maatwebsite package.",
     "rap2hpoutre/fast-excel": "Faster exporting of dataTables using fast-excel package.",
     "dompdf/dompdf": "Allows exporting of dataTable to PDF using the DomPDF.",

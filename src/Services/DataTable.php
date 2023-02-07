@@ -217,6 +217,7 @@ abstract class DataTable implements DataTableButtons
             return app()->call($callback);
         }
 
+        /** @phpstan-ignore-next-line  */
         return view($view, $data, $mergeData)->with($this->dataTableVariable, $this->getHtmlBuilder());
     }
 
@@ -610,10 +611,6 @@ abstract class DataTable implements DataTableButtons
      *
      * @return \Illuminate\Http\Response|string|\Symfony\Component\HttpFoundation\StreamedResponse
      *
-     * @throws \Box\Spout\Common\Exception\IOException
-     * @throws \Box\Spout\Common\Exception\InvalidArgumentException
-     * @throws \Box\Spout\Common\Exception\UnsupportedTypeException
-     * @throws \Box\Spout\Writer\Exception\WriterNotOpenedException
      * @throws \Exception
      */
     public function pdf()
