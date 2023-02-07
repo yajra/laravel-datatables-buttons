@@ -23,7 +23,7 @@ abstract class TestCase extends BaseTestCase
         $this->seedDatabase();
     }
 
-    protected function migrateDatabase()
+    protected function migrateDatabase(): void
     {
         /** @var \Illuminate\Database\Schema\Builder $schemaBuilder */
         $schemaBuilder = $this->app['db']->connection()->getSchemaBuilder();
@@ -62,7 +62,7 @@ abstract class TestCase extends BaseTestCase
         }
     }
 
-    protected function seedDatabase()
+    protected function seedDatabase(): void
     {
         $adminRole = Role::create(['role' => 'Administrator']);
         $userRole = Role::create(['role' => 'User']);
@@ -115,12 +115,12 @@ abstract class TestCase extends BaseTestCase
         ];
     }
 
-    public function getAjax($uri, array $headers = []): TestResponse
+    public function getAjax(string $uri, array $headers = []): TestResponse
     {
         return $this->getJson($uri, array_merge(['X-Requested-With' => 'XMLHttpRequest'], $headers));
     }
 
-    public function postAjax($uri, array $headers = []): TestResponse
+    public function postAjax(string $uri, array $headers = []): TestResponse
     {
         return $this->postJson($uri, array_merge(['X-Requested-With' => 'XMLHttpRequest'], $headers));
     }

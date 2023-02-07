@@ -15,7 +15,7 @@ class DataTableServiceTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_can_handle_ajax_request()
+    public function it_can_handle_ajax_request(): void
     {
         $response = $this->getAjax('/users');
 
@@ -27,7 +27,7 @@ class DataTableServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_view_on_normal_get_request()
+    public function it_returns_view_on_normal_get_request(): void
     {
         $response = $this->get('users');
 
@@ -36,7 +36,7 @@ class DataTableServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_can_return_a_csv_file()
+    public function it_can_return_a_csv_file(): void
     {
         $response = $this->get('users?action=csv');
 
@@ -44,7 +44,7 @@ class DataTableServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_can_return_a_xls_file()
+    public function it_can_return_a_xls_file(): void
     {
         $response = $this->get('users?action=excel');
 
@@ -52,7 +52,7 @@ class DataTableServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_can_return_a_pdf_file()
+    public function it_can_return_a_pdf_file(): void
     {
         $response = $this->get('users?action=pdf');
 
@@ -60,7 +60,7 @@ class DataTableServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_before_response_callback()
+    public function it_allows_before_response_callback(): void
     {
         $response = $this->getAjax('users/before');
         $response->assertOk();
@@ -70,7 +70,7 @@ class DataTableServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_response_callback()
+    public function it_allows_response_callback(): void
     {
         $response = $this->getAjax('users/response');
         $response->assertOk();
