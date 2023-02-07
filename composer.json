@@ -15,10 +15,10 @@
     }
   ],
   "require": {
-    "php": "^8.0.2",
-    "yajra/laravel-datatables-oracle": "10.*",
-    "yajra/laravel-datatables-html": "9.*",
-    "illuminate/console": "*"
+    "php": "^8.1",
+    "yajra/laravel-datatables-oracle": "^10",
+    "yajra/laravel-datatables-html": "^10",
+    "illuminate/console": "^10"
   },
   "require-dev": {
     "maatwebsite/excel": "^3.1.40",
@@ -39,7 +39,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "9.0-dev"
+      "dev-master": "10.0-dev"
     },
     "laravel": {
       "providers": [
