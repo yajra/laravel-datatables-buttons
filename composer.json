@@ -21,11 +21,11 @@
     "illuminate/console": "^10"
   },
   "require-dev": {
-    "maatwebsite/excel": "^3.1.40",
+    "maatwebsite/excel": "^3.1.46",
     "nunomaduro/larastan": "^2.4",
     "orchestra/testbench": "^8",
-    "rap2hpoutre/fast-excel": "^5",
-    "barryvdh/laravel-snappy": "^1.0"
+    "rap2hpoutre/fast-excel": "^5.1",
+    "barryvdh/laravel-snappy": "^1.0.1"
   },
   "autoload": {
     "psr-4": {
