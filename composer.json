@@ -55,5 +55,11 @@
     "barryvdh/laravel-snappy": "Allows exporting of dataTable to PDF using the print view."
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/yajra"
+    }
+  ]
 }
