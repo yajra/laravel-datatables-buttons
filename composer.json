@@ -48,6 +48,7 @@
     }
   },
   "suggest": {
+    "yajra/laravel-datatables-export": "Exporting of dataTables (excel, csv and PDF) via livewire and queue worker.",
     "maatwebsite/excel": "Exporting of dataTables (excel, csv and PDF) using maatwebsite package.",
     "rap2hpoutre/fast-excel": "Faster exporting of dataTables using fast-excel package.",
     "dompdf/dompdf": "Allows exporting of dataTable to PDF using the DomPDF.",
