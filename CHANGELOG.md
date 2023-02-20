@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v10.0.2 - 2023-02-20
+
+- fix: scopes when using api resource #170
+
 ## v10.0.1 - 2023-02-20
 
 - fix: applyScopes method to support Collection #168
