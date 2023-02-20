@@ -13,7 +13,6 @@ class DummyClass extends DataTableHtml
     /**
      * Build the html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
      * @throws \Exception
      */
     public function handle(): Builder
@@ -31,8 +30,6 @@ class DummyClass extends DataTableHtml
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
