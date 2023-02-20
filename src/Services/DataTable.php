@@ -713,10 +713,10 @@ abstract class DataTable implements DataTableButtons
     /**
      * Apply query scopes.
      *
-     * @param  EloquentBuilder|QueryBuilder|EloquentRelation  $query
-     * @return EloquentBuilder|QueryBuilder|EloquentRelation
+     * @param  EloquentBuilder|QueryBuilder|EloquentRelation|Collection  $query
+     * @return EloquentBuilder|QueryBuilder|EloquentRelation|Collection
      */
-    protected function applyScopes(EloquentBuilder|QueryBuilder|EloquentRelation $query): EloquentBuilder|QueryBuilder|EloquentRelation
+    protected function applyScopes(EloquentBuilder|QueryBuilder|EloquentRelation|Collection $query): EloquentBuilder|QueryBuilder|EloquentRelation|Collection
     {
         foreach ($this->scopes as $scope) {
             $scope->apply($query);
