@@ -15,10 +15,9 @@ use Yajra\DataTables\Html\Builder as HtmlBuilder;
 class DummyClass extends DataTable
 {
     /**
-     * Build DataTable class.
+     * Build the DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -28,10 +27,7 @@ class DummyClass extends DataTable
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \DummyModel $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the query source of dataTable.
      */
     public function query(ModelName $model): QueryBuilder
     {
@@ -39,9 +35,7 @@ class DummyClass extends DataTable
     }
 
     /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
+     * Optional method if you want to use the html builder.
      */
     public function html(): HtmlBuilder
     {
@@ -59,8 +53,6 @@ class DummyClass extends DataTable
 
     /**
      * Get the dataTable columns definition.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -75,9 +67,7 @@ class DummyClass extends DataTable
     }
 
     /**
-     * Get filename for export.
-     *
-     * @return string
+     * Get the filename for export.
      */
     protected function filename(): string
     {
