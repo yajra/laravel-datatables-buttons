@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation as EloquentRelation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
@@ -709,12 +710,10 @@ abstract class DataTable implements DataTableButtons
 
     /**
      * Apply query scopes.
-     *
-     * @param  EloquentBuilder|QueryBuilder|EloquentRelation|Collection  $query
-     * @return EloquentBuilder|QueryBuilder|EloquentRelation|Collection
      */
-    protected function applyScopes(EloquentBuilder|QueryBuilder|EloquentRelation|Collection $query): EloquentBuilder|QueryBuilder|EloquentRelation|Collection
-    {
+    protected function applyScopes(
+        EloquentBuilder|QueryBuilder|EloquentRelation|Collection|AnonymousResourceCollection $query
+    ): EloquentBuilder|QueryBuilder|EloquentRelation|Collection|AnonymousResourceCollection {
         foreach ($this->scopes as $scope) {
             $scope->apply($query);
         }
