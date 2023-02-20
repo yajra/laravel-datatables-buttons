@@ -39,7 +39,7 @@ class DummyClass extends DataTable
     }
 
     /**
-     * Get filename for export.
+     * Get the filename for export.
      */
     protected function filename(): string
     {
