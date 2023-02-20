@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v10.0.4 - 2023-02-21
+
+- fix: stubs - remove redundant docs #172
+- fix: default model namespace
+
 ## v10.0.3 - 2023-02-20
 
 - fix: default model namespace config #171
