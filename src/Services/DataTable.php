@@ -800,15 +800,15 @@ abstract class DataTable implements DataTableButtons
 
         if ($dataTable instanceof QueryDataTable) {
             // @phpstan-ignore-next-line
-            function queryGenerator($dataTable): Generator
+            $queryGenerator = function ($dataTable): Generator
             {
                 foreach ($dataTable->getFilteredQuery()->cursor() as $row) {
                     yield $row;
                 }
-            }
+            };
 
             // @phpstan-ignore-next-line
-            return new FastExcel(queryGenerator($dataTable));
+            return new FastExcel($queryGenerator($dataTable));
         }
 
         return new FastExcel($dataTable->toArray()['data']);
