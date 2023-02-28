@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v10.0.6 - 2023-02-28
+
+- fix: export package integration error message #174
+
 ## v10.0.5 - 2023-02-28
 
 - fix: prevent redeclaring export query generator function (Laravel Octane) #173
