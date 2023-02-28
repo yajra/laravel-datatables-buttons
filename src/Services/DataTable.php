@@ -489,7 +489,7 @@ abstract class DataTable implements DataTableButtons
         }
 
         if (! class_exists(ExcelServiceProvider::class)) {
-            throw new Exception('Please install maatwebsite/excel to be able to use this function.');
+            throw new Exception('Please `composer require maatwebsite/excel` to be able to use this function.');
         }
 
         if (! new $this->exportClass instanceof DataTablesExportHandler) {
@@ -634,7 +634,7 @@ abstract class DataTable implements DataTableButtons
     public function snappyPdf(): Response
     {
         if (! class_exists(PdfWrapper::class)) {
-            throw new Exception('You need to install barryvdh/laravel-snappy to be able to use this feature.');
+            throw new Exception('Please `composer require barryvdh/laravel-snappy` to be able to use this feature.');
         }
 
         /** @var \Barryvdh\Snappy\PdfWrapper $snappy */
@@ -783,9 +783,14 @@ abstract class DataTable implements DataTableButtons
 
     /**
      * @return \Rap2hpoutre\FastExcel\FastExcel
+     * @throws \Yajra\DataTables\Exceptions\Exception
      */
     protected function buildFastExcelFile(): FastExcel
     {
+        if (! class_exists(FastExcel::class)) {
+            throw new Exception('Please `composer require rap2hpoutre/fast-excel` to be able to use this function.');
+        }
+
         $query = null;
         if (method_exists($this, 'query')) {
             /** @var EloquentBuilder|QueryBuilder $query */
