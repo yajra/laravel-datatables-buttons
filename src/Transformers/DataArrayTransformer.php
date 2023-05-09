@@ -52,10 +52,10 @@ class DataArrayTransformer
                     $data = is_array($data) ? json_encode($data) : $this->decodeContent($data);
                 }
 
-                if(isset($column->exportRender)){
+                if (isset($column->exportRender)) {
                     $callback = $column->exportRender;
-                    $results[$title] = $callback($row,$data);
-                }else{
+                    $results[$title] = $callback($row, $data);
+                } else {
                     $results[$title] = $data;
                 }
             }
