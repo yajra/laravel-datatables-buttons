@@ -52,7 +52,12 @@ class DataArrayTransformer
                     $data = is_array($data) ? json_encode($data) : $this->decodeContent($data);
                 }
 
-                $results[$title] = $data;
+                if (isset($column->exportRender)) {
+                    $callback = $column->exportRender;
+                    $results[$title] = $callback($row, $data);
+                } else {
+                    $results[$title] = $data;
+                }
             }
         });
 
