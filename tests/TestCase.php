@@ -111,7 +111,6 @@ abstract class TestCase extends BaseTestCase
             DataTablesServiceProvider::class,
             ButtonsServiceProvider::class,
             HtmlServiceProvider::class,
-            ServiceProvider::class,
         ];
     }
 

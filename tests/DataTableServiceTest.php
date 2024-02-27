@@ -5,6 +5,7 @@ namespace Yajra\DataTables\Buttons\Tests;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Yajra\DataTables\Buttons\Tests\DataTables\UsersDataTable;
 use Yajra\DataTables\Buttons\Tests\Models\User;
@@ -14,7 +15,7 @@ class DataTableServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @test */
+    #[Test]
     public function it_can_handle_ajax_request(): void
     {
         $response = $this->getAjax('/users');
@@ -26,7 +27,7 @@ class DataTableServiceTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_view_on_normal_get_request(): void
     {
         $response = $this->get('users');
@@ -35,7 +36,7 @@ class DataTableServiceTest extends TestCase
         $response->assertSeeText('LaravelDataTables');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_a_csv_file(): void
     {
         $response = $this->get('users?action=csv');
@@ -43,7 +44,7 @@ class DataTableServiceTest extends TestCase
         $this->assertInstanceOf(BinaryFileResponse::class, $response->baseResponse);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_a_xls_file(): void
     {
         $response = $this->get('users?action=excel');
@@ -51,7 +52,7 @@ class DataTableServiceTest extends TestCase
         $this->assertInstanceOf(BinaryFileResponse::class, $response->baseResponse);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_a_pdf_file(): void
     {
         $response = $this->get('users?action=pdf');
@@ -59,7 +60,7 @@ class DataTableServiceTest extends TestCase
         $this->assertInstanceOf(Response::class, $response->baseResponse);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_before_response_callback(): void
     {
         $response = $this->getAjax('users/before');
@@ -69,7 +70,7 @@ class DataTableServiceTest extends TestCase
         $this->assertEquals($row['name'].'X', $row['nameX']);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_response_callback(): void
     {
         $response = $this->getAjax('users/response');

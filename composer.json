@@ -15,17 +15,14 @@
     }
   ],
   "require": {
-    "php": "^8.1",
-    "yajra/laravel-datatables-oracle": "^10",
-    "yajra/laravel-datatables-html": "^10",
-    "illuminate/console": "^10"
+    "php": "^8.2",
+    "yajra/laravel-datatables-oracle": "^11",
+    "yajra/laravel-datatables-html": "^11",
+    "illuminate/console": "^11"
   },
   "require-dev": {
-    "maatwebsite/excel": "^3.1.46",
     "larastan/larastan": "^2.4",
-    "orchestra/testbench": "^8",
-    "rap2hpoutre/fast-excel": "^5.1",
-    "barryvdh/laravel-snappy": "^1.0.1"
+    "orchestra/testbench": "^9"
   },
   "autoload": {
     "psr-4": {
@@ -39,7 +36,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "10.0-dev"
+      "dev-master": "11.0-dev"
     },
     "laravel": {
       "providers": [

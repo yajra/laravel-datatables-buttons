@@ -10,9 +10,6 @@ use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
-    /**
-     * @throws \Yajra\DataTables\Exceptions\Exception
-     */
     public function dataTable(Builder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
