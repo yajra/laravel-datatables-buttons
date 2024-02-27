@@ -2,7 +2,6 @@
 
 namespace Yajra\DataTables\Buttons\Tests;
 
-use Barryvdh\Snappy\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Testing\TestResponse;
 use Orchestra\Testbench\TestCase as BaseTestCase;

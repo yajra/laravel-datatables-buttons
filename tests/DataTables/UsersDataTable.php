@@ -24,12 +24,12 @@ class UsersDataTable extends DataTable
     public function html(): \Yajra\DataTables\Html\Builder
     {
         return $this->builder()
-                    ->setTableId('users-table')
-                    ->minifiedAjax()
-                    ->columns([
-                        Column::make('id'),
-                        Column::make('name'),
-                    ]);
+            ->setTableId('users-table')
+            ->minifiedAjax()
+            ->columns([
+                Column::make('id'),
+                Column::make('name'),
+            ]);
     }
 
     protected function filename(): string

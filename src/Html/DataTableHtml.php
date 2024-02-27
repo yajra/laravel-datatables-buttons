@@ -25,7 +25,6 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     }
 
     /**
-     * @param  string  $method
      * @param  mixed  $parameters
      * @return \Yajra\DataTables\Html\Builder
      *
