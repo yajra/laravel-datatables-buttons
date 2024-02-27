@@ -88,6 +88,6 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
             $name = preg_replace('#datatablehtml$#i', 'DataTableHtml', $name);
         }
 
-        return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
+        return $this->getDefaultNamespace(trim((string) $rootNamespace, '\\')).'\\'.$name;
     }
 }

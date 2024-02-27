@@ -85,23 +85,17 @@ class DataTableServiceTest extends TestCase
         parent::setUp();
 
         $router = $this->app['router'];
-        $router->get('/users', function (UsersDataTable $dataTable) {
-            return $dataTable->render('tests::users');
-        });
+        $router->get('/users', fn (UsersDataTable $dataTable) => $dataTable->render('tests::users'));
 
-        $router->get('/users/before', function (UsersDataTable $dataTable) {
-            return $dataTable->before(function (EloquentDataTable $dataTable) {
-                $dataTable->addColumn('nameX', fn (User $user) => $user->name.'X');
-            })->render('tests::users');
-        });
+        $router->get('/users/before', fn (UsersDataTable $dataTable) => $dataTable->before(function (EloquentDataTable $dataTable) {
+            $dataTable->addColumn('nameX', fn (User $user) => $user->name.'X');
+        })->render('tests::users'));
 
-        $router->get('/users/response', function (UsersDataTable $dataTable) {
-            return $dataTable->response(function (Collection $data) {
-                $data['recordsTotal'] = 2;
-                $data['recordsFiltered'] = 1;
+        $router->get('/users/response', fn (UsersDataTable $dataTable) => $dataTable->response(function (Collection $data) {
+            $data['recordsTotal'] = 2;
+            $data['recordsFiltered'] = 1;
 
-                return $data;
-            })->render('tests::users');
-        });
+            return $data;
+        })->render('tests::users'));
     }
 }

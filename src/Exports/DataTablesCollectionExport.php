@@ -25,10 +25,7 @@ abstract class DataTablesCollectionExport implements FromCollection, WithHeading
         $this->collection = $collection ?? new Collection;
     }
 
-    /**
-     * @return Collection|LazyCollection
-     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Collection|\Illuminate\Support\LazyCollection
     {
         return $this->collection;
     }

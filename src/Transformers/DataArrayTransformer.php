@@ -43,7 +43,7 @@ class DataArrayTransformer
 
                 if ($type == 'exportable') {
                     $title = $this->decodeContent($title);
-                    $data = is_array($data) ? json_encode($data) : $this->decodeContent($data);
+                    $data = is_array($data) ? json_encode($data, JSON_THROW_ON_ERROR) : $this->decodeContent($data);
                 }
 
                 if (isset($column->exportRender)) {

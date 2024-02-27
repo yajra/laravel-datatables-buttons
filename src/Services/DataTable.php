@@ -168,7 +168,7 @@ abstract class DataTable implements DataTableButtons
     public function render(?string $view = null, array $data = [], array $mergeData = [])
     {
         if ($this->request()->ajax() && $this->request()->wantsJson()) {
-            return app()->call([$this, 'ajax']);
+            return app()->call($this->ajax(...));
         }
 
         /** @var string $action */
@@ -311,16 +311,12 @@ abstract class DataTable implements DataTableButtons
 
     /**
      * Map ajax response to columns definition.
-     *
-     * @param  array|Collection  $columns
      */
-    protected function mapResponseToColumns($columns, string $type): array
+    protected function mapResponseToColumns(array|\Illuminate\Support\Collection $columns, string $type): array
     {
         $transformer = new DataArrayTransformer;
 
-        return array_map(function ($row) use ($columns, $type, $transformer) {
-            return $transformer->transform($row, $columns, $type);
-        }, $this->getAjaxResponseData());
+        return array_map(fn ($row) => $transformer->transform($row, $columns, $type), $this->getAjaxResponseData());
     }
 
     /**
@@ -334,7 +330,7 @@ abstract class DataTable implements DataTableButtons
         ]);
 
         /** @var JsonResponse $response */
-        $response = app()->call([$this, 'ajax']);
+        $response = app()->call($this->ajax(...));
 
         /** @var array{data: array} $data */
         $data = $response->getData(true);
@@ -498,7 +494,7 @@ abstract class DataTable implements DataTableButtons
 
         foreach ($columns as $column) {
             if (isset($column['data'])) {
-                $column['title'] = $column['title'] ?? $column['data'];
+                $column['title'] ??= $column['data'];
                 $collection->push(new Column($column));
             } else {
                 $data = [];
@@ -648,9 +644,7 @@ abstract class DataTable implements DataTableButtons
      */
     protected function hasScopes(array $scopes, bool $validateAll = false): bool
     {
-        $filteredScopes = array_filter($this->scopes, function ($scope) use ($scopes) {
-            return in_array(get_class($scope), $scopes);
-        });
+        $filteredScopes = array_filter($this->scopes, fn ($scope) => in_array($scope::class, $scopes));
 
         return $validateAll ? count($filteredScopes) === count($scopes) : ! empty($filteredScopes);
     }

@@ -86,7 +86,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      */
     protected function getDataTableBaseName(): string
     {
-        return (string) preg_replace('#datatable$#i', '', $this->getNameInput());
+        return (string) preg_replace('#datatable$#i', '', (string) $this->getNameInput());
     }
 
     /**
@@ -311,7 +311,7 @@ class DataTablesMakeCommand extends GeneratorCommand
             $name = preg_replace('#datatable$#i', 'DataTable', $name);
         }
 
-        return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
+        return $this->getDefaultNamespace(trim((string) $rootNamespace, '\\')).'\\'.$name;
     }
 
     /**
@@ -343,9 +343,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     {
         /** @var string $modelFromOption */
         $modelFromOption = $this->option('model');
-        $modelNamespaceFromOption = $this->option('model-namespace')
-            ? $this->option('model-namespace')
-            : config('datatables-buttons.namespace.model');
+        $modelNamespaceFromOption = $this->option('model-namespace') ?: config('datatables-buttons.namespace.model');
 
         $name = $modelFromOption ?: $this->prepareModelName();
         $modelNamespace = $modelNamespaceFromOption ?: $this->laravel->getNamespace();

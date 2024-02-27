@@ -25,12 +25,11 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     }
 
     /**
-     * @param  mixed  $parameters
      * @return \Yajra\DataTables\Html\Builder
      *
      * @throws \Exception
      */
-    public function __call(string $method, $parameters)
+    public function __call(string $method, mixed $parameters)
     {
         if (method_exists($this->getHtmlBuilder(), $method)) {
             return $this->getHtmlBuilder()->{$method}(...$parameters);
