@@ -12,20 +12,14 @@ abstract class DataTablesCollectionExport implements FromCollection, WithHeading
 {
     use Exportable;
 
-    /**
-     * @var Collection|LazyCollection
-     */
-    protected $collection;
+    protected LazyCollection|Collection $collection;
 
-    /**
-     * @param  Collection|LazyCollection|null  $collection
-     */
-    public function __construct($collection = null)
+    public function __construct(Collection|LazyCollection $collection = null)
     {
         $this->collection = $collection ?? new Collection;
     }
 
-    public function collection(): \Illuminate\Support\Collection|\Illuminate\Support\LazyCollection
+    public function collection(): Collection|LazyCollection
     {
         return $this->collection;
     }
