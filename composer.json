@@ -21,11 +21,12 @@
         "illuminate/console": "^11"
     },
     "require-dev": {
-        "larastan/larastan": "^2.4",
+        "larastan/larastan": "^2.9.2",
         "orchestra/testbench": "^9",
         "laravel/pint": "^1.14",
-        "rector/rector": "^1.0",
-        "maatwebsite/excel": "^3.1"
+        "rector/rector": "^1.0.2",
+        "maatwebsite/excel": "^3.1.55",
+        "rap2hpoutre/fast-excel": "^5.4"
     },
     "autoload": {
         "psr-4": {
