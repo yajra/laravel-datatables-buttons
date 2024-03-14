@@ -14,7 +14,7 @@ abstract class DataTablesCollectionExport implements FromCollection, WithHeading
 
     protected LazyCollection|Collection $collection;
 
-    public function __construct(Collection|LazyCollection $collection = null)
+    public function __construct(Collection|LazyCollection|null $collection = null)
     {
         $this->collection = $collection ?? new Collection;
     }
