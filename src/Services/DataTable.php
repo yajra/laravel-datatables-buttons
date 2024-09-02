@@ -15,6 +15,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use Maatwebsite\Excel\ExcelServiceProvider;
+use OpenSpout\Common\Entity\Style\Style;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
@@ -674,11 +675,11 @@ abstract class DataTable implements DataTableButtons
         return function ($row) {
             $mapped = [];
 
-            $this->exportColumns()->each(function (Column $column) use (&$mapped, $row) {
-                if ($column['exportable']) {
-                    $mapped[$column['title']] = $row[$column['data']];
-                }
-            });
+            $this->exportColumns()
+                ->reject(fn (Column $column) => $column->exportable === false)
+                ->each(function (Column $column) use (&$mapped, $row) {
+                    $mapped[$column->title] = $row[$column->data];
+                });
 
             return $mapped;
         };
@@ -705,6 +706,15 @@ abstract class DataTable implements DataTableButtons
         $dataTable = app()->call([$this, 'dataTable'], compact('query'));
         $dataTable->skipPaging();
 
+        $styles = [];
+        $this->exportColumns()
+            ->reject(fn (Column $column) => $column->exportable === false)
+            ->each(function (Column $column) use (&$styles) {
+                if ($column->exportFormat) {
+                    $styles[$column->title] = (new Style)->setFormat($column->exportFormat);
+                }
+            });
+
         if ($dataTable instanceof QueryDataTable) {
             $queryGenerator = function ($dataTable): Generator {
                 foreach ($dataTable->getFilteredQuery()->cursor() as $row) {
@@ -712,9 +722,9 @@ abstract class DataTable implements DataTableButtons
                 }
             };
 
-            return new FastExcel($queryGenerator($dataTable));
+            return (new FastExcel($queryGenerator($dataTable)))->setColumnStyles($styles);
         }
 
-        return new FastExcel($dataTable->toArray()['data']);
+        return (new FastExcel($dataTable->toArray()['data']))->setColumnStyles($styles);
     }
 }
