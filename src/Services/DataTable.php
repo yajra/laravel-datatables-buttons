@@ -708,11 +708,9 @@ abstract class DataTable implements DataTableButtons
 
         $styles = [];
         $this->exportColumns()
-            ->reject(fn (Column $column) => $column->exportable === false)
+            ->reject(fn (Column $column) => $column->exportable === false || ! $column->exportFormat)
             ->each(function (Column $column) use (&$styles) {
-                if ($column->exportFormat) {
-                    $styles[$column->title] = (new Style)->setFormat($column->exportFormat);
-                }
+                $styles[$column->title] = (new Style)->setFormat($column->exportFormat);
             });
 
         if ($dataTable instanceof QueryDataTable) {
