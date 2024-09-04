@@ -680,7 +680,7 @@ abstract class DataTable implements DataTableButtons
                 ->each(function (Column $column) use (&$mapped, $row) {
                     $callback = $column->exportRender ?? null;
 
-                    if (isset($callback) && is_callable($callback)) {
+                    if (is_callable($callback)) {
                         $mapped[$column->title] = $callback($row, $row[$column->data]);
                     } else {
                         $mapped[$column->title] = $row[$column->data];
