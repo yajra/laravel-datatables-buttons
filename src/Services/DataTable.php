@@ -12,6 +12,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use Maatwebsite\Excel\ExcelServiceProvider;
@@ -679,11 +680,18 @@ abstract class DataTable implements DataTableButtons
                 ->reject(fn (Column $column) => $column->exportable === false)
                 ->each(function (Column $column) use (&$mapped, $row) {
                     $callback = $column->exportRender ?? null;
+                    $key = $column->data;
+
+                    if (is_array($key)) {
+                        $data = Arr::get($row, $key['_']);
+                    } else {
+                        $data = Arr::get($row, $key);
+                    }
 
                     if (is_callable($callback)) {
-                        $mapped[$column->title] = $callback($row, $row[$column->data]);
+                        $mapped[$column->title] = $callback($row, $data);
                     } else {
-                        $mapped[$column->title] = $row[$column->data];
+                        $mapped[$column->title] = $data;
                     }
                 });
 
