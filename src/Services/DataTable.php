@@ -530,7 +530,7 @@ abstract class DataTable implements DataTableButtons
         }
 
         // @phpstan-ignore-next-line
-        return $this->buildExcelFile()->download($path, $this->csvWriter);
+        return $excelFile->download($path, $this->csvWriter);
     }
 
     /**
