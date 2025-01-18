@@ -1,5 +1,10 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v11.2.2 - 2025-01-18
+
+- Fix: Avoid redundant call to buildExcelFile in csv method #191
+- Fixes #192
+
 ## v11.2.1 - 2024-09-14
 
 - fix: fast-excel exporting of related models #189
