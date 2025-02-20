@@ -15,6 +15,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
+use Illuminate\Support\Traits\Macroable;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use OpenSpout\Common\Entity\Style\Style;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -29,6 +30,8 @@ use Yajra\DataTables\Utilities\Request;
 
 abstract class DataTable implements DataTableButtons
 {
+    use Macroable;
+
     /**
      * DataTables print preview view.
      *
