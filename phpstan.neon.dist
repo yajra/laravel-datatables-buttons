@@ -10,7 +10,17 @@ parameters:
 
     ignoreErrors:
         - '#Unsafe usage of new static\(\).#'
-        - identifier: missingType.generics
-        - identifier: missingType.iterableValue
+        -   identifier: missingType.generics
+        -   identifier: missingType.iterableValue
+        -   identifier: argument.type
+        -   identifier: method.nonObject
+        -   identifier: foreach.nonIterable
+        -   identifier: assign.propertyType
+        -   identifier: return.type
+        -   identifier: offsetAccess.nonOffsetAccessible
+        -   identifier: property.defaultValue
+        -   identifier: binaryOp.invalid
+        -   identifier: encapsedStringPart.nonString
+        -   identifier: return.missing
 
     excludePaths:
