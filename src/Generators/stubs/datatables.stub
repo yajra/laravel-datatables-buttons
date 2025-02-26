@@ -43,7 +43,6 @@ class DummyClass extends DataTable
                     ->setTableId('DummyTableId')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('DummyDOM')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
