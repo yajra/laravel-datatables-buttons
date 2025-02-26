@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Yajra\DataTables\Buttons\Tests\DataTables\UsersDataTable;
 use Yajra\DataTables\Buttons\Tests\Models\User;
 use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Services\DataTable;
 
 class DataTableServiceTest extends TestCase
 {
@@ -78,6 +79,20 @@ class DataTableServiceTest extends TestCase
 
         $this->assertEquals(2, $response->json('recordsTotal'));
         $this->assertEquals(1, $response->json('recordsFiltered'));
+    }
+
+    #[Test]
+    public function it_is_macroable(): void
+    {
+        $dataTable = new class extends DataTable {};
+
+        $this->assertObjectHasProperty('macros', $dataTable);
+        $this->assertTrue(method_exists($dataTable, 'macro'), 'Method macro does not exist.');
+        $this->assertTrue(method_exists($dataTable, 'mixin'), 'Method mixin does not exist.');
+
+        DataTable::macro('macroMethod', fn () => 'macro');
+
+        $this->assertEquals('macro', $dataTable->macroMethod());
     }
 
     protected function setUp(): void
