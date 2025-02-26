@@ -2,6 +2,9 @@ name: "Static Analysis"
 
 on:
   push:
+    branches:
+      - master
+      - 11.x
     paths:
       - .github/workflows/static-analysis.yml
       - composer.*
