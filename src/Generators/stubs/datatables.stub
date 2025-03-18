@@ -17,7 +17,7 @@ class DummyClass extends DataTable
     /**
      * Build the DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param QueryBuilder<ModelName> $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -28,6 +28,8 @@ class DummyClass extends DataTable
 
     /**
      * Get the query source of dataTable.
+     *
+     * @return QueryBuilder<ModelName>
      */
     public function query(ModelName $model): QueryBuilder
     {
