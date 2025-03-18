@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v12.1.2 - 2025-03-18
+
+- fix: stubs with generics #196
+
 ## v12.1.1 - 2025-02-26
 
 - fix: stubs #195
