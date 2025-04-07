@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v12.1.3 - 2025-04-07
+
+- fix: custom ajax action #197
+
 ## v12.1.2 - 2025-03-18
 
 - fix: stubs with generics #196
