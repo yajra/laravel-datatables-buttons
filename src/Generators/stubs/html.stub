@@ -47,10 +47,10 @@ final class DummyClass extends DataTableHtml
     public function editors(): array
     {
         return [
-            // Editor::make()
-               // ->fields([
-                    // Fields::text('field_name'),
-               // ]),
+//             Editor::make()
+//                ->fields([
+//                     Fields\Text::make('field_name'),
+//                ]),
         ];
     }
 }
