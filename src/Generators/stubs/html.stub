@@ -27,10 +27,7 @@ class DummyClass extends DataTableHtml
     public function columns(): array
     {
         return [
-            Column::make('id'),
-            // Column::make('add_your_columns_here'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            DummyColumns
         ];
     }
 
@@ -40,7 +37,7 @@ class DummyClass extends DataTableHtml
     public function buttons(): array
     {
         return [
-            // Button::make('create'),
+            DummyButtons
         ];
     }
 
