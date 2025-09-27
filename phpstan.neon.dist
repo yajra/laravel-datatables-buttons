@@ -22,5 +22,6 @@ parameters:
         -   identifier: binaryOp.invalid
         -   identifier: encapsedStringPart.nonString
         -   identifier: return.missing
+        -   identifier: offsetAccess.invalidOffset
 
     excludePaths:
