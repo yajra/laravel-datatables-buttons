@@ -2,6 +2,7 @@
 
 namespace DummyNamespace;
 
+use Illuminate\Support\Facades\Request;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -11,36 +12,48 @@ use Yajra\DataTables\Html\Editor\Editor;
 
 class DummyClass extends DataTableHtml
 {
-    /**
-     * Build the html builder.
-     *
-     * @throws \Exception
-     */
-    public function handle(): Builder
+    protected string $tableId = 'DummyTableId';
+
+    public function options(Builder $builder): void
     {
-        return $this->getHtmlBuilder()
-            ->setTableId('DummyTableId')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
+        $builder
             ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                DummyButtons
-            ]);
+            ->languageSearchPlaceholder('Search...');
     }
 
     /**
-     * Get the dataTable columns definition.
+     * @return array<int, \Yajra\DataTables\Html\Column>
      */
-    public function getColumns(): array
+    public function columns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            DummyColumns
+            Column::make('id'),
+            // Column::make('add_your_columns_here'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
+        ];
+    }
+
+    /**
+     * @return array<int, \Yajra\DataTables\Html\Button>
+     */
+    public function buttons(): array
+    {
+        return [
+            // Button::make('create'),
+        ];
+    }
+
+    /**
+     * @return array<int, \Yajra\DataTables\Html\Editor\Editor>
+     */
+    public function editors(): array
+    {
+        return [
+            // Editor::make()
+               // ->fields([
+                    // Fields::text('field_name'),
+               // ]),
         ];
     }
 }

@@ -2,15 +2,17 @@
 
 namespace Yajra\DataTables\Html;
 
-use BadMethodCallException;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Traits\ForwardsCalls;
 use Yajra\DataTables\Contracts\DataTableHtmlBuilder;
 
-/**
- * @mixin Builder
- */
 abstract class DataTableHtml implements DataTableHtmlBuilder
 {
+    use ForwardsCalls;
+
     protected ?Builder $htmlBuilder = null;
+
+    protected string $tableId = 'dataTable';
 
     public static function make(): Builder
     {
@@ -31,11 +33,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
      */
     public function __call(string $method, mixed $parameters)
     {
-        if (method_exists($this->getHtmlBuilder(), $method)) {
-            return $this->getHtmlBuilder()->{$method}(...$parameters);
-        }
-
-        throw new BadMethodCallException("Method {$method} does not exists");
+        return $this->forwardCallTo($this->htmlBuilder ?? $this->getHtmlBuilder(), $method, $parameters);
     }
 
     protected function getHtmlBuilder(): Builder
@@ -44,7 +42,33 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
             return $this->htmlBuilder;
         }
 
-        return $this->htmlBuilder = app(Builder::class);
+        $this->htmlBuilder = app(Builder::class);
+
+        $this->options($this->htmlBuilder);
+
+        if ($this->buttons()) {
+            $this->htmlBuilder->buttons($this->buttons());
+        }
+
+        if ($this->columns()) {
+            $this->htmlBuilder->columns($this->columns());
+        }
+
+        if ($this->editors()) {
+            $this->htmlBuilder->editors($this->editors());
+        }
+
+        return $this->htmlBuilder;
+    }
+
+    public function handle(): Builder
+    {
+        return $this->getHtmlBuilder()
+            ->setTableId($this->tableId)
+            ->selectSelector()
+            ->selectStyleOs()
+            ->postAjax($this->ajax())
+            ->addScript('datatables::functions.batch_remove');
     }
 
     public function setHtmlBuilder(Builder $builder): static
@@ -52,5 +76,39 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
         $this->htmlBuilder = $builder;
 
         return $this;
+    }
+
+    /**
+     * @return array{url: string, data: array<string, string>}|string
+     */
+    public function ajax(): array|string
+    {
+        return Request::url();
+    }
+
+    public function options(Builder $builder): void {}
+
+    /**
+     * @return array<int, \Yajra\DataTables\Html\Column>
+     */
+    public function columns(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<int, \Yajra\DataTables\Html\Button>
+     */
+    public function buttons(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<int, \Yajra\DataTables\Html\Editor\Editor>
+     */
+    public function editors(): array
+    {
+        return [];
     }
 }
