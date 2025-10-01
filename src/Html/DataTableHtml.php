@@ -44,6 +44,8 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
 
         $this->htmlBuilder = app(Builder::class);
 
+        $this->htmlBuilder->postAjax($this->ajax());
+
         $this->options($this->htmlBuilder);
 
         if ($this->buttons()) {
@@ -67,7 +69,6 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
             ->setTableId($this->tableId)
             ->selectSelector()
             ->selectStyleOs()
-            ->postAjax($this->ajax())
             ->addScript('datatables::functions.batch_remove');
     }
 
