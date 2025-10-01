@@ -44,6 +44,13 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
 
         $this->htmlBuilder = app(Builder::class);
 
+        $this->htmlBuilder
+            ->postAjax($this->ajax())
+            ->setTableId($this->tableId)
+            ->selectSelector()
+            ->selectStyleOs()
+            ->addScript('datatables::functions.batch_remove');
+
         $this->options($this->htmlBuilder);
 
         if ($this->buttons()) {
@@ -63,12 +70,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
 
     public function handle(): Builder
     {
-        return $this->getHtmlBuilder()
-            ->setTableId($this->tableId)
-            ->selectSelector()
-            ->selectStyleOs()
-            ->postAjax($this->ajax())
-            ->addScript('datatables::functions.batch_remove');
+        return $this->getHtmlBuilder();
     }
 
     public function setHtmlBuilder(Builder $builder): static
