@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v12.2.0 - 2025-10-01
+
+- feat: improve html builder #199
+
 ## v12.1.3 - 2025-04-07
 
 - fix: custom ajax action #197
