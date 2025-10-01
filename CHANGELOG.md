@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v12.2.1 - 2025-10-01
+
+- fix: defaults override via options #200
+
 ## v12.2.0 - 2025-10-01
 
 - feat: improve html builder #199
