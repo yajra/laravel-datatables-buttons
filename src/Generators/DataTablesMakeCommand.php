@@ -194,7 +194,7 @@ class DataTablesMakeCommand extends GeneratorCommand
     /**
      * Parse array from definition.
      */
-    protected function parseButtons(string $definition, int $indentation = 24): string
+    protected function parseButtons(string $definition, int $indentation = 12): string
     {
         $columns = explode(',', $definition);
         $stub = '';
