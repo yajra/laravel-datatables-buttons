@@ -1,5 +1,9 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v12.3.0 - 2025-10-01
+
+- feat: DataTable as route action #201
+
 ## v12.2.1 - 2025-10-01
 
 - fix: defaults override via options #200
