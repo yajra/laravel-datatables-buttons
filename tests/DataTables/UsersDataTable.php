@@ -10,6 +10,8 @@ use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
+    protected ?string $view = 'tests::users';
+
     public function dataTable(Builder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
@@ -35,5 +37,13 @@ class UsersDataTable extends DataTable
     protected function filename(): string
     {
         return 'Users';
+    }
+
+    protected function viewData(): array
+    {
+        return [
+            'title' => 'LaravelDataTables',
+            'description' => 'This is a test description',
+        ];
     }
 }

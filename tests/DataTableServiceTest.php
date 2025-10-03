@@ -4,6 +4,7 @@ namespace Yajra\DataTables\Buttons\Tests;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -93,6 +94,23 @@ class DataTableServiceTest extends TestCase
         DataTable::macro('macroMethod', fn () => 'macro');
 
         $this->assertEquals('macro', $dataTable->macroMethod());
+    }
+
+    #[Test]
+    public function it_can_be_used_as_route_action(): void
+    {
+        /** @var Router|null $router */
+        $router = $this->app['router'] ?? null;
+        $router?->get('datatables-as-route-action', UsersDataTable::class);
+
+        $this->get('datatables-as-route-action')
+            ->assertSeeText('LaravelDataTables')
+            ->assertSeeText('This is a test description');
+
+        // Assert that view data are not present when manually calling render
+        $this->get('users')
+            ->assertSeeText('DataTable')
+            ->assertSeeText('No description');
     }
 
     protected function setUp(): void

@@ -151,6 +151,11 @@ abstract class DataTable implements DataTableButtons
      */
     protected string $pdfWriter = 'Dompdf';
 
+    /**
+     * @phpstan-var view-string|null
+     */
+    protected ?string $view = null;
+
     public function __construct()
     {
         /** @var Request $request */
@@ -161,6 +166,11 @@ abstract class DataTable implements DataTableButtons
 
         $this->request = $request;
         $this->htmlBuilder = $builder;
+    }
+
+    public function __invoke(): mixed
+    {
+        return $this->render($this->view, $this->viewData(), $this->viewMergeData());
     }
 
     /**
@@ -741,5 +751,21 @@ abstract class DataTable implements DataTableButtons
         }
 
         return (new FastExcel($dataTable->toArray()['data']))->setColumnStyles($styles);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function viewData(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function viewMergeData(): array
+    {
+        return [];
     }
 }
