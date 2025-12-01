@@ -183,7 +183,7 @@ abstract class DataTable implements DataTableButtons
     public function render(?string $view = null, array $data = [], array $mergeData = [])
     {
         /** @var string $action */
-        $action = $this->request()->get('action');
+        $action = $this->request()->action;
         $actionMethod = $action === 'print' ? 'printPreview' : $action;
 
         if (in_array($action, $this->actions) && method_exists($this, $actionMethod)) {
