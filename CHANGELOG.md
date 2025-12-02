@@ -1,4 +1,4 @@
-# Laravel DataTables Buttons Plugin CHANGELOG.
+# Laravel DataTables Buttons Plugin CHANGELOG
 
 ## v12.3.0 - 2025-10-01
 
