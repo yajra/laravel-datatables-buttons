@@ -1,3 +1,10 @@
+## [12.3.1](https://github.com/yajra/laravel-datatables-buttons/compare/v12.3.0...v12.3.1) (2025-12-02)
+
+
+### Bug Fixes
+
+* trigger semantic release for [#205](https://github.com/yajra/laravel-datatables-buttons/issues/205) ([2a39b45](https://github.com/yajra/laravel-datatables-buttons/commit/2a39b4573a8ab23724615fbd2136ab02842e47a9))
+
 # Laravel DataTables Buttons Plugin CHANGELOG
 
 ## v12.3.0 - 2025-10-01
