@@ -18,11 +18,11 @@
         "php": "^8.2",
         "yajra/laravel-datatables-oracle": "^12",
         "yajra/laravel-datatables-html": "^12",
-        "illuminate/console": "^12"
+        "illuminate/console": "^12|^13.0"
     },
     "require-dev": {
         "larastan/larastan": "^3.1",
-        "orchestra/testbench": "^10",
+        "orchestra/testbench": "^10|^11.0",
         "laravel/pint": "^1.21",
         "rector/rector": "^2.0",
         "maatwebsite/excel": "^3.1.64",
