@@ -3,6 +3,8 @@
 namespace Yajra\DataTables\Buttons\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
+use Illuminate\Foundation\Application;
 use Illuminate\Testing\TestResponse;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Yajra\DataTables\Buttons\Tests\Models\Role;
@@ -24,7 +26,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function migrateDatabase(): void
     {
-        /** @var \Illuminate\Database\Schema\Builder $schemaBuilder */
+        /** @var Builder $schemaBuilder */
         $schemaBuilder = $this->app['db']->connection()->getSchemaBuilder();
         if (! $schemaBuilder->hasTable('users')) {
             $schemaBuilder->create('users', function (Blueprint $table) {
@@ -90,7 +92,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Set up the environment.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
     protected function getEnvironmentSetUp($app)
     {

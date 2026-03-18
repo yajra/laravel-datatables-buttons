@@ -6,6 +6,7 @@ use Barryvdh\Snappy\PdfWrapper;
 use Closure;
 use Generator;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation as EloquentRelation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -19,8 +20,11 @@ use Illuminate\Support\Traits\Macroable;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use OpenSpout\Common\Entity\Style\Style;
 use Rap2hpoutre\FastExcel\FastExcel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
+use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\Exceptions\Exception;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Html\Column;
@@ -67,7 +71,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Query scopes.
      *
-     * @var \Yajra\DataTables\Contracts\DataTableScope[]
+     * @var DataTableScope[]
      */
     protected array $scopes = [];
 
@@ -225,7 +229,7 @@ abstract class DataTable implements DataTableButtons
             $query = $this->applyScopes($query);
         }
 
-        /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
+        /** @var DataTableAbstract $dataTable */
         // @phpstan-ignore-next-line
         $dataTable = app()->call([$this, 'dataTable'], compact('query'));
 
@@ -247,7 +251,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Display printable view of datatables.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return View
      */
     public function printPreview(): Renderable
     {
@@ -301,7 +305,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return Builder
      */
     public function html()
     {
@@ -327,7 +331,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Map ajax response to columns definition.
      */
-    protected function mapResponseToColumns(array|\Illuminate\Support\Collection $columns, string $type): array
+    protected function mapResponseToColumns(array|Collection $columns, string $type): array
     {
         $transformer = new DataArrayTransformer;
 
@@ -402,7 +406,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export results to Excel file.
      *
-     * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @return string|BinaryFileResponse|StreamedResponse
      *
      * @throws \Exception
      */
@@ -525,7 +529,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export results to CSV file.
      *
-     * @return string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @return string|StreamedResponse
      *
      * @throws \Exception
      */
@@ -549,7 +553,7 @@ abstract class DataTable implements DataTableButtons
     /**
      * Export results to PDF file.
      *
-     * @return \Illuminate\Http\Response|string|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @return Response|string|StreamedResponse
      *
      * @throws \Exception
      */
@@ -567,7 +571,7 @@ abstract class DataTable implements DataTableButtons
      * PDF version of the table using print preview blade template.
      *
      *
-     * @throws \Yajra\DataTables\Exceptions\Exception
+     * @throws Exception
      */
     public function snappyPdf(): Response
     {
@@ -575,7 +579,7 @@ abstract class DataTable implements DataTableButtons
             throw new Exception('Please `composer require barryvdh/laravel-snappy` to be able to use this feature.');
         }
 
-        /** @var \Barryvdh\Snappy\PdfWrapper $snappy */
+        /** @var PdfWrapper $snappy */
         $snappy = app('snappy.pdf.wrapper');
         $options = (array) config('datatables-buttons.snappy.options');
 
@@ -713,7 +717,7 @@ abstract class DataTable implements DataTableButtons
     }
 
     /**
-     * @throws \Yajra\DataTables\Exceptions\Exception
+     * @throws Exception
      */
     protected function buildFastExcelFile(): FastExcel
     {
@@ -728,7 +732,7 @@ abstract class DataTable implements DataTableButtons
             $query = $this->applyScopes($query);
         }
 
-        /** @var \Yajra\DataTables\DataTableAbstract $dataTable */
+        /** @var DataTableAbstract $dataTable */
         // @phpstan-ignore-next-line
         $dataTable = app()->call([$this, 'dataTable'], compact('query'));
         $dataTable->skipPaging();

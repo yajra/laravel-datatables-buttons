@@ -2,6 +2,7 @@
 
 namespace Yajra\DataTables\Generators;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 
 class DataTablesHtmlCommand extends DataTablesMakeCommand
@@ -38,7 +39,7 @@ class DataTablesHtmlCommand extends DataTablesMakeCommand
      *
      * @param  string  $name
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     protected function buildClass($name): string
     {

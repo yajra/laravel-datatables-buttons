@@ -5,6 +5,7 @@ namespace Yajra\DataTables\Html;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Yajra\DataTables\Contracts\DataTableHtmlBuilder;
+use Yajra\DataTables\Html\Editor\Editor;
 
 abstract class DataTableHtml implements DataTableHtmlBuilder
 {
@@ -27,7 +28,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     }
 
     /**
-     * @return \Yajra\DataTables\Html\Builder
+     * @return Builder
      *
      * @throws \Exception
      */
@@ -91,7 +92,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     public function options(Builder $builder): void {}
 
     /**
-     * @return array<int, \Yajra\DataTables\Html\Column>
+     * @return array<int, Column>
      */
     public function columns(): array
     {
@@ -99,7 +100,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     }
 
     /**
-     * @return array<int, \Yajra\DataTables\Html\Button>
+     * @return array<int, Button>
      */
     public function buttons(): array
     {
@@ -107,7 +108,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
     }
 
     /**
-     * @return array<int, \Yajra\DataTables\Html\Editor\Editor>
+     * @return array<int, Editor>
      */
     public function editors(): array
     {
