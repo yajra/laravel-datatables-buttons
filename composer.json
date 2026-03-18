@@ -15,7 +15,6 @@
         }
     ],
     "require": {
-        "php": "^8.2",
         "yajra/laravel-datatables-oracle": "^13",
         "yajra/laravel-datatables-html": "^13",
         "illuminate/console": "^13"
