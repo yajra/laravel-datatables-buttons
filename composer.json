@@ -16,13 +16,13 @@
     ],
     "require": {
         "php": "^8.2",
-        "yajra/laravel-datatables-oracle": "^12",
-        "yajra/laravel-datatables-html": "^12",
-        "illuminate/console": "^12"
+        "yajra/laravel-datatables-oracle": "^13",
+        "yajra/laravel-datatables-html": "^13",
+        "illuminate/console": "^13"
     },
     "require-dev": {
         "larastan/larastan": "^3.1",
-        "orchestra/testbench": "^10",
+        "orchestra/testbench": "^11",
         "laravel/pint": "^1.21",
         "rector/rector": "^2.0",
         "maatwebsite/excel": "^3.1.64",
@@ -40,7 +40,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "12.x-dev"
+            "dev-master": "13.x-dev"
         },
         "laravel": {
             "providers": [
