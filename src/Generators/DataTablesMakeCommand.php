@@ -3,6 +3,7 @@
 namespace Yajra\DataTables\Generators;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
@@ -62,7 +63,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      *
      * @param  string  $name
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     protected function buildClass($name): string
     {
@@ -275,7 +276,7 @@ class DataTablesMakeCommand extends GeneratorCommand
      * Replace builder name.
      *
      * @param  string  $stub
-     * @return \Yajra\DataTables\Generators\DataTablesMakeCommand
+     * @return DataTablesMakeCommand
      */
     protected function replaceBuilder(&$stub)
     {
