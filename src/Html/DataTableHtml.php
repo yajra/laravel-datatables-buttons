@@ -46,7 +46,7 @@ abstract class DataTableHtml implements DataTableHtmlBuilder
         $this->htmlBuilder = app(Builder::class);
 
         $this->htmlBuilder
-            ->minifiedAjax($this->ajax())
+            ->postAjax($this->ajax())
             ->setTableId($this->tableId)
             ->selectSelector()
             ->selectStyleOs()
