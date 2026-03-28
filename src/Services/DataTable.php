@@ -21,6 +21,8 @@ use OpenSpout\Common\Entity\Row;
 use OpenSpout\Common\Entity\Style\Style;
 use OpenSpout\Writer\CSV\Writer as CsvWriter;
 use OpenSpout\Writer\XLSX\Writer as XlsxWriter;
+use ReflectionMethod;
+use ReflectionNamedType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Yajra\DataTables\Contracts\DataTableButtons;
@@ -589,7 +591,7 @@ abstract class DataTable implements DataTableButtons
             if (! $asCsv) {
                 $exportableColumns->each(function (Column $column, int $index) use (&$columnStylesByIndex): void {
                     if ($column->exportFormat) {
-                        $columnStylesByIndex[$index] = (new Style)->withFormat($column->exportFormat);
+                        $columnStylesByIndex[$index] = $this->openSpoutCellStyleWithFormat($column->exportFormat);
                     }
                 });
             }
@@ -599,12 +601,59 @@ abstract class DataTable implements DataTableButtons
                 if ($asCsv || $columnStylesByIndex === []) {
                     $writer->addRow(Row::fromValues($values));
                 } else {
-                    $writer->addRow(Row::fromValuesWithStyles($values, $columnStylesByIndex));
+                    $writer->addRow($this->openSpoutRowWithColumnStyles($values, $columnStylesByIndex));
                 }
             }
 
             $writer->close();
         }, $downloadName, $headers);
+    }
+
+    /**
+     * OpenSpout 4.x uses mutable {@see Style::setFormat}; 5.x uses immutable {@see Style::withFormat}.
+     */
+    protected function openSpoutCellStyleWithFormat(string $format): Style
+    {
+        // OpenSpout 5.x: withFormat(); 4.x: setFormat() (mutating).
+        // @phpstan-ignore function.alreadyNarrowedType (OpenSpout major differs)
+        if (method_exists(Style::class, 'withFormat')) {
+            return (new Style)->withFormat($format);
+        }
+
+        $style = new Style;
+
+        // @phpstan-ignore method.notFound (OpenSpout 4.x)
+        return $style->setFormat($format);
+    }
+
+    /**
+     * OpenSpout 5.x: fromValuesWithStyles(values, columnStyles).
+     * OpenSpout 4.x: fromValuesWithStyles(values, ?rowStyle, columnStyles).
+     *
+     * @param  array<int, mixed>  $values
+     * @param  array<int, Style>  $columnStylesByIndex
+     */
+    protected function openSpoutRowWithColumnStyles(array $values, array $columnStylesByIndex): Row
+    {
+        if ($this->openSpoutColumnStylesIsSecondArgument()) {
+            return Row::fromValuesWithStyles($values, $columnStylesByIndex);
+        }
+
+        return Row::fromValuesWithStyles($values, null, $columnStylesByIndex);
+    }
+
+    protected function openSpoutColumnStylesIsSecondArgument(): bool
+    {
+        static $cached = null;
+
+        if ($cached === null) {
+            $method = new ReflectionMethod(Row::class, 'fromValuesWithStyles');
+            $secondParameterType = $method->getParameters()[1]->getType();
+            $cached = $secondParameterType instanceof ReflectionNamedType
+                && $secondParameterType->getName() === 'array';
+        }
+
+        return $cached;
     }
 
     /**
