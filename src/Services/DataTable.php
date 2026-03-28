@@ -2,6 +2,7 @@
 
 namespace Yajra\DataTables\Services;
 
+use BackedEnum;
 use Barryvdh\Snappy\PdfWrapper;
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
@@ -727,6 +728,9 @@ abstract class DataTable implements DataTableButtons
     }
 
     /**
+     * OpenSpout (fast Excel) iterates Eloquent models from cursor without DataProcessor; enum casts
+     * must be reduced to scalars before writing cells.
+     *
      * @param  Collection<int, Column>  $exportableColumns
      * @return list<mixed>
      */
@@ -744,14 +748,23 @@ abstract class DataTable implements DataTableButtons
                 $data = Arr::get($row, $key);
             }
 
-            if ($this->fastExcelCallback && is_callable($callback)) {
-                $values[] = $callback($row, $data);
-            } else {
-                $values[] = $data;
-            }
+            $cell = ($this->fastExcelCallback && is_callable($callback))
+                ? $callback($row, $data)
+                : $data;
+
+            $values[] = $this->normalizeOpenSpoutCellValue($cell);
         }
 
         return $values;
+    }
+
+    private function normalizeOpenSpoutCellValue(mixed $value): mixed
+    {
+        if ($value instanceof BackedEnum) {
+            return $value->value;
+        }
+
+        return $value;
     }
 
     public function fastExcelCallback(): Closure

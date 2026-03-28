@@ -7,6 +7,7 @@ use OpenSpout\Reader\XLSX\Reader as XlsxReader;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Yajra\DataTables\Buttons\Tests\DataTables\UsersDataTableOpenSpout;
+use Yajra\DataTables\Buttons\Tests\DataTables\UsersDataTableOpenSpoutBackedEnum;
 use Yajra\DataTables\Buttons\Tests\DataTables\UsersDataTableOpenSpoutExportOptions;
 use ZipArchive;
 
@@ -33,6 +34,18 @@ class OpenSpoutExportTest extends TestCase
         $response->assertOk();
         $this->assertInstanceOf(StreamedResponse::class, $response->baseResponse);
         $this->assertStringContainsString('text/csv', (string) $response->headers->get('Content-Type'));
+    }
+
+    #[Test]
+    public function it_exports_backed_enum_column_values_as_scalars_on_openspout_csv(): void
+    {
+        $response = $this->get('/users-openspout-backed-enum?action=csv');
+
+        $response->assertOk();
+        $csv = preg_replace('/^\xEF\xBB\xBF/', '', $response->streamedContent());
+        $this->assertStringContainsString('Status', $csv);
+        $this->assertStringContainsString('1,Record-1,premium', $csv);
+        $this->assertStringContainsString('2,Record-2,active', $csv);
     }
 
     #[Test]
@@ -119,5 +132,6 @@ class OpenSpoutExportTest extends TestCase
         $router = $this->app['router'];
         $router->get('/users-openspout', fn (UsersDataTableOpenSpout $dataTable) => $dataTable->render('tests::users'));
         $router->get('/users-openspout-export-options', fn (UsersDataTableOpenSpoutExportOptions $dataTable) => $dataTable->render('tests::users'));
+        $router->get('/users-openspout-backed-enum', fn (UsersDataTableOpenSpoutBackedEnum $dataTable) => $dataTable->render('tests::users'));
     }
 }
