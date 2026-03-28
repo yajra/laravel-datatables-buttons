@@ -2,11 +2,12 @@
 
 namespace Yajra\DataTables\Buttons\Tests\DataTables;
 
+use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Html\Column;
 
 class UsersDataTableOpenSpoutExportOptions extends UsersDataTableOpenSpout
 {
-    public function html(): \Yajra\DataTables\Html\Builder
+    public function html(): Builder
     {
         return $this->builder()
             ->setTableId('users-openspout-export-options')
