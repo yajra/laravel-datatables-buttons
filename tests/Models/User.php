@@ -3,10 +3,10 @@
 namespace Yajra\DataTables\Buttons\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Yajra\DataTables\Buttons\Tests\Enums\TestUserStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Yajra\DataTables\Buttons\Tests\Enums\TestUserStatus;
 
 class User extends Model
 {
