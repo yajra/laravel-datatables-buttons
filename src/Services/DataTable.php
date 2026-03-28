@@ -17,18 +17,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Traits\Macroable;
 use Maatwebsite\Excel\ExcelServiceProvider;
-use OpenSpout\Common\Entity\Row;
-use OpenSpout\Common\Entity\Style\Style;
-use OpenSpout\Writer\CSV\Writer as CsvWriter;
-use OpenSpout\Writer\XLSX\Writer as XlsxWriter;
-use ReflectionMethod;
-use ReflectionNamedType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Yajra\DataTables\Contracts\DataTableButtons;
 use Yajra\DataTables\Contracts\DataTableScope;
 use Yajra\DataTables\DataTableAbstract;
 use Yajra\DataTables\Exceptions\Exception;
+use Yajra\DataTables\Exports\OpenSpoutStreamExporter;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\QueryDataTable;
@@ -567,136 +562,17 @@ abstract class DataTable implements DataTableButtons
      */
     protected function streamOpenSpoutExport(bool $asCsv): StreamedResponse
     {
-        if (! class_exists(XlsxWriter::class)) {
-            throw new Exception('Please `composer require openspout/openspout` to be able to use this function.');
-        }
-
-        return response()->streamDownload(
-            fn () => $this->writeOpenSpoutExportToOutput($asCsv),
-            $this->openSpoutStreamDownloadFilename($asCsv),
-            $this->openSpoutStreamDownloadHeaders($asCsv)
+        return (new OpenSpoutStreamExporter)->streamDownload(
+            $asCsv,
+            $this->getFilename(),
+            $this->csvWriter,
+            $this->excelWriter,
+            fn (): Collection => $this->exportColumns()
+                ->reject(fn (Column $column) => $column->exportable === false)
+                ->values(),
+            fn (): iterable => $this->iterateRowsForOpenSpoutExport(),
+            fn (mixed $row, Collection $cols): array => $this->mapSourceRowToExportValues($row, $cols),
         );
-    }
-
-    protected function openSpoutStreamDownloadFilename(bool $asCsv): string
-    {
-        $suffix = strtolower($asCsv ? $this->csvWriter : $this->excelWriter);
-
-        return $this->getFilename().'.'.$suffix;
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    protected function openSpoutStreamDownloadHeaders(bool $asCsv): array
-    {
-        if ($asCsv) {
-            return ['Content-Type' => 'text/csv; charset=UTF-8'];
-        }
-
-        return ['Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-    }
-
-    /**
-     * @param  Collection<int, Column>  $exportableColumns
-     * @return array<int, Style>
-     */
-    protected function openSpoutColumnStylesIndexedForExport(bool $asCsv, Collection $exportableColumns): array
-    {
-        if ($asCsv) {
-            return [];
-        }
-
-        $styles = [];
-        foreach ($exportableColumns as $index => $column) {
-            if ($column->exportFormat) {
-                $styles[$index] = $this->openSpoutCellStyleWithFormat($column->exportFormat);
-            }
-        }
-
-        return $styles;
-    }
-
-    /**
-     * @param  array<int, mixed>  $values
-     * @param  array<int, Style>  $columnStylesByIndex
-     */
-    protected function openSpoutExportRowForWriter(array $values, bool $asCsv, array $columnStylesByIndex): Row
-    {
-        if ($asCsv || $columnStylesByIndex === []) {
-            return Row::fromValues($values);
-        }
-
-        return $this->openSpoutRowWithColumnStyles($values, $columnStylesByIndex);
-    }
-
-    protected function writeOpenSpoutExportToOutput(bool $asCsv): void
-    {
-        $writer = $asCsv ? new CsvWriter : new XlsxWriter;
-        $writer->openToFile('php://output');
-
-        $exportableColumns = $this->exportColumns()
-            ->reject(fn (Column $column) => $column->exportable === false)
-            ->values();
-
-        $titles = $exportableColumns->map(fn (Column $column) => $column->title)->all();
-        $writer->addRow(Row::fromValues($titles));
-
-        $columnStylesByIndex = $this->openSpoutColumnStylesIndexedForExport($asCsv, $exportableColumns);
-
-        foreach ($this->iterateRowsForOpenSpoutExport() as $row) {
-            $values = $this->mapSourceRowToExportValues($row, $exportableColumns);
-            $writer->addRow($this->openSpoutExportRowForWriter($values, $asCsv, $columnStylesByIndex));
-        }
-
-        $writer->close();
-    }
-
-    /**
-     * OpenSpout 4.x uses mutable {@see Style::setFormat}; 5.x uses immutable {@see Style::withFormat}.
-     */
-    protected function openSpoutCellStyleWithFormat(string $format): Style
-    {
-        // OpenSpout 5.x: withFormat(); 4.x: setFormat() (mutating).
-        // @phpstan-ignore function.alreadyNarrowedType (OpenSpout major differs)
-        if (method_exists(Style::class, 'withFormat')) {
-            return (new Style)->withFormat($format);
-        }
-
-        $style = new Style;
-
-        // @phpstan-ignore method.notFound (OpenSpout 4.x)
-        return $style->setFormat($format);
-    }
-
-    /**
-     * OpenSpout 5.x: fromValuesWithStyles(values, columnStyles).
-     * OpenSpout 4.x: fromValuesWithStyles(values, ?rowStyle, columnStyles).
-     *
-     * @param  array<int, mixed>  $values
-     * @param  array<int, Style>  $columnStylesByIndex
-     */
-    protected function openSpoutRowWithColumnStyles(array $values, array $columnStylesByIndex): Row
-    {
-        if ($this->openSpoutColumnStylesIsSecondArgument()) {
-            return Row::fromValuesWithStyles($values, $columnStylesByIndex);
-        }
-
-        return Row::fromValuesWithStyles($values, null, $columnStylesByIndex);
-    }
-
-    protected function openSpoutColumnStylesIsSecondArgument(): bool
-    {
-        static $cached = null;
-
-        if ($cached === null) {
-            $method = new ReflectionMethod(Row::class, 'fromValuesWithStyles');
-            $secondParameterType = $method->getParameters()[1]->getType();
-            $cached = $secondParameterType instanceof ReflectionNamedType
-                && $secondParameterType->getName() === 'array';
-        }
-
-        return $cached;
     }
 
     /**
