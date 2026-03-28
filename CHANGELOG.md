@@ -1,3 +1,15 @@
+# [13.2.0](https://github.com/yajra/laravel-datatables-buttons/compare/v13.1.0...v13.2.0) (2026-03-28)
+
+
+### Bug Fixes
+
+* pint :robot: ([9568431](https://github.com/yajra/laravel-datatables-buttons/commit/9568431850ba339642406fce023341e1e7bd2f6b))
+
+
+### Features
+
+* export support for enum ([fb94866](https://github.com/yajra/laravel-datatables-buttons/commit/fb9486658883964a1090712fa87b16cd210077fb))
+
 # [13.1.0](https://github.com/yajra/laravel-datatables-buttons/compare/v13.0.2...v13.1.0) (2026-03-28)
 
 
