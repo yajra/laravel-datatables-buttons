@@ -7,6 +7,7 @@ use Illuminate\Database\Schema\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Testing\TestResponse;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Yajra\DataTables\Buttons\Tests\Enums\TestUserStatus;
 use Yajra\DataTables\Buttons\Tests\Models\Role;
 use Yajra\DataTables\Buttons\Tests\Models\User;
 use Yajra\DataTables\Buttons\Tests\Providers\TestServiceProvider;
@@ -32,6 +33,7 @@ abstract class TestCase extends BaseTestCase
             $schemaBuilder->create('users', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
+                $table->string('status')->default('active');
                 $table->string('email');
                 $table->string('user_type')->nullable();
                 $table->unsignedInteger('user_id')->nullable();
@@ -73,6 +75,7 @@ abstract class TestCase extends BaseTestCase
             $user = User::query()->create([
                 'name' => 'Record-'.$i,
                 'email' => 'Email-'.$i.'@example.com',
+                'status' => $i === 1 ? TestUserStatus::Premium : TestUserStatus::Active,
             ]);
 
             collect(range(1, 3))->each(function ($i) use ($user) {
