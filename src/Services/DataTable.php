@@ -571,42 +571,85 @@ abstract class DataTable implements DataTableButtons
             throw new Exception('Please `composer require openspout/openspout` to be able to use this function.');
         }
 
-        $downloadName = $this->getFilename().'.'.strtolower($asCsv ? $this->csvWriter : $this->excelWriter);
-        $headers = $asCsv
-            ? ['Content-Type' => 'text/csv; charset=UTF-8']
-            : ['Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+        return response()->streamDownload(
+            fn () => $this->writeOpenSpoutExportToOutput($asCsv),
+            $this->openSpoutStreamDownloadFilename($asCsv),
+            $this->openSpoutStreamDownloadHeaders($asCsv)
+        );
+    }
 
-        return response()->streamDownload(function () use ($asCsv): void {
-            $writer = $asCsv ? new CsvWriter : new XlsxWriter;
-            $writer->openToFile('php://output');
+    protected function openSpoutStreamDownloadFilename(bool $asCsv): string
+    {
+        $suffix = strtolower($asCsv ? $this->csvWriter : $this->excelWriter);
 
-            $exportableColumns = $this->exportColumns()
-                ->reject(fn (Column $column) => $column->exportable === false)
-                ->values();
+        return $this->getFilename().'.'.$suffix;
+    }
 
-            $titles = $exportableColumns->map(fn (Column $column) => $column->title)->all();
-            $writer->addRow(Row::fromValues($titles));
+    /**
+     * @return array<string, string>
+     */
+    protected function openSpoutStreamDownloadHeaders(bool $asCsv): array
+    {
+        if ($asCsv) {
+            return ['Content-Type' => 'text/csv; charset=UTF-8'];
+        }
 
-            $columnStylesByIndex = [];
-            if (! $asCsv) {
-                $exportableColumns->each(function (Column $column, int $index) use (&$columnStylesByIndex): void {
-                    if ($column->exportFormat) {
-                        $columnStylesByIndex[$index] = $this->openSpoutCellStyleWithFormat($column->exportFormat);
-                    }
-                });
+        return ['Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+    }
+
+    /**
+     * @param  Collection<int, Column>  $exportableColumns
+     * @return array<int, Style>
+     */
+    protected function openSpoutColumnStylesIndexedForExport(bool $asCsv, Collection $exportableColumns): array
+    {
+        if ($asCsv) {
+            return [];
+        }
+
+        $styles = [];
+        foreach ($exportableColumns as $index => $column) {
+            if ($column->exportFormat) {
+                $styles[$index] = $this->openSpoutCellStyleWithFormat($column->exportFormat);
             }
+        }
 
-            foreach ($this->iterateRowsForOpenSpoutExport() as $row) {
-                $values = $this->mapSourceRowToExportValues($row, $exportableColumns);
-                if ($asCsv || $columnStylesByIndex === []) {
-                    $writer->addRow(Row::fromValues($values));
-                } else {
-                    $writer->addRow($this->openSpoutRowWithColumnStyles($values, $columnStylesByIndex));
-                }
-            }
+        return $styles;
+    }
 
-            $writer->close();
-        }, $downloadName, $headers);
+    /**
+     * @param  array<int, mixed>  $values
+     * @param  array<int, Style>  $columnStylesByIndex
+     */
+    protected function openSpoutExportRowForWriter(array $values, bool $asCsv, array $columnStylesByIndex): Row
+    {
+        if ($asCsv || $columnStylesByIndex === []) {
+            return Row::fromValues($values);
+        }
+
+        return $this->openSpoutRowWithColumnStyles($values, $columnStylesByIndex);
+    }
+
+    protected function writeOpenSpoutExportToOutput(bool $asCsv): void
+    {
+        $writer = $asCsv ? new CsvWriter : new XlsxWriter;
+        $writer->openToFile('php://output');
+
+        $exportableColumns = $this->exportColumns()
+            ->reject(fn (Column $column) => $column->exportable === false)
+            ->values();
+
+        $titles = $exportableColumns->map(fn (Column $column) => $column->title)->all();
+        $writer->addRow(Row::fromValues($titles));
+
+        $columnStylesByIndex = $this->openSpoutColumnStylesIndexedForExport($asCsv, $exportableColumns);
+
+        foreach ($this->iterateRowsForOpenSpoutExport() as $row) {
+            $values = $this->mapSourceRowToExportValues($row, $exportableColumns);
+            $writer->addRow($this->openSpoutExportRowForWriter($values, $asCsv, $columnStylesByIndex));
+        }
+
+        $writer->close();
     }
 
     /**
