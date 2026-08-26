@@ -341,6 +341,10 @@ abstract class DataTable implements DataTableButtons
      */
     protected function getAjaxResponseData(): array
     {
+        // An export contains every filtered record, so the length configured
+        // via datatables.max_length must not cap the response.
+        $this->request()->ignoreMaxLength();
+
         $this->request()->merge([
             'start' => 0,
             'length' => -1,
