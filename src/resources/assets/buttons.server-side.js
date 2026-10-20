@@ -236,12 +236,29 @@
         },
 
         action: function (e, dt, button, config) {
+            // Clear the global search.
             dt.search('');
-            // DataTables 3 searches column groups separately from individual columns.
+
+            // Clear individual column searches.
             // @see https://datatables.net/releases/3/upgrade#Cross-column-search
             dt.columns().every(function () {
                 this.search('');
             });
+
+            // Clear grouped column searches.
+            // @see https://next.datatables.net/releases/3/new#Grouped-column-search
+            // We use the internal "searches" property because DataTables v3 does not yet
+            // provide a public API to list column groups with an applied search.
+            // DataTables v2 has no "searches" object, so this block is skipped.
+            var searches = dt.settings()[0]?.searches;
+            if (searches) {
+                Object.keys(searches).forEach(function (key) {
+                    if (key.includes(',')) {
+                        dt.columns(key.split(',').map(Number)).search('');
+                    }
+                });
+            }
+
             dt.draw();
         }
     };
