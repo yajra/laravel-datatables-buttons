@@ -14,10 +14,10 @@ This package is a plugin of [Laravel DataTables](https://github.com/yajra/larave
 ## Requirements
 
 - [PHP >= 8.3](http://php.net/)
-- [Laravel 12.x](https://github.com/laravel/framework)
+- [Laravel 13.x](https://github.com/laravel/framework)
 - [Laravel DataTables](https://github.com/yajra/laravel-datatables)
-- [jQuery DataTables v1.10.x](http://datatables.net/)
-- [jQuery DataTables Buttons Extension](https://datatables.net/reference/button/)
+- [DataTables >= 2.3](http://datatables.net/)
+- [DataTables Buttons Extension](https://datatables.net/reference/button/)
 
 ## Documentations
 

@@ -1,30 +1,30 @@
-(function ($, DataTable) {
+(function (DataTable) {
     "use strict";
+
+    // Once DataTables v2 support is dropped, replace this helper's calls
+    // with DataTable.util.ajax.serialize(params) and remove the jQuery fallback.
+    var _serializeParams = function (params) {
+        // Only available in DataTables v3.
+        if (typeof DataTable.util?.ajax?.serialize === 'function') {
+            return DataTable.util.ajax.serialize(params);
+        }
+
+        return window.jQuery.param(params);
+    };
 
     var _buildParams = function (dt, action, onlyVisibles) {
         var params = dt.ajax.params();
         params.action = action;
-        params._token = $('meta[name="csrf-token"]').attr('content');
+        var csrfToken = document.querySelector('meta[name="csrf-token"]');
+        params._token = csrfToken ? csrfToken.getAttribute('content') : undefined;
 
         if (onlyVisibles) {
-            params.visible_columns = _getVisibleColumns();
+            params.visible_columns = dt.columns(':visible').names().toArray();
         } else {
             params.visible_columns = null;
         }
         
         return params;
-    };
-    
-    var _getVisibleColumns = function () {
-
-        var visible_columns = [];
-        $.each(DataTable.settings[0].aoColumns, function (key, col) {
-            if (col.bVisible) {
-                visible_columns.push(col.name);
-            }
-        });
-
-        return visible_columns;
     };
 
     var _downloadFromUrl = function (url, params) {
@@ -74,7 +74,7 @@
             }
         };
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.send($.param(params));
+        xhr.send(_serializeParams(params));
     };
 
     var _buildUrl = function(dt, action) {
@@ -83,10 +83,10 @@
         params.action = action;
 
         if (url.indexOf('?') > -1) {
-            return url + '&' + $.param(params);
+            return url + '&' + _serializeParams(params);
         }
         
-        return url + '?' + $.param(params);
+        return url + '?' + _serializeParams(params);
     };
 
     DataTable.ext.buttons.excel = {
@@ -236,8 +236,29 @@
         },
 
         action: function (e, dt, button, config) {
+            // Clear the global search.
             dt.search('');
-            dt.columns().search('');
+
+            // Clear individual column searches.
+            // @see https://datatables.net/releases/3/upgrade#Cross-column-search
+            dt.columns().every(function () {
+                this.search('');
+            });
+
+            // Clear grouped column searches.
+            // @see https://next.datatables.net/releases/3/new#Grouped-column-search
+            // We use the internal "searches" property because DataTables v3 does not yet
+            // provide a public API to list column groups with an applied search.
+            // DataTables v2 has no "searches" object, so this block is skipped.
+            var searches = dt.settings()[0]?.searches;
+            if (searches) {
+                Object.keys(searches).forEach(function (key) {
+                    if (key.includes(',')) {
+                        dt.columns(key.split(',').map(Number)).search('');
+                    }
+                });
+            }
+
             dt.draw();
         }
     };
@@ -267,7 +288,7 @@
     };
 
     if (typeof DataTable.ext.buttons.copyHtml5 !== 'undefined') {
-        $.extend(DataTable.ext.buttons.copyHtml5, {
+        Object.assign(DataTable.ext.buttons.copyHtml5, {
             text: function (dt) {
                 return '<i class="fa fa-copy"></i> ' + dt.i18n('buttons.copy', 'Copy');
             }
@@ -275,10 +296,10 @@
     }
 
     if (typeof DataTable.ext.buttons.colvis !== 'undefined') {
-        $.extend(DataTable.ext.buttons.colvis, {
+        Object.assign(DataTable.ext.buttons.colvis, {
             text: function (dt) {
                 return '<i class="fa fa-eye"></i> ' + dt.i18n('buttons.colvis', 'Column visibility');
             }
         });
     }
-})(jQuery, jQuery.fn.dataTable);
+})(window.DataTable || window.jQuery?.fn.dataTable);
