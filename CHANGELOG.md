@@ -1,3 +1,10 @@
+# [13.3.0](https://github.com/yajra/laravel-datatables-buttons/compare/v13.2.1...v13.3.0) (2026-10-24)
+
+
+### Features
+
+* support DataTables 3 ([859cf6c](https://github.com/yajra/laravel-datatables-buttons/commit/859cf6c4dddad0d5c81e80a396e1eb2854bcd5c0))
+
 ## [13.2.1](https://github.com/yajra/laravel-datatables-buttons/compare/v13.2.0...v13.2.1) (2026-07-21)
 
 
